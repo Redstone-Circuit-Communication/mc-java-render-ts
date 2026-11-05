@@ -197,6 +197,9 @@ importers:
         specifier: 0.186.1
         version: 0.186.1
     devDependencies:
+      '@coastlinecreations/schematic-renderer':
+        specifier: workspace:*
+        version: link:engine
       typescript:
         specifier: 5.9.3
         version: 5.9.3

@@ -45,7 +45,7 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "pnpm run build && pnpm run typecheck:consumer && node --test tests/*.test.mjs",
-    "build:engine": "npm --prefix engine ci --ignore-scripts && npm --prefix engine run build",
+    "build:engine": "pnpm --filter @coastlinecreations/schematic-renderer run build",
     "typecheck:consumer": "tsc --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --noEmit tests/public-api.ts"
   },
   "dependencies": {
@@ -60,7 +60,8 @@
     "postprocessing": "6.39.5"
   },
   "devDependencies": {
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "@coastlinecreations/schematic-renderer": "workspace:*"
   },
   "engines": {
     "node": ">=22.12.0"
