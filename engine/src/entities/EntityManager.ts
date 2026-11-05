@@ -80,14 +80,15 @@ export class EntityManager {
 						model.traverse((node) => {
 							if (node instanceof THREE.Mesh) {
 								const copy = (material: THREE.Material) => {
-									if (!copies.has(material)) {
-										const owned = material.clone();
+									let owned = copies.get(material);
+									if (!owned) {
+										owned = material.clone();
 										owned.userData.entityOpacity = material.opacity;
 										owned.userData.entityTransparent = material.transparent;
 										copies.set(material, owned);
 										this.materials.add(owned);
 									}
-									return copies.get(material)!;
+									return owned;
 								};
 								node.material = Array.isArray(node.material)
 									? node.material.map(copy)

@@ -159,6 +159,49 @@ describe("worker dispatch failures", () => {
 });
 
 describe("palette freshness", () => {
+	it.each([false, true])(
+		"does not overlay stateless chests on palette geometry (prefiltered=%s)",
+		async (prefiltered) => {
+			const f = sharedFixture();
+			const getBlockMesh = vi.fn().mockImplementation(async () => new Group());
+			Reflect.set(f.first, "cubane", { getBlockMesh });
+			await f.first.precomputePaletteGeometries([
+				{ name: "minecraft:chest", properties: { facing: "north", type: "left" } },
+				{ name: "minecraft:chest", properties: { facing: "north", type: "right" } },
+			]);
+			expect(getBlockMesh).toHaveBeenCalledTimes(2);
+			getBlockMesh.mockClear();
+			Reflect.set(f.first, "useGPUCompute", true);
+			Reflect.set(f.first, "computeMeshBuilder", {
+				isReady: true,
+				buildChunk: vi.fn().mockResolvedValue({ geometries: [], origin: [0, 0, 0] }),
+				dispose: vi.fn(),
+			});
+			// The pair straddles a chunk boundary and carries container NBT on both sides.
+			const entities = [15, 16].map((x) => ({ position: [x, 0, 0], nbt: { Items: [] } }));
+			const schematic = {
+				schematicWrapper: { get_block: () => "minecraft:chest" },
+				getBlockEntitiesMap: () => new Map(entities.map((e) => [e.position.join(","), e])),
+			} as unknown as SchematicObject;
+			for (const [index, entity] of entities.entries()) {
+				const meshes = await f.first.getChunkMesh(
+					{
+						chunk_x: index,
+						chunk_y: 0,
+						chunk_z: 0,
+						blocks: [[15 + index, 0, 0, index]],
+					},
+					schematic,
+					undefined,
+					prefiltered ? [entity] : undefined
+				);
+				expect(meshes).toHaveLength(0);
+			}
+			expect(getBlockMesh).not.toHaveBeenCalled();
+			f.first.dispose();
+			f.second.dispose();
+		}
+	);
 	it("recomputes changed middle states even when palette length and endpoints stay unchanged", async () => {
 		const f = sharedFixture();
 		const getBlockMesh = vi.fn().mockImplementation(async () => new Group());

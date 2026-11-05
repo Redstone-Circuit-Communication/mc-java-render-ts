@@ -1477,7 +1477,9 @@ export class WorldMeshBuilder {
 				if (
 					// Signs are handled by the mode-independent buildSignMeshes pass.
 					blockName &&
-					(blockName.includes("chest") || blockName.includes("banner"))
+					// Closed chests already have state-aware geometry in the palette.
+					// Drawing them here again overlays a second, stateless single chest.
+					blockName.includes("banner")
 				) {
 					tileEntityBlocks.push({
 						x: pos[0],
@@ -1528,7 +1530,7 @@ export class WorldMeshBuilder {
 						if (
 							// Signs are handled by the mode-independent buildSignMeshes pass.
 							blockName &&
-							(blockName.includes("chest") || blockName.includes("banner"))
+							blockName.includes("banner")
 						) {
 							tileEntityBlocks.push({
 								x: pos[0],

@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import * as THREE from "three";
+import { Group } from "three";
 import { EntityManager } from "./EntityManager";
 import { normalizeEntities } from "./normalize";
 import { resolveEntityModel } from "./MobRegistry";
@@ -79,8 +80,9 @@ describe("entity snapshots", () => {
 		manager.group.traverse((node) => {
 			if (node instanceof THREE.Mesh) owned = node.material as THREE.Material;
 		});
-		const ownedDisposal = vi.spyOn(owned!, "dispose");
-		let resolve!: (object: THREE.Object3D) => void;
+		if (!owned) throw new Error("Expected an owned material on the rebuilt group");
+		const ownedDisposal = vi.spyOn(owned, "dispose");
+		let resolve!: (value: PromiseLike<Group> | Group) => void;
 		load.mockImplementation(
 			() =>
 				new Promise((done) => {

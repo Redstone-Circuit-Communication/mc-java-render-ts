@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { WorldMeshBuilder } from "../../WorldMeshBuilder";
 import { Cubane } from "../../cubane/Cubane";
 import { LegacyMeshBuilder } from "../LegacyMeshBuilder";
-import { SchematicWrapper, initializeNucleationWasm } from "../../nucleationExports";
+import { initializeNucleationWasm, SchematicWrapper } from "../../nucleationExports";
 import type { SchematicRenderer } from "../../SchematicRenderer";
 import type { PaletteItem } from "../../core/index";
 
@@ -80,8 +80,10 @@ describe("palette loading across renderer and strict mesh core", () => {
 			if (backend === "default") await import("../MeshBuilderWasm.worker");
 			else await import("../MeshBuilder.worker");
 			const send = async (data: Record<string, unknown>) => {
-				expect(scope.onmessage).toBeTypeOf("function");
-				await scope.onmessage!({ data } as MessageEvent);
+				const onmessage = scope.onmessage;
+				expect(onmessage).toBeTypeOf("function");
+				if (!onmessage) throw new Error("Worker did not install onmessage");
+				await onmessage({ data } as MessageEvent);
 			};
 			await send({ type: "updatePalette", paletteData: f.payload() });
 			const chunk = {

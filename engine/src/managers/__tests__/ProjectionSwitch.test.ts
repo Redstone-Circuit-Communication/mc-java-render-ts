@@ -22,7 +22,7 @@ function fixture(background: THREE.Scene["background"] = new THREE.Color("#dfe6d
 		cameraManager: { activeCamera: { camera: perspective } },
 		invalidate: vi.fn(),
 	};
-	const manager = Object.assign(Object.create(RenderManager.prototype) as RenderManager, {
+	const manager = Object.assign(Object.create(RenderManager.prototype), {
 		schematicRenderer: schematic,
 		passes: new Map(),
 		_backgroundMode: "hdri",
@@ -31,7 +31,7 @@ function fixture(background: THREE.Scene["background"] = new THREE.Color("#dfe6d
 		backgroundBeforeOrthographic: undefined,
 		originalBackground: null,
 		ssaoPresets: { isometric: {}, perspective: {} },
-	});
+	}) as RenderManager;
 	const change = (camera: THREE.Camera, name = "custom") => {
 		schematic.cameraManager.activeCamera.camera = camera as THREE.PerspectiveCamera;
 		manager.updateCamera(camera);
@@ -59,7 +59,7 @@ describe("projection/background transitions", () => {
 		const hdri = new THREE.Texture();
 		f.scene.background = hdri;
 		Reflect.get(manager, "applyCameraBackground").call(manager);
-		expect((f.scene.background as THREE.Color).getHexString()).toBe("dfe6d7");
+		expect((f.scene.background as unknown as THREE.Color).getHexString()).toBe("dfe6d7");
 		f.schematic.cameraManager.activeCamera.camera = f.perspective;
 		Reflect.get(manager, "applyCameraBackground").call(manager);
 		expect(f.scene.background).toBe(hdri);
@@ -138,7 +138,8 @@ describe("projection/background transitions", () => {
 			passes: new Map([["tiltShift", tilt]]),
 		});
 		f.manager.updateCamera(f.orthographic);
-		for (const pass of [render, alpha, parked]) expect(pass.camera).toBe(f.orthographic);
+		for (const pass of [render, alpha, parked])
+		expect(Reflect.get(pass, "camera")).toBe(f.orthographic);
 		expect(changed).toHaveBeenLastCalledWith(f.orthographic);
 		expect(Reflect.get(tilt, "camera")).toBe(f.orthographic);
 		render.dispose();
@@ -245,7 +246,7 @@ describe("atomic projection and pose", () => {
 		const controls = new OrbitControls(ortho, canvas),
 			oldControls = new OrbitControls(perspective, canvas);
 		const manager = Object.assign(
-			Object.setPrototypeOf(new EventEmitter(), CameraManager.prototype) as CameraManager,
+			Object.setPrototypeOf(new EventEmitter(), CameraManager.prototype),
 			{
 				cameras: new Map([
 					["perspective", { camera: perspective }],
@@ -254,7 +255,7 @@ describe("atomic projection and pose", () => {
 				controls: new Map([
 					["perspective-orbit", oldControls],
 					["isometric-orbit", controls],
-				]),
+				] as [string, typeof oldControls | typeof controls][]),
 				activeCameraKey: "perspective",
 				activeControlKey: "perspective-orbit",
 				rendererDomElement: canvas,
@@ -267,7 +268,7 @@ describe("atomic projection and pose", () => {
 				},
 				focusOnSchematics: vi.fn(),
 			}
-		);
+		) as CameraManager;
 		const pose = perspective.position.clone();
 		manager.on("cameraChanged", () => {
 			expect(ortho.position.distanceTo(pose)).toBeLessThan(1e-9);

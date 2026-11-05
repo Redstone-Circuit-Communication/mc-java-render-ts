@@ -773,15 +773,31 @@ export class Cubane {
 		}
 
 		if (this.pureBlockEntityMap[blockId]) {
-			const entityMesh = await this.getEntityMesh(this.pureBlockEntityMap[blockId], useCache);
-
-			// For pure entities, the entityMesh is the final block mesh.
-			// It might already have its own internal origin and structure.
-			if (useCache) {
-				// Clone before caching as getEntityMesh might also return a clone from its cache
-				this.blockMeshCache.set(cacheKey, entityMesh.clone());
+			let entityType = this.pureBlockEntityMap[blockId];
+			const isChest = blockId === "minecraft:chest" || blockId === "minecraft:trapped_chest";
+			const half = block.properties?.type;
+			if (isChest && (half === "left" || half === "right")) entityType += `_${half}`;
+			const entityMesh = await this.getEntityMesh(entityType, useCache);
+			// Keep the root at identity: palette extraction bakes descendant transforms.
+			// The closed GLBs face north and their left/right edges meet at +/- 0.5.
+			const blockMesh = new THREE.Group();
+			blockMesh.name = `block_${block.name}`;
+			if (isChest || blockId === "minecraft:ender_chest") {
+				const rotations: Record<string, number> = {
+					north: 0,
+					east: -Math.PI / 2,
+					south: Math.PI,
+					west: Math.PI / 2,
+				};
+				entityMesh.rotation.y = rotations[block.properties?.facing ?? "north"] ?? 0;
 			}
-			return entityMesh; // Already cloned if from entity cache, or the original if newly created
+			blockMesh.add(entityMesh);
+
+			if (useCache) {
+				// Cache the posed hierarchy without mutating the shared entity template.
+				this.blockMeshCache.set(cacheKey, blockMesh.clone());
+			}
+			return blockMesh;
 		}
 
 		const rootGroup = new THREE.Group();

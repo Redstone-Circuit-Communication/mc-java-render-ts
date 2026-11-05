@@ -4,12 +4,12 @@ import { EventEmitter } from "events";
 import * as THREE from "three";
 import { CameraManager } from "../CameraManager";
 // @ts-expect-error The app uses plain JavaScript without declaration files.
-import { ViewControls } from "../../../../src/view-controls.js";
+import { ViewControls } from "../../../../example/src/view-controls.js";
 // @ts-expect-error The app uses plain JavaScript without declaration files.
-import { BlockInspector } from "../../../../src/block-inspector.js";
+import { BlockInspector } from "../../../../example/src/block-inspector.js";
 const cleanups: (() => void)[] = [];
 beforeEach(() => {
-	document.documentElement.innerHTML = readFileSync("../index.html", "utf8")
+	document.documentElement.innerHTML = readFileSync("../example/index.html", "utf8")
 		.replace(/<script[\s\S]*?<\/script>/g, "")
 		.replace(/<link[^>]+>/g, "");
 	vi.stubGlobal(
@@ -112,6 +112,48 @@ function click(canvas: HTMLCanvasElement, x = 400, y = 300) {
 	canvas.dispatchEvent(new MouseEvent("click", { button: 0, clientX: x, clientY: y }));
 }
 describe("real Three.js cameras, controls and raycasting", () => {
+	it.each([
+		["north", 1, 0],
+		["east", 0, 1],
+		["south", -1, 0],
+		["west", 0, -1],
+	] as const)("wraps both chest halves from either selection facing %s", (facing, dx, dz) => {
+		const { inspector, schematic } = fixture();
+		const state = vi.spyOn(schematic.schematicWrapper, "get_block_string");
+		state.mockImplementation((...args: unknown[]) => {
+			const [x, , z] = args;
+			return x === 0 && z === 0
+				? `minecraft:chest[facing=${facing},type=left]`
+				: x === dx && z === dz
+					? `minecraft:chest[facing=${facing},type=right]`
+					: "minecraft:air";
+		});
+		for (const position of [
+			[0, 0, 0],
+			[dx, 0, dz],
+		]) {
+			inspector.select(schematic, position);
+			expect(inspector.highlight.position.toArray()).toEqual([dx / 2, 0, dz / 2]);
+			expect(inspector.highlight.scale.toArray()).toEqual([
+				Math.abs(dx) + 1.012,
+				1.012,
+				Math.abs(dz) + 1.012,
+			]);
+			expect(inspector.selection.inventory.size).toBe(54);
+		}
+		// Mismatched neighbours and the next ordinary block must reset the box.
+		state.mockReturnValue("minecraft:stone");
+		inspector.select(schematic, [4, 2, 3]);
+		expect(inspector.highlight.position.toArray()).toEqual([4, 2, 3]);
+		expect(inspector.highlight.scale.toArray()).toEqual([1.012, 1.012, 1.012]);
+		state.mockImplementation((...args: unknown[]) =>
+			args[0] === 0 && args[2] === 0
+				? `minecraft:chest[facing=${facing},type=left]`
+				: "minecraft:stone"
+		);
+		inspector.select(schematic, [0, 0, 0]);
+		expect(inspector.highlight.scale.toArray()).toEqual([1.012, 1.012, 1.012]);
+	});
 	it("switches from inside a transformed large building with no front-plane slice on the first frame", () => {
 		const { views, manager, group, renderer } = fixture();
 		group.scale.set(900, 500, 1200);

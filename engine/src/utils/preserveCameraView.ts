@@ -17,7 +17,7 @@ export function preserveCameraView(
 		previous instanceof THREE.OrthographicCamera
 			? (previous.top - previous.bottom) / previous.zoom
 			: 2 * distance * Math.tan(THREE.MathUtils.degToRad(previous.getEffectiveFOV()) / 2);
-	const damping = controls?.enableDamping;
+	const damping = controls?.enableDamping ?? false;
 	if (controls) {
 		// Flush stale inertia before installing the final pose.
 		controls.enableDamping = false;
@@ -65,7 +65,7 @@ export function preserveCameraView(
 		controls.maxDistance = Math.max(controls.maxDistance, distance * 10);
 		controls.target.copy(target);
 		controls.update();
-		controls.enableDamping = damping!;
+		controls.enableDamping = damping;
 	}
 	next.updateProjectionMatrix();
 	next.updateMatrixWorld(true);

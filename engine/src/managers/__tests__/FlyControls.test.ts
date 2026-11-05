@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Euler, PerspectiveCamera, Vector3 } from "three";
 import { FlyControls } from "../FlyControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 let now = 0;
 beforeEach(() => {
@@ -205,8 +206,54 @@ describe("Minecraft-style fly controls", () => {
 		expect(camera.position.equals(before)).toBe(true);
 		pointer.dispatchEvent({ type: "unlock" });
 		const paused = controls.getMoveSpeed();
-		expect(wheel(-100).defaultPrevented).toBe(false);
+		expect(wheel(-100).defaultPrevented).toBe(true);
 		expect(controls.getMoveSpeed()).toBe(paused);
+	});
+	it("owns wheel input ahead of orbit zoom and page scrolling, then releases it", () => {
+		const camera = new PerspectiveCamera();
+		camera.position.set(3, 4, 8);
+		const canvas = document.createElement("canvas");
+		document.body.append(canvas);
+		// Register orbit first, as CameraManager does. A stale enabled orbit control
+		// must not dolly/lookAt its old target when the first-person wheel fires.
+		const orbit = new OrbitControls(camera, canvas);
+		const controls = new FlyControls(camera, canvas, { showOverlay: false });
+		controlsToDispose.push(controls);
+		const pointer = controls.getPointerLockControls();
+		pointer.dispatchEvent({ type: "lock" });
+		camera.quaternion.setFromEuler(new Euler(0.7, 1.8, 0, "YXZ"));
+		const position = camera.position.clone(),
+			rotation = camera.quaternion.clone();
+		const pageScroll = vi.fn();
+		document.body.addEventListener("wheel", pageScroll);
+		const wheel = (deltaY: number) =>
+			canvas.dispatchEvent(
+				new WheelEvent("wheel", {
+					deltaY,
+					bubbles: true,
+					cancelable: true,
+				})
+			);
+		for (let i = 0; i < 20; i++) {
+			wheel(i % 2 ? 100 : -100);
+			tick(controls);
+			expect(camera.position.equals(position)).toBe(true);
+			expect(camera.quaternion.angleTo(rotation)).toBeLessThan(1e-7);
+		}
+		expect(pageScroll).not.toHaveBeenCalled();
+		pointer.dispatchEvent({ type: "unlock" });
+		wheel(100);
+		expect(camera.position.equals(position)).toBe(true);
+		controls.enabled = false;
+		wheel(100);
+		expect(camera.position.equals(position)).toBe(false);
+		expect(pageScroll).toHaveBeenCalledOnce();
+		controls.enabled = true;
+		controls.dispose();
+		wheel(100);
+		expect(pageScroll).toHaveBeenCalledTimes(2);
+		document.body.removeEventListener("wheel", pageScroll);
+		orbit.dispose();
 	});
 	it("clears movement on blur, unlock and disable", () => {
 		const { camera, controls, pointer } = fixture();

@@ -181,7 +181,8 @@ export class FlyControls extends EventEmitter {
 
 		// Click to lock
 		this.domElement.addEventListener("click", this.onCanvasClick);
-		this.domElement.addEventListener("wheel", this.onWheel, { passive: false });
+		// Own wheel input before OrbitControls and page scrolling can act on it.
+		this.domElement.addEventListener("wheel", this.onWheel, { passive: false, capture: true });
 		// Apply relative input once. Pointer-lock transitions / OS cursor warps
 		// can report a viewport-sized delta in one event.
 		document.addEventListener("mousemove", this.guardMouseDelta, true);
@@ -251,14 +252,18 @@ export class FlyControls extends EventEmitter {
 	};
 
 	private onWheel = (event: WheelEvent): void => {
-		if (!this.enabled || !this.isLocked || !this.wheelSpeed || !Number.isFinite(event.deltaY))
-			return;
+		if (!this.enabled) return;
 		event.preventDefault();
+		event.stopImmediatePropagation();
+		// While unlocked, keep the first-person view still; UI panels outside the
+		// canvas retain normal scrolling. Disabling speed changes must not enable zoom.
+		if (!this.isLocked || !this.wheelSpeed || !Number.isFinite(event.deltaY)) return;
 		// Treat one wheel notch (~100 pixels / 3 lines) as a 20% change;
 		// retain fractional trackpad deltas and bound accelerated page-wheel events.
 		const unit = event.deltaMode === 1 ? 100 / 3 : event.deltaMode === 2 ? 100 : 1;
 		const steps = THREE.MathUtils.clamp((-event.deltaY * unit) / 100, -4, 4);
 		this.setMoveSpeed(this.moveSpeed * Math.pow(1.2, steps));
+		this.emit("input");
 	};
 
 	private isPressed(binding: string): boolean {
@@ -547,7 +552,7 @@ export class FlyControls extends EventEmitter {
 		this.enabled = false;
 		// Remove event listeners
 		this.domElement.removeEventListener("click", this.onCanvasClick);
-		this.domElement.removeEventListener("wheel", this.onWheel);
+		this.domElement.removeEventListener("wheel", this.onWheel, true);
 		document.removeEventListener("mousemove", this.guardMouseDelta, true);
 		document.removeEventListener("keydown", this.onKeyDown);
 		document.removeEventListener("keyup", this.onKeyUp);

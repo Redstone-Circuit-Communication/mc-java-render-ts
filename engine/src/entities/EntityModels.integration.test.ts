@@ -21,7 +21,9 @@ async function load(model: string) {
 		group.add(scene);
 		templates.set(model, group);
 	}
-	return templates.get(model)!.clone();
+	const template = templates.get(model);
+	if (!template) throw new Error(`Missing template for ${model}`);
+	return template.clone();
 }
 const source = (filename: string) => {
 	const schematic = Schematic.fromData(
@@ -43,7 +45,8 @@ describe("actual schematic entities and bundled GLBs", () => {
 		await manager.rebuild();
 		expect(manager.records).toHaveLength(5);
 		expect(manager.records.every((record) => record.status === "model")).toBe(true);
-		const allay = manager.group.children.find((node) => node.name === "minecraft:allay")!;
+		const allay = manager.group.children.find((node) => node.name === "minecraft:allay");
+		if (!allay) throw new Error("Missing allay model");
 		expect(new THREE.Box3().setFromObject(allay).min.y).toBeCloseTo(0.5);
 		manager.dispose();
 	});
@@ -66,12 +69,13 @@ describe("actual schematic entities and bundled GLBs", () => {
 			const yaw = THREE.MathUtils.degToRad(record.rotation[0]);
 			expect(forward.x).toBeCloseTo(-Math.sin(yaw));
 			expect(forward.z).toBeCloseTo(Math.cos(yaw));
-			expect(node.getObjectByName("head")!.rotation.x).toBeCloseTo(
-				-THREE.MathUtils.degToRad(record.rotation[1])
-			);
+			const head = node.getObjectByName("head");
+			if (!head) throw new Error("Missing head pivot");
+			expect(head.rotation.x).toBeCloseTo(-THREE.MathUtils.degToRad(record.rotation[1]));
 			if (record.nbt.IsBaby) expect(bounds.getSize(new THREE.Vector3()).y).toBeCloseTo(2.03125 / 2);
 		}
-		const cart = manager.group.children.find((node) => node.name === "minecraft:minecart")!;
+		const cart = manager.group.children.find((node) => node.name === "minecraft:minecart");
+		if (!cart) throw new Error("Missing minecart model");
 		expect(new THREE.Box3().setFromObject(cart).min.y).toBeCloseTo(
 			cart.userData.entity.position[1] - 0.5
 		);
