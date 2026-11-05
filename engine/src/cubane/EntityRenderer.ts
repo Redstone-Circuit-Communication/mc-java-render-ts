@@ -81,6 +81,11 @@ export class EntityRenderer {
 		return group;
 	}
 
+	/** Whether the bundled catalog ships a model under this exact name. */
+	public hasModel(entityName: string): boolean {
+		return Object.prototype.hasOwnProperty.call(this.modelLoaders, entityName);
+	}
+
 	/** Preload a selection using the same deduplicated requests as normal rendering. */
 	public async preloadModels(entityNames: string[]): Promise<void> {
 		await Promise.all(entityNames.map((name) => this.createEntityMesh(name)));

@@ -941,6 +941,11 @@ export class Cubane {
 		return this.entityRenderer.createEntityMesh(entityType);
 	}
 
+	/** Whether a bundled model exists for this exact name; used to resolve entity ids. */
+	public hasEntityModel(entityType: string): boolean {
+		return this.entityRenderer.hasModel(entityType);
+	}
+
 	public async getEntityMesh(
 		entityType: string,
 		useCache: boolean = true

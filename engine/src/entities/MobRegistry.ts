@@ -19,6 +19,9 @@ const registry: Record<string, EntityModelSpec> = {
 	pig: { model: "pig", baby: "pig_baby" },
 	cow: { model: "cow", baby: "cow_baby" },
 	armor_stand: { model: "armor_stand", baby: "armor_stand_small", babyScale: 0.5 },
+	// The entity id and the model file disagree, and the dragon is authored facing
+	// +Z (head at +Z, tail at -Z) unlike the -Z living-entity models.
+	ender_dragon: { model: "dragon", yawOffset: 0 },
 	minecart: { model: "minecart", bodyPitch: true, origin: [0, -1 / 16, -1 / 16] },
 	chest_minecart: { model: "chest_minecart", bodyPitch: true, origin: [0, -1 / 16, -1 / 16] },
 	hopper_minecart: { model: "hopper_minecart", bodyPitch: true, origin: [0, -1 / 16, -1 / 16] },
@@ -48,7 +51,10 @@ for (const wood of woods) {
 	};
 }
 
-export function resolveEntityModel(entity: EntityRecord): EntityModelSpec | undefined {
+export function resolveEntityModel(
+	entity: EntityRecord,
+	hasModel?: (model: string) => boolean
+): EntityModelSpec | undefined {
 	if (!entity.id.startsWith("minecraft:")) return undefined;
 	let id = entity.id.slice(10);
 	if (id === "boat" || id === "chest_boat") {
@@ -57,7 +63,10 @@ export function resolveEntityModel(entity: EntityRecord): EntityModelSpec | unde
 		id = `${wood}_${id === "chest_boat" ? "chest_" : ""}${wood === "bamboo" ? "raft" : "boat"}`;
 	}
 	const spec = Object.prototype.hasOwnProperty.call(registry, id) ? registry[id] : undefined;
-	if (!spec) return undefined;
+	// The catalog names most base models after the entity id, so an unregistered mob
+	// still renders when a same-named model ships. Calibrated variants (baby scale,
+	// origin, pitch, extra parts) still require an explicit registry entry.
+	if (!spec) return hasModel?.(id) ? { model: id } : undefined;
 	const baby =
 		entity.nbt.IsBaby === 1 ||
 		entity.nbt.IsBaby === true ||

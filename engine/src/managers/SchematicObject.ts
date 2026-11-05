@@ -2,15 +2,15 @@ import { EntityManager } from "../entities/EntityManager";
 // managers/SchematicObject.ts
 import * as THREE from "three";
 import { createWorkCheckpoint } from "../utils/cooperativeYield";
-import { renderBlockEntities, type BlockEntityOverlay } from "../block-entities";
+import { type BlockEntityOverlay, renderBlockEntities } from "../block-entities";
 import {
-	SchematicWrapper,
+	BlockPosition,
+	CircuitBuilderWrapper,
+	DefinitionRegionWrapper,
+	ExecutionModeWrapper,
 	IoTypeWrapper,
 	LayoutFunctionWrapper,
-	ExecutionModeWrapper,
-	BlockPosition,
-	DefinitionRegionWrapper,
-	CircuitBuilderWrapper,
+	SchematicWrapper,
 	SortStrategyWrapper,
 } from "../nucleationExports";
 import { WorldMeshBuilder } from "../WorldMeshBuilder";
@@ -21,14 +21,13 @@ import { resetPerformanceMetrics } from "../monitoring";
 import { SchematicRenderer } from "../SchematicRenderer";
 import type { BlockData, PaletteEntry } from "../types";
 import type { MeshBuildingSession } from "../performance/PerformanceMonitor";
+import { performanceMonitor } from "../performance/PerformanceMonitor";
 import type { PerformanceWithMemory } from "../types/browser";
 import type { MeshBlockEntity } from "../workers/types";
-import { performanceMonitor } from "../performance/PerformanceMonitor";
-import { SchematicExporter } from "../export/SchematicExporter";
-import type { ExportOptions, ExportFormat, ExportResult } from "../types/export";
+import { SchematicExporter } from "../export";
+import type { ExportFormat, ExportOptions, ExportResult } from "../types/export";
 
 // Define chunk data interface to fix TypeScript errors
-
 import { EditableRegionHighlight } from "./highlight/EditableRegionHighlight";
 
 interface ChunkDimensions {
@@ -760,9 +759,14 @@ export class SchematicObject extends EventEmitter {
 		await this.rebuildBlockEntities();
 		if (this.disposed || buildVersion !== this.buildVersion) return;
 		if (typeof this.schematicWrapper.get_entities === "function") {
-			this.entityManager ??= new EntityManager(this.group, this.id, this.schematicWrapper,
+			this.entityManager ??= new EntityManager(
+				this.group,
+				this.id,
+				this.schematicWrapper,
 				(model) => this.schematicRenderer.cubane.getEntityModel(model),
-				() => this.schematicRenderer.invalidate());
+				() => this.schematicRenderer.invalidate(),
+				(model) => this.schematicRenderer.cubane.hasEntityModel(model)
+			);
 			this.entityManager.setOpacity(this.opacity);
 			this.entityManager.setBounds(this.renderingBounds);
 			await this.entityManager.rebuild();
@@ -2482,14 +2486,12 @@ export class SchematicObject extends EventEmitter {
 					executionMode = ExecutionModeWrapper.untilStable(2, maxTicks);
 				}
 
-				const result = executor.execute(sanitizedInputs, executionMode);
-				return result;
+				return executor.execute(sanitizedInputs, executionMode);
 			},
 			reset: () => executor.reset(),
 			sync: async () => {
-				const updatedSchematic = executor.syncToSchematic();
 				// Update the wrapper reference to the new state
-				this.schematicWrapper = updatedSchematic;
+				this.schematicWrapper = executor.syncToSchematic();
 				// Rebuild visuals
 				await this.rebuildMesh();
 				// Return the current outputs for convenience

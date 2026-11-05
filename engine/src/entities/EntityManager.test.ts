@@ -4,11 +4,15 @@ import { Group } from "three";
 import { EntityManager } from "./EntityManager";
 import { normalizeEntities } from "./normalize";
 import { resolveEntityModel } from "./MobRegistry";
+import { entityModelLoaders } from "../cubane/entity-models";
+
+/** The real bundled catalog, without touching the filesystem. */
+const bundled = (model: string) => Object.prototype.hasOwnProperty.call(entityModelLoaders, model);
 
 function entity(id = "minecraft:zombie", position = [1.5, 1, -3.5], nbt = {}) {
 	return { id, position, nbt };
 }
-function fixture(records = [entity()]) {
+function fixture(records = [entity()], hasModel?: (model: string) => boolean) {
 	const parent = new THREE.Group();
 	const geometry = new THREE.BoxGeometry(0.5, 2, 0.5).translate(0, 1, 0);
 	const material = new THREE.MeshStandardMaterial();
@@ -23,7 +27,7 @@ function fixture(records = [entity()]) {
 	template.add(body);
 	const load = vi.fn(async () => template.clone());
 	const source = { get_entities: () => records };
-	const manager = new EntityManager(parent, "test", source, load, vi.fn());
+	const manager = new EntityManager(parent, "test", source, load, vi.fn(), hasModel);
 	return { parent, geometry, material, template, load, source, manager };
 }
 
@@ -52,6 +56,28 @@ describe("entity snapshots", () => {
 		])
 			expect(resolveEntityModel(normalizeEntities([raw], "s")[0])?.model).toBe("raft");
 		expect(resolveEntityModel(normalizeEntities([entity("mod:zombie")], "s")[0])).toBeUndefined();
+	});
+	it("resolves unregistered ids only when the catalog ships a same-named model", () => {
+		const [wolf, item] = normalizeEntities(
+			[entity("minecraft:wolf"), entity("minecraft:item")],
+			"s"
+		);
+		expect(resolveEntityModel(wolf, bundled)).toEqual({ model: "wolf" });
+		expect(resolveEntityModel(item, bundled)).toBeUndefined();
+		expect(resolveEntityModel(wolf)).toBeUndefined();
+		// The dragon model is authored facing +Z, so it must not get the living-entity flip.
+		const dragon = normalizeEntities([entity("minecraft:ender_dragon")], "s")[0];
+		expect(resolveEntityModel(dragon)).toMatchObject({ model: "dragon", yawOffset: 0 });
+	});
+	it("renders unregistered entities through the same-named bundled model", async () => {
+		const { manager, load } = fixture(
+			[entity("minecraft:wolf"), entity("minecraft:item")],
+			bundled
+		);
+		await manager.rebuild();
+		expect(manager.records.map((record) => record.status)).toEqual(["model", "unsupported"]);
+		expect(load).toHaveBeenCalledWith("wolf");
+		manager.dispose();
 	});
 	it("places feet on centered blocks, rotates head independently, and isolates materials", async () => {
 		const { manager, parent, material } = fixture([

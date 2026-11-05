@@ -25,7 +25,8 @@ export class EntityManager {
 		private id: string,
 		private source: EntitySource,
 		private loadModel: (model: string) => Promise<THREE.Object3D | null>,
-		private invalidate: () => void
+		private invalidate: () => void,
+		private hasModel?: (model: string) => boolean
 	) {
 		this.group.name = "entities";
 		this.group.userData.kind = "entity-group";
@@ -48,7 +49,7 @@ export class EntityManager {
 			const batch = this.records.slice(start, start + 16);
 			await Promise.all(
 				batch.map(async (record) => {
-					const spec = resolveEntityModel(record);
+					const spec = resolveEntityModel(record, this.hasModel);
 					let model: THREE.Object3D | null = null;
 					try {
 						if (spec) model = await this.loadModel(spec.model);
