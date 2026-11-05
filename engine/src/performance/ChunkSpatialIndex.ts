@@ -11,7 +11,7 @@ interface Node<T> {
 }
 /** Static topology, refittable bounds. Keeps exact leaf tests and never reduces visibility quality. */
 export class ChunkSpatialIndex<T extends Item> {
-	private root: Node<T>;
+	private readonly root: Node<T>;
 	private stack: Node<T>[] = [];
 	public visitedNodes = 0;
 	public testedItems = 0;
@@ -40,9 +40,11 @@ export class ChunkSpatialIndex<T extends Item> {
 			node.box.makeEmpty();
 			if (node.items) for (const item of node.items) node.box.union(item.world);
 			else {
-				visit(node.left!);
-				visit(node.right!);
-				node.box.union(node.left!.box).union(node.right!.box);
+				const { left, right } = node;
+				if (!left || !right) throw new Error("Malformed spatial index node");
+				visit(left);
+				visit(right);
+				node.box.union(left.box).union(right.box);
 			}
 		};
 		visit(this.root);
@@ -67,7 +69,8 @@ export class ChunkSpatialIndex<T extends Item> {
 		this.stack.length = 0;
 		this.stack.push(this.root);
 		while (this.stack.length) {
-			const node = this.stack.pop()!;
+			const node = this.stack.pop();
+			if (!node) break;
 			this.visitedNodes++;
 			if (!accepts(node.box)) continue;
 			if (node.items)
@@ -76,7 +79,9 @@ export class ChunkSpatialIndex<T extends Item> {
 					if (accepts(item.world)) output.push(item);
 				}
 			else {
-				this.stack.push(node.right!, node.left!);
+				const { left, right } = node;
+				if (!left || !right) throw new Error("Malformed spatial index node");
+				this.stack.push(right, left);
 			}
 		}
 	}

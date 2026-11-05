@@ -1,4 +1,5 @@
 /** NBT contains version-specific keys and heterogeneous typed-tag wrappers. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- 异构 NBT 形状随版本/来源变化，无法用有限联合类型建模
 export type NbtData = any;
 export type Position = [number, number, number];
 export interface Material { id: string; count: number; stacks: number; remainder: number }

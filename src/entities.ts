@@ -1,5 +1,5 @@
 import type { EntitySummary, EntityObject } from "./types.js";
-import { nbtJson, textComponent } from "./inventory.js";
+import { textComponent } from "./inventory.js";
 
 const NAMES: Record<string, string> = {
   allay: "悦灵",

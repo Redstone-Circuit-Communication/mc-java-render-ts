@@ -10,7 +10,6 @@ import {
 } from "three";
 import {
   blockState,
-  containerDefinition,
   readBlockInventory,
   nbtJson,
 } from "@rsw/mc-java-render-ts";
@@ -121,7 +120,7 @@ export class BlockInspector {
         schematic.entityManager?.setVisible(event.target.checked);
       if (this.selection?.kind === "entity") this.clear();
     }, { signal });
-    const box = new BoxGeometry(1.012, 1.012, 1.012);
+    const box = new BoxGeometry(1, 1, 1);
     this.highlight = new LineSegments(
       new EdgesGeometry(box),
       new LineBasicMaterial({
@@ -165,7 +164,9 @@ export class BlockInspector {
   select(schematic, position) {
     this.selection = { ...readBlockInventory(schematic, position), schematic };
     schematic.group.add(this.highlight);
-    this.highlight.position.set(...position);
+    const pair = this.selection.inventory?.pairPosition ?? position;
+    this.highlight.position.set(...position.map((value, axis) => (value + pair[axis]) / 2));
+    this.highlight.scale.set(...position.map((value, axis) => Math.abs(value - pair[axis]) + 1.012));
     this.highlight.visible = true;
     document.getElementById("selection-dot").hidden = false;
     this.showTab("inspect");

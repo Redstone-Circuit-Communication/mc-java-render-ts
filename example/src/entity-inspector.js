@@ -12,7 +12,7 @@ export function renderEntityDetails(content, entity) {
     el("h3", entityName(entity)),
     el("code", entity.id),
     el("p", `位置：${entity.position.join(", ")}`, "coordinates"),
-    el("p", `朝向：${entity.rotation[0]}°　俯仰：${entity.rotation[1]}°`),
+    el("p", `朝向：${entity.rotation[0]}° 俯仰：${entity.rotation[1]}°`),
     el(
       "p",
       entity.status === "model"
