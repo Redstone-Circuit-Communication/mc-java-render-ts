@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#edf0e8" />
+    <title>方块工坊 · Minecraft 蓝图查看器</title>
+    <link rel="icon" href="./favicon.svg" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <a class="brand" href="./"
+        ><span class="brand-cube" aria-hidden="true"><i></i></span
+        ><span>方块工坊<small>SCHEMATIC STUDIO</small></span></a
+      ><span class="header-divider"></span
+      ><span class="workspace-label">蓝图工作台</span>
+      <div class="header-actions">
+        <span class="local-badge"><i></i>本地解析</span
+        ><button id="open-file" class="button primary" disabled>
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M3 7h7l2 2h9v11H3zM3 7V4h6l2 3M12 12v5m-2-2 2 2 2-2"
+            /></svg
+          >打开蓝图
+        </button>
+      </div>
+      <input
+        id="file-input"
+        type="file"
+        accept=".litematic,.schem,.schematic,.nbt"
+        hidden
+      />
+    </header>
+    <main class="workspace">
+      <section class="scene-panel" aria-label="蓝图三维视图">
+        <div class="scene-toolbar">
+          <div class="scene-file">
+            <span class="file-dot"></span
+            ><span id="scene-name">inspection-demo</span
+            ><span class="file-extension">.litematic</span>
+          </div>
+          <div class="camera-modes" role="group" aria-label="视角模式">
+            <button
+              data-view="orbit"
+              aria-pressed="true"
+              disabled
+              title="透视环绕 · 1"
+            >
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="m12 3 8 4.5v9L12 21l-8-4.5v-9zm0 9L4 7.5m8 4.5 8-4.5M12 12v9"
+                /></svg
+              ><span>环绕</span><kbd>1</kbd>
+            </button>
+            <button
+              data-view="first"
+              aria-pressed="false"
+              disabled
+              title="第一人称 · 2"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                <circle cx="12" cy="12" r="3" /></svg
+              ><span>第一人称</span><kbd>2</kbd>
+            </button>
+            <button
+              data-view="ortho"
+              aria-pressed="false"
+              disabled
+              title="正交投影 · 3"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16v16H4zM4 10h16M10 4v16" /></svg
+              ><span>正交</span><kbd>3</kbd>
+            </button>
+          </div>
+        </div>
+        <div class="viewport" id="viewport">
+          <canvas
+            id="canvas"
+            aria-label="Minecraft 蓝图，单击方块查看详情"
+            tabindex="0"
+          ></canvas>
+          <div class="viewport-label">
+            <i class="live-dot"></i><span id="view-label">透视 · 环绕视角</span>
+          </div>
+          <div
+            id="performance-hud"
+            class="performance-hud"
+            role="group"
+            aria-label="渲染帧率"
+            title="FPS：最近 1 秒的实际提交帧间隔。1% Low：最近 10 秒最慢 1% 帧的平均帧时间换算值，至少 100 帧后显示。空闲间隔不计，加载和隐藏页面重置。"
+          >
+            <div class="performance-values">
+              <span>FPS <b data-fps>—</b></span
+              ><span>1% LOW <b data-low>—</b></span>
+            </div>
+            <small data-frame-state>加载中</small>
+          </div>
+          <details id="render-settings" class="render-settings">
+            <summary>渲染设置</summary>
+            <div class="render-settings-body">
+              <fieldset disabled>
+                <legend class="sr-only">渲染性能设置</legend>
+                <label for="render-preset">预设</label>
+                <select id="render-preset">
+                  <option value="performance">性能优先</option>
+                  <option value="balanced" selected>均衡</option>
+                  <option value="quality">画质优先</option>
+                  <option value="custom" disabled>自定义</option>
+                </select>
+                <label for="render-maxChunks">最大渲染区块数</label>
+                <input
+                  id="render-maxChunks"
+                  type="number"
+                  min="0"
+                  max="32768"
+                  step="1"
+                  value="512"
+                />
+                <label for="render-renderDistance">最大可见范围（格）</label>
+                <input
+                  id="render-renderDistance"
+                  type="number"
+                  min="0"
+                  max="8192"
+                  step="1"
+                  value="0"
+                />
+                <label for="render-maxPixelRatio">像素比上限</label>
+                <input
+                  id="render-maxPixelRatio"
+                  type="number"
+                  min="0.5"
+                  max="2"
+                  step="0.25"
+                  value="1"
+                />
+                <label for="render-targetFPS">帧率上限</label>
+                <input
+                  id="render-targetFPS"
+                  type="number"
+                  min="0"
+                  max="240"
+                  step="1"
+                  value="60"
+                />
+                <label for="render-frustumCulling">裁剪视野外区块</label>
+                <input id="render-frustumCulling" type="checkbox" checked />
+                <label for="render-ssao">环境光遮蔽（SSAO）</label>
+                <input id="render-ssao" type="checkbox" />
+              </fieldset>
+              <p>
+                区块数、范围和帧率填 0 表示不限。区块按 16 × 16 × 16
+                格统计，优先显示近处；范围按区块裁剪。
+              </p>
+              <label class="checkbox-row"><input type="checkbox" id="profile-cpu" /> CPU 分段诊断</label>
+              <output id="cpu-profile" hidden></output>
+              <p id="cpu-profile-help" hidden>显示最近 120 次提交的均值 / P95，不是 GPU 耗时。比较分辨率时请使用相同视角和画质，将帧率上限设为 0，并记录实际画布尺寸、区块和材质批次。</p>
+              <output id="render-stats">等待蓝图加载…</output>
+              <small id="render-resolution"></small>
+            </div>
+          </details>
+          <div class="axis-widget" id="axis-widget" aria-label="坐标球">
+            <canvas
+              id="axis-canvas"
+              width="256"
+              height="256"
+              aria-hidden="true"
+            ></canvas>
+            <div id="axis-buttons"></div>
+            <span>点击坐标轴对齐</span>
+          </div>
+          <div class="view-tools" role="group" aria-label="视图操作">
+            <button
+              id="fit-view"
+              class="tool-button"
+              title="适应蓝图 · F"
+              aria-label="适应蓝图"
+              disabled
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5M9 9h6v6H9z" />
+              </svg>
+            </button>
+            <button
+              id="toggle-grid"
+              class="tool-button"
+              title="网格 · G"
+              aria-label="切换网格"
+              aria-pressed="true"
+              disabled
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16v16H4zM4 10h16M4 15h16M10 4v16M15 4v16" />
+              </svg>
+            </button>
+            <button
+              id="take-screenshot"
+              class="tool-button"
+              title="导出 PNG 截图"
+              aria-label="导出 PNG 截图"
+              disabled
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M8 6l2-3h4l2 3h5v14H3V6z" />
+                <circle cx="12" cy="12" r="4" />
+              </svg>
+            </button>
+          </div>
+          <div class="loading-card" id="loading-card" role="status">
+            <span class="loading-cube"></span
+            ><strong id="loading-title">正在打开蓝图</strong>
+            <p id="loading-message">准备材质与方块模型…</p>
+            <div class="loading-track"><i></i></div>
+          </div>
+          <div class="crosshair" id="crosshair" hidden aria-hidden="true"></div>
+          <button id="resume-flight" class="flight-prompt" hidden>
+            点击进入第一人称<small
+              >WASD 移动 · Space 上升 · Shift 下降 · 滚轮调速 · Esc
+              释放鼠标</small
+            >
+          </button>
+          <div id="drop-overlay" hidden>
+            <strong>放下，打开你的蓝图</strong
+            ><span>支持 .litematic / .schem / .schematic / .nbt</span>
+          </div>
+          <div class="viewport-bottom">
+            <div class="scene-caption">
+              <span>BUILD. EXPLORE. INSPECT.</span
+              ><strong>每一格，都有细节。</strong>
+            </div>
+            <div class="control-hint" id="control-hint">
+              <span><b>左键单击</b> 查看方块</span><span><b>拖动</b> 旋转</span
+              ><span><b>右键</b> 平移</span><span><b>滚轮</b> 缩放</span>
+            </div>
+          </div>
+        </div>
+        <footer class="scene-footer">
+          <span class="status-indicator"
+            ><i></i><span id="scene-status" role="status">准备中</span></span
+          ><span id="scene-dimensions">— × — × —</span
+          ><label for="demo-select" class="sr-only">示例蓝图</label
+          ><select id="demo-select" disabled>
+            <option value="./schematics/inspection-demo.litematic">
+              海盗船 · 示例蓝图
+            </option>
+            <option value="./schematics/inspection-demo.litematic">
+              容器与剔除 · 测试场
+            </option>
+            <option value="./schematics/redstone-demo.litematic">
+              红石状态 · 测试场
+            </option>
+            <option value="./schematics/entities-demo.litematic">实体渲染测试场</option>
+            <option value="./schematics/b.litematic">悦灵、盔甲架与载具</option>
+          </select>
+        </footer>
+      </section>
+      <aside class="sidebar" aria-label="蓝图材料与方块详情">
+        <div class="sidebar-tabs" role="tablist" aria-label="侧栏面板">
+          <button
+            id="materials-tab"
+            role="tab"
+            aria-selected="true"
+            aria-controls="materials-pane"
+          >
+            材料清单 <span id="material-count-badge">—</span></button
+          ><button
+            id="inspect-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="inspect-pane"
+            tabindex="-1"
+          >
+            方块详情 <i id="selection-dot" hidden></i>
+          </button>
+        </div>
+        <section
+          id="materials-pane"
+          class="tab-pane"
+          role="tabpanel"
+          aria-labelledby="materials-tab"
+        >
+          <header class="panel-header">
+            <span class="eyebrow">YOUR BUILD, BLOCK BY BLOCK</span>
+            <h1>
+              建造所需，一目了然<span class="tiny-cube" aria-hidden="true"
+                >▦</span
+              >
+            </h1>
+            <p id="materials-status">正在读取完整蓝图…</p>
+          </header>
+          <div class="summary">
+            <div>
+              <span>方块总数</span><strong id="total-blocks">—</strong
+              ><small>不含空气方块</small>
+            </div>
+            <div>
+              <span>材料种类</span><strong id="total-types">—</strong
+              ><small>相同方块合并统计</small>
+            </div>
+          </div>
+          <div class="search-field">
+            <svg viewBox="0 0 24 24">
+              <circle cx="10.5" cy="10.5" r="6.5" />
+              <path d="m16 16 5 5" /></svg
+            ><label for="material-search" class="sr-only">搜索材料</label
+            ><input
+              type="search"
+              id="material-search"
+              placeholder="搜索材料名称或 ID…"
+              autocomplete="off"
+            /><kbd>/</kbd>
+          </div>
+          <div class="list-heading">
+            <span>材料 <small id="filtered-count"></small></span
+            ><span>数量 / 组</span>
+          </div>
+          <div class="material-list" id="material-list"></div>
+          <footer class="panel-footer">
+            <button id="copy-materials" class="button" disabled>复制清单</button
+            ><button id="export-materials" class="button" disabled>
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5" /></svg
+              >导出 CSV
+            </button>
+          </footer>
+          <p class="panel-footnote">按蓝图内已放置方块统计 · 64 个 / 组</p>
+        </section>
+        <section
+          id="inspect-pane"
+          class="tab-pane"
+          role="tabpanel"
+          aria-labelledby="inspect-tab"
+          hidden
+        >
+          <header class="panel-header">
+            <span class="eyebrow">LOOK A LITTLE CLOSER</span>
+            <h2>看看这一格</h2>
+            <p>单击方块或实体，查看保存的状态与 NBT。</p>
+          </header>
+          <div class="container-jump">
+            <label for="show-entities"><input id="show-entities" type="checkbox" checked> 显示实体</label>
+            <label for="entity-select">快速定位实体</label>
+            <select id="entity-select" disabled><option value="">蓝图未保存实体</option></select>
+            <label for="container-select">快速定位容器</label
+            ><select id="container-select" disabled>
+              <option value="">尚未加载容器</option>
+            </select>
+          </div>
+          <div id="inspect-content" class="inspect-content">
+            <div class="inspect-empty">
+              <strong>选中一个方块或实体</strong>
+              <p>箱子里装了什么？<br />左键点一下，就能看见。</p>
+              <span class="small-tag">支持箱子 · 木桶 · 潜影盒等容器</span>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+    <div id="item-tooltip" class="item-tooltip" role="tooltip" hidden></div>
+    <div id="toast" role="status" hidden></div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

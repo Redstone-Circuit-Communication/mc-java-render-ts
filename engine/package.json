@@ -1,0 +1,120 @@
+{
+	"name": "@coastlinecreations/schematic-renderer",
+	"version": "1.8.0",
+	"packageManager": "npm@11.17.0",
+	"allowScripts": {
+		"fsevents@2.3.2": false,
+		"fsevents@2.3.3": false
+	},
+	"license": "AGPL-3.0-only",
+	"description": "A schematic renderer package for Minecraft schematics using Three.js. Forked from schematic-renderer",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/CoastlineCreations/schematic-renderer.git"
+	},
+	"bugs": {
+		"url": "https://github.com/CoastlineCreations/schematic-renderer/issues"
+	},
+	"homepage": "https://github.com/CoastlineCreations/schematic-renderer#readme",
+	"keywords": [
+		"minecraft",
+		"schematic",
+		"renderer",
+		"three.js",
+		"3d",
+		"webgl",
+		"litematic",
+		"nbt"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "dist/schematic-renderer.umd.js",
+	"module": "dist/schematic-renderer.es.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/schematic-renderer.es.js",
+			"require": "./dist/schematic-renderer.umd.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"start": "vite",
+		"dev": "concurrently \"npm run watch-wasm\" \"npm run start\"",
+		"build": "vite build && tsc --project tsconfig.build.json",
+		"build-only": "vite build",
+		"test": "vitest",
+		"test:run": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:ui": "vitest --ui",
+		"lint": "eslint src/ --max-warnings 0",
+		"lint:fix": "eslint src/ --fix",
+		"format": "prettier --write \"src/**/*.ts\"",
+		"format:check": "prettier --check \"src/**/*.ts\"",
+		"typecheck": "tsc --noEmit && tsc --project tsconfig.preview.json",
+		"prepare": "husky",
+		"watch-wasm": "node watch-wasm.js",
+		"dev:preview": "vite --open /preview.html",
+		"verify": "npm run format:check && npm run lint && npm run typecheck && npm run test:run && npm run test:proxy && npm run build && npm run test:browser",
+		"test:browser": "playwright test",
+		"test:proxy": "node --test test/proxy-server.test.cjs",
+		"nucleation:local": "node scripts/use-local-nucleation.mjs",
+		"benchmark:nucleation": "node --expose-gc scripts/benchmark-nucleation.mjs"
+	},
+	"lint-staged": {
+		"src/**/*.ts": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"*.{json,md,yml,yaml}": [
+			"prettier --write"
+		]
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.39.5",
+		"@playwright/test": "1.62.0",
+		"@types/d3": "^7.4.3",
+		"@types/lodash": "^4.17.25",
+		"@types/node": "^24.19.1",
+		"@types/three": "^0.186.0",
+		"@typescript-eslint/eslint-plugin": "^8.71.1",
+		"@typescript-eslint/parser": "^8.71.1",
+		"@vitest/coverage-v8": "^4.1.11",
+		"@vitest/ui": "^4.1.11",
+		"@webgpu/types": "^0.1.74",
+		"chokidar": "^5.0.0",
+		"concurrently": "^8.2.2",
+		"d3": "^7.9.0",
+		"eslint": "^9.39.5",
+		"eslint-config-prettier": "^10.1.8",
+		"fs-extra": "^11.4.1",
+		"happy-dom": "^20.14.5",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.4.0",
+		"prettier": "^3.9.9",
+		"simplex-noise": "^4.0.3",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.71.1",
+		"vite": "^8.3.2",
+		"vitest": "^4.1.11"
+	},
+	"dependencies": {
+		"@ffmpeg/ffmpeg": "^0.12.15",
+		"@ffmpeg/util": "^0.12.2",
+		"events": "^3.3.0",
+		"jszip": "^3.10.2",
+		"lil-gui": "^0.19.2",
+		"lodash": "^4.18.1",
+		"n8ao": "^1.10.3",
+		"nucleation": "npm:@coastlinecreations/nucleation@0.10.24",
+		"postprocessing": "^6.39.5",
+		"three": "^0.186.1"
+	},
+	"engines": {
+		"node": "^20.19.0 || >=22.12.0"
+	}
+}

@@ -1,0 +1,7 @@
+dist/
+node_modules/
+*.wasm
+*.tgz
+package-lock.json
+mesh_builder_wasm/
+test/

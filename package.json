@@ -1,0 +1,69 @@
+{
+  "name": "@rsw/mc-java-render-ts",
+  "version": "1.0.0",
+  "description": "方块工坊 TypeScript SDK：蓝图渲染、材料、容器、红石、实体与相机",
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.js"
+    },
+    "./renderer": {
+      "types": "./engine/index.d.mts",
+      "import": "./engine/index.mjs"
+    },
+    "./mesh": {
+      "types": "./dist/mesh/core/index.d.ts",
+      "import": "./dist/mesh/core/index.js"
+    },
+    "./mesh/three": {
+      "types": "./dist/mesh/three/index.d.ts",
+      "import": "./dist/mesh/three/index.js"
+    },
+    "./mesh/worker": {
+      "types": "./dist/mesh/worker/index.d.ts",
+      "import": "./dist/mesh/worker/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "engine",
+    "README.md",
+    "LICENSE",
+    "THIRD-PARTY-NOTICES.md",
+    "tsconfig.json",
+    "VALIDATION.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && npm run typecheck:consumer && node --test tests/*.test.mjs",
+    "build:engine": "npm --prefix engine ci --ignore-scripts && npm --prefix engine run build",
+    "typecheck:consumer": "tsc --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --noEmit tests/public-api.ts"
+  },
+  "dependencies": {
+    "three": "0.186.1",
+    "nucleation": "npm:@coastlinecreations/nucleation@0.10.24",
+    "@types/three": "0.186.0",
+    "@types/node": "24.19.1",
+    "@ffmpeg/ffmpeg": "0.12.15",
+    "events": "3.3.0",
+    "jszip": "3.10.2",
+    "lil-gui": "0.19.2",
+    "postprocessing": "6.39.5"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
