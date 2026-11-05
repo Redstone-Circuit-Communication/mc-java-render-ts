@@ -1,7 +1,6 @@
 {
 	"name": "@coastlinecreations/schematic-renderer",
 	"version": "1.8.0",
-	"packageManager": "npm@11.17.0",
 	"allowScripts": {
 		"fsevents@2.3.2": false,
 		"fsevents@2.3.3": false
@@ -44,8 +43,8 @@
 	],
 	"scripts": {
 		"start": "vite",
-		"dev": "concurrently \"npm run watch-wasm\" \"npm run start\"",
-		"build": "vite build && tsc --project tsconfig.build.json",
+		"dev": "concurrently \"pnpm watch-wasm\" \"pnpm start\"",
+		"build": "vite build && tsc --project tsconfig.build.json && node -e \"if(!require('node:fs').existsSync('dist/index.d.ts'))throw new Error('missing dist/index.d.ts')\"",
 		"build-only": "vite build",
 		"test": "vitest",
 		"test:run": "vitest run",
@@ -59,7 +58,7 @@
 		"prepare": "husky",
 		"watch-wasm": "node watch-wasm.js",
 		"dev:preview": "vite --open /preview.html",
-		"verify": "npm run format:check && npm run lint && npm run typecheck && npm run test:run && npm run test:proxy && npm run build && npm run test:browser",
+		"verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:run && pnpm test:proxy && pnpm build && pnpm test:browser",
 		"test:browser": "playwright test",
 		"test:proxy": "node --test test/proxy-server.test.cjs",
 		"nucleation:local": "node scripts/use-local-nucleation.mjs",
@@ -81,10 +80,6 @@
 		"@types/lodash": "^4.17.25",
 		"@types/node": "^24.19.1",
 		"@types/three": "^0.186.0",
-		"@typescript-eslint/eslint-plugin": "^8.0.0",
-		"@typescript-eslint/parser": "^8.0.0",
-		"@typescript-eslint/type-utils": "^8.0.0",
-		"@typescript-eslint/utils": "^8.0.0",
 		"@vitest/coverage-v8": "^4.1.11",
 		"@vitest/ui": "^4.1.11",
 		"@webgpu/types": "^0.1.74",
@@ -104,6 +99,11 @@
 		"vite": "^8.3.2",
 		"vitest": "^4.1.11"
 	},
+	"overrides": {
+		"@typescript-eslint/typescript-estree": {
+			"minimatch": "^11.0.1"
+		}
+	},
 	"dependencies": {
 		"@ffmpeg/ffmpeg": "^0.12.15",
 		"@ffmpeg/util": "^0.12.2",
@@ -118,6 +118,14 @@
 		"three": "^0.186.1"
 	},
 	"engines": {
-		"node": "^20.19.0 || >=22.12.0"
-	}
+		"node": ">=22.12.0"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "12.16.1",
+			"onFail": "download"
+		}
+	},
+	"packageManager": "pnpm@12.16.1"
 }

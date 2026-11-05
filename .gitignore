@@ -6,6 +6,7 @@ dist
 
 engine/node_modules
 engine/dist
+engine/.nucleation-local/
 
 example/node_modules
 example/dist

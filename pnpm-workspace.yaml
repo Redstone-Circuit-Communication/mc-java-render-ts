@@ -1,0 +1,20 @@
+packages:
+  - 'engine'
+  - 'example'
+
+# npm 的 engine/package.json overrides 上移到这里，并用 parent>child 精确限定，
+# 避免影响 ESLint 依赖的 minimatch@3.1.5
+overrides:
+  "@typescript-eslint/typescript-estree>minimatch": "^11.0.1"
+
+# 对应 engine/package.json 里 npm 专属的 allowScripts（fsevents 设为 false）
+allowBuilds:
+  fsevents: false
+
+# 让 pnpm -r 把根包也算进去
+includeWorkspaceRoot: true
+
+# 后续依赖升级时防止误升到 TS 7（typescript-eslint 8.72.1 peer 上限 <6.1.0）
+update:
+  ignoreDeps:
+    - typescript

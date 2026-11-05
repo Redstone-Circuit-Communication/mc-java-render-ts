@@ -37,19 +37,19 @@ work/
 
 ```bash
 cd block-workshop-ts
-npm ci
-npm run build
+pnpm ci
+pnpm build
 cd ../block-workshop-example
-npm ci
-npm run dev
+pnpm ci
+pnpm dev
 ```
 
 Vite 输出本地地址；完整界面使用首页，最小示例使用 `/minimal.html`。
 
 ```bash
-npm test
-npm run build
-npm run preview
+pnpm test
+pnpm build
+pnpm preview
 ```
 
 依赖通过 `"@rsw/mc-java-render-ts": "file:../block-workshop-ts"` 连接。如果移动目录，请修改 package.json 的路径并重新 npm install。

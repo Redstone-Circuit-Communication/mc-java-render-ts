@@ -45,3 +45,4 @@ smoke-server.ts
 # Browser verification artifacts
 playwright-report/
 test-results/
+/package-lock.json

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "方块工坊 TypeScript SDK：蓝图渲染、材料、容器、红石、实体与相机",
   "type": "module",
-  "license": "AGPL-3.0-only",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -45,7 +44,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "npm run build && npm run typecheck:consumer && node --test tests/*.test.mjs",
+    "test": "pnpm run build && pnpm run typecheck:consumer && node --test tests/*.test.mjs",
     "build:engine": "npm --prefix engine ci --ignore-scripts && npm --prefix engine run build",
     "typecheck:consumer": "tsc --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --noEmit tests/public-api.ts"
   },
@@ -65,5 +64,13 @@
   },
   "engines": {
     "node": ">=22.12.0"
-  }
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.16.1",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.16.1"
 }
