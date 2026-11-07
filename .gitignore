@@ -2,8 +2,8 @@
 node_modules/
 dist/
 npm/
-src/renderer/wasm/
 .nucleation-local/
 coverage/
+mesh_builder_wasm/target/
 example/dist
-example
+example/node_modules

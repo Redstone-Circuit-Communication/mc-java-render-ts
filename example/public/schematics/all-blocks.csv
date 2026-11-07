@@ -1,0 +1,1284 @@
+index,name,id,x,y,z,state,note
+1,Acacia Button,minecraft:acacia_button,0,0,0,"face=floor,facing=north,powered=false",label sign at y=2
+2,Acacia Door,minecraft:acacia_door,2,0,0,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+3,Acacia Fence,minecraft:acacia_fence,4,0,0,"east=true,north=true,south=true,west=true",label sign at y=2
+4,Acacia Fence Gate,minecraft:acacia_fence_gate,6,0,0,"facing=north,in_wall=false,open=false",label sign at y=2
+5,Acacia Hanging Sign,minecraft:acacia_hanging_sign,8,0,0,"attached=false,rotation=0",label sign at y=2
+6,Acacia Leaves,minecraft:acacia_leaves,10,0,0,,label sign at y=2
+7,Acacia Log,minecraft:acacia_log,12,0,0,axis=y,label sign at y=2
+8,Acacia Planks,minecraft:acacia_planks,14,0,0,,label sign at y=2
+9,Acacia Pressure Plate,minecraft:acacia_pressure_plate,16,0,0,powered=false,label sign at y=2
+10,Acacia Sapling,minecraft:acacia_sapling,18,0,0,,label sign at y=2
+11,Acacia Shelf,minecraft:acacia_shelf,20,0,0,"facing=north,powered=false",label sign at y=2
+12,Acacia Sign,minecraft:acacia_sign,22,0,0,rotation=0,label sign at y=2
+13,Acacia Slab,minecraft:acacia_slab,24,0,0,type=bottom,label sign at y=2
+14,Acacia Stairs,minecraft:acacia_stairs,26,0,0,"facing=north,half=bottom,shape=straight",label sign at y=2
+15,Acacia Trapdoor,minecraft:acacia_trapdoor,28,0,0,"facing=north,half=bottom,open=false",label sign at y=2
+16,Acacia Wall Hanging Sign,minecraft:acacia_wall_hanging_sign,30,0,0,facing=north,label sign at y=2
+17,Acacia Wall Sign,minecraft:acacia_wall_sign,32,0,0,facing=north,label sign at y=2
+18,Acacia Wood,minecraft:acacia_wood,34,0,0,axis=y,label sign at y=2
+19,Activator Rail,minecraft:activator_rail,36,0,0,"powered=false,shape=north_south",label sign at y=2
+20,Allium,minecraft:allium,38,0,0,,label sign at y=2
+21,Block of Amethyst,minecraft:amethyst_block,40,0,0,,label sign at y=2
+22,Amethyst Cluster,minecraft:amethyst_cluster,42,0,0,facing=north,label sign at y=2
+23,Ancient Debris,minecraft:ancient_debris,44,0,0,,label sign at y=2
+24,Andesite,minecraft:andesite,46,0,0,,label sign at y=2
+25,Andesite Slab,minecraft:andesite_slab,48,0,0,type=bottom,label sign at y=2
+26,Andesite Stairs,minecraft:andesite_stairs,50,0,0,"facing=north,half=bottom,shape=straight",label sign at y=2
+27,Andesite Wall,minecraft:andesite_wall,52,0,0,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+28,Anvil,minecraft:anvil,54,0,0,facing=north,label sign at y=2
+29,Attached Melon Stem,minecraft:attached_melon_stem,56,0,0,facing=north,label sign at y=2
+30,Attached Pumpkin Stem,minecraft:attached_pumpkin_stem,58,0,0,facing=north,label sign at y=2
+31,Azalea,minecraft:azalea,60,0,0,,label sign at y=2
+32,Azalea Leaves,minecraft:azalea_leaves,62,0,0,,label sign at y=2
+33,Azure Bluet,minecraft:azure_bluet,64,0,0,,label sign at y=2
+34,Bamboo,minecraft:bamboo,66,0,0,"age=0,leaves=small",label sign at y=2
+35,Block of Bamboo,minecraft:bamboo_block,68,0,0,axis=y,label sign at y=2
+36,Bamboo Button,minecraft:bamboo_button,70,0,0,"face=floor,facing=north,powered=false",label sign at y=2
+37,Bamboo Door,minecraft:bamboo_door,0,0,2,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+38,Bamboo Fence,minecraft:bamboo_fence,2,0,2,"east=true,north=true,south=true,west=true",label sign at y=2
+39,Bamboo Fence Gate,minecraft:bamboo_fence_gate,4,0,2,"facing=north,in_wall=false,open=false",label sign at y=2
+40,Bamboo Hanging Sign,minecraft:bamboo_hanging_sign,6,0,2,"attached=false,rotation=0",label sign at y=2
+41,Bamboo Mosaic,minecraft:bamboo_mosaic,8,0,2,,label sign at y=2
+42,Bamboo Mosaic Slab,minecraft:bamboo_mosaic_slab,10,0,2,type=bottom,label sign at y=2
+43,Bamboo Mosaic Stairs,minecraft:bamboo_mosaic_stairs,12,0,2,"facing=north,half=bottom,shape=straight",label sign at y=2
+44,Bamboo Planks,minecraft:bamboo_planks,14,0,2,,label sign at y=2
+45,Bamboo Pressure Plate,minecraft:bamboo_pressure_plate,16,0,2,powered=false,label sign at y=2
+46,Bamboo Shoot,minecraft:bamboo_sapling,18,0,2,,label sign at y=2
+47,Bamboo Shelf,minecraft:bamboo_shelf,20,0,2,"facing=north,powered=false",label sign at y=2
+48,Bamboo Sign,minecraft:bamboo_sign,22,0,2,rotation=0,label sign at y=2
+49,Bamboo Slab,minecraft:bamboo_slab,24,0,2,type=bottom,label sign at y=2
+50,Bamboo Stairs,minecraft:bamboo_stairs,26,0,2,"facing=north,half=bottom,shape=straight",label sign at y=2
+51,Bamboo Trapdoor,minecraft:bamboo_trapdoor,28,0,2,"facing=north,half=bottom,open=false",label sign at y=2
+52,Bamboo Wall Hanging Sign,minecraft:bamboo_wall_hanging_sign,30,0,2,facing=north,label sign at y=2
+53,Bamboo Wall Sign,minecraft:bamboo_wall_sign,32,0,2,facing=north,label sign at y=2
+54,Barrel,minecraft:barrel,34,0,2,"facing=north,open=false",label sign at y=2
+55,Barrier,minecraft:barrier,36,0,2,,label sign at y=2
+56,Basalt,minecraft:basalt,38,0,2,axis=y,label sign at y=2
+57,Beacon,minecraft:beacon,40,0,2,,label sign at y=2
+58,Bedrock,minecraft:bedrock,42,0,2,,label sign at y=2
+59,Bee Nest,minecraft:bee_nest,44,0,2,"facing=north,honey_level=0",label sign at y=2
+60,Beehive,minecraft:beehive,46,0,2,"facing=north,honey_level=0",label sign at y=2
+61,Beetroots,minecraft:beetroots,48,0,2,age=0,label sign at y=2
+62,Bell,minecraft:bell,50,0,2,"attachment=floor,facing=north",label sign at y=2
+63,Big Dripleaf,minecraft:big_dripleaf,52,0,2,"facing=north,tilt=none",label sign at y=2
+64,Big Dripleaf Stem,minecraft:big_dripleaf_stem,54,0,2,facing=north,label sign at y=2
+65,Birch Button,minecraft:birch_button,56,0,2,"face=floor,facing=north,powered=false",label sign at y=2
+66,Birch Door,minecraft:birch_door,58,0,2,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+67,Birch Fence,minecraft:birch_fence,60,0,2,"east=true,north=true,south=true,west=true",label sign at y=2
+68,Birch Fence Gate,minecraft:birch_fence_gate,62,0,2,"facing=north,in_wall=false,open=false",label sign at y=2
+69,Birch Hanging Sign,minecraft:birch_hanging_sign,64,0,2,"attached=false,rotation=0",label sign at y=2
+70,Birch Leaves,minecraft:birch_leaves,66,0,2,,label sign at y=2
+71,Birch Log,minecraft:birch_log,68,0,2,axis=y,label sign at y=2
+72,Birch Planks,minecraft:birch_planks,70,0,2,,label sign at y=2
+73,Birch Pressure Plate,minecraft:birch_pressure_plate,0,0,4,powered=false,label sign at y=2
+74,Birch Sapling,minecraft:birch_sapling,2,0,4,,label sign at y=2
+75,Birch Shelf,minecraft:birch_shelf,4,0,4,"facing=north,powered=false",label sign at y=2
+76,Birch Sign,minecraft:birch_sign,6,0,4,rotation=0,label sign at y=2
+77,Birch Slab,minecraft:birch_slab,8,0,4,type=bottom,label sign at y=2
+78,Birch Stairs,minecraft:birch_stairs,10,0,4,"facing=north,half=bottom,shape=straight",label sign at y=2
+79,Birch Trapdoor,minecraft:birch_trapdoor,12,0,4,"facing=north,half=bottom,open=false",label sign at y=2
+80,Birch Wall Hanging Sign,minecraft:birch_wall_hanging_sign,14,0,4,facing=north,label sign at y=2
+81,Birch Wall Sign,minecraft:birch_wall_sign,16,0,4,facing=north,label sign at y=2
+82,Birch Wood,minecraft:birch_wood,18,0,4,axis=y,label sign at y=2
+83,Black Banner,minecraft:black_banner,20,0,4,,label sign at y=2
+84,Black Bed,minecraft:black_bed,22,0,4,"facing=north,part=foot",label sign at y=2
+85,Black Candle,minecraft:black_candle,24,0,4,"candles=1,lit=false",label sign at y=2
+86,Cake with Black Candle,minecraft:black_candle_cake,26,0,4,lit=false,label sign at y=2
+87,Black Carpet,minecraft:black_carpet,28,0,4,,label sign at y=2
+88,Black Concrete,minecraft:black_concrete,30,0,4,,label sign at y=2
+89,Black Concrete Powder,minecraft:black_concrete_powder,32,0,4,,label sign at y=2
+90,Black Concrete Slab,minecraft:black_concrete_slab,34,0,4,type=bottom,label sign at y=2
+91,Black Concrete Stairs,minecraft:black_concrete_stairs,36,0,4,"facing=north,half=bottom,shape=straight",label sign at y=2
+92,Black Glazed Terracotta,minecraft:black_glazed_terracotta,38,0,4,facing=north,label sign at y=2
+93,Black Shulker Box,minecraft:black_shulker_box,40,0,4,,label sign at y=2
+94,Black Stained Glass,minecraft:black_stained_glass,42,0,4,,label sign at y=2
+95,Black Stained Glass Pane,minecraft:black_stained_glass_pane,44,0,4,"east=true,north=true,south=true,west=true",label sign at y=2
+96,Black Terracotta,minecraft:black_terracotta,46,0,4,,label sign at y=2
+97,,minecraft:black_wall_banner,48,0,4,,label sign at y=2
+98,Black Wool,minecraft:black_wool,50,0,4,,label sign at y=2
+99,Black Wool Slab,minecraft:black_wool_slab,52,0,4,type=bottom,label sign at y=2
+100,Black Wool Stairs,minecraft:black_wool_stairs,54,0,4,"facing=north,half=bottom,shape=straight",label sign at y=2
+101,Blackstone,minecraft:blackstone,56,0,4,,label sign at y=2
+102,Blackstone Slab,minecraft:blackstone_slab,58,0,4,type=bottom,label sign at y=2
+103,Blackstone Stairs,minecraft:blackstone_stairs,60,0,4,"facing=north,half=bottom,shape=straight",label sign at y=2
+104,Blackstone Wall,minecraft:blackstone_wall,62,0,4,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+105,Blast Furnace,minecraft:blast_furnace,64,0,4,"facing=north,lit=false",label sign at y=2
+106,Blue Banner,minecraft:blue_banner,66,0,4,,label sign at y=2
+107,Blue Bed,minecraft:blue_bed,68,0,4,"facing=north,part=foot",label sign at y=2
+108,Blue Candle,minecraft:blue_candle,70,0,4,"candles=1,lit=false",label sign at y=2
+109,Cake with Blue Candle,minecraft:blue_candle_cake,0,0,6,lit=false,label sign at y=2
+110,Blue Carpet,minecraft:blue_carpet,2,0,6,,label sign at y=2
+111,Blue Concrete,minecraft:blue_concrete,4,0,6,,label sign at y=2
+112,Blue Concrete Powder,minecraft:blue_concrete_powder,6,0,6,,label sign at y=2
+113,Blue Concrete Slab,minecraft:blue_concrete_slab,8,0,6,type=bottom,label sign at y=2
+114,Blue Concrete Stairs,minecraft:blue_concrete_stairs,10,0,6,"facing=north,half=bottom,shape=straight",label sign at y=2
+115,Blue Glazed Terracotta,minecraft:blue_glazed_terracotta,12,0,6,facing=north,label sign at y=2
+116,Blue Ice,minecraft:blue_ice,14,0,6,,label sign at y=2
+117,Blue Orchid,minecraft:blue_orchid,16,0,6,,label sign at y=2
+118,Blue Shulker Box,minecraft:blue_shulker_box,18,0,6,,label sign at y=2
+119,Blue Stained Glass,minecraft:blue_stained_glass,20,0,6,,label sign at y=2
+120,Blue Stained Glass Pane,minecraft:blue_stained_glass_pane,22,0,6,"east=true,north=true,south=true,west=true",label sign at y=2
+121,Blue Terracotta,minecraft:blue_terracotta,24,0,6,,label sign at y=2
+122,,minecraft:blue_wall_banner,26,0,6,,label sign at y=2
+123,Blue Wool,minecraft:blue_wool,28,0,6,,label sign at y=2
+124,Blue Wool Slab,minecraft:blue_wool_slab,30,0,6,type=bottom,label sign at y=2
+125,Blue Wool Stairs,minecraft:blue_wool_stairs,32,0,6,"facing=north,half=bottom,shape=straight",label sign at y=2
+126,Bone Block,minecraft:bone_block,34,0,6,axis=y,label sign at y=2
+127,Bookshelf,minecraft:bookshelf,36,0,6,,label sign at y=2
+128,Brain Coral,minecraft:brain_coral,38,0,6,,label sign at y=2
+129,Brain Coral Block,minecraft:brain_coral_block,40,0,6,,label sign at y=2
+130,Brain Coral Fan,minecraft:brain_coral_fan,42,0,6,,label sign at y=2
+131,Brain Coral Wall Fan,minecraft:brain_coral_wall_fan,44,0,6,facing=north,label sign at y=2
+132,Brewing Stand,minecraft:brewing_stand,46,0,6,"has_bottle_0=true,has_bottle_1=true,has_bottle_2=true",label sign at y=2
+133,Brick Slab,minecraft:brick_slab,48,0,6,type=bottom,label sign at y=2
+134,Brick Stairs,minecraft:brick_stairs,50,0,6,"facing=north,half=bottom,shape=straight",label sign at y=2
+135,Brick Wall,minecraft:brick_wall,52,0,6,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+136,Bricks,minecraft:bricks,54,0,6,,label sign at y=2
+137,Brown Banner,minecraft:brown_banner,56,0,6,,label sign at y=2
+138,Brown Bed,minecraft:brown_bed,58,0,6,"facing=north,part=foot",label sign at y=2
+139,Brown Candle,minecraft:brown_candle,60,0,6,"candles=1,lit=false",label sign at y=2
+140,Cake with Brown Candle,minecraft:brown_candle_cake,62,0,6,lit=false,label sign at y=2
+141,Brown Carpet,minecraft:brown_carpet,64,0,6,,label sign at y=2
+142,Brown Concrete,minecraft:brown_concrete,66,0,6,,label sign at y=2
+143,Brown Concrete Powder,minecraft:brown_concrete_powder,68,0,6,,label sign at y=2
+144,Brown Concrete Slab,minecraft:brown_concrete_slab,70,0,6,type=bottom,label sign at y=2
+145,Brown Concrete Stairs,minecraft:brown_concrete_stairs,0,0,8,"facing=north,half=bottom,shape=straight",label sign at y=2
+146,Brown Glazed Terracotta,minecraft:brown_glazed_terracotta,2,0,8,facing=north,label sign at y=2
+147,Brown Mushroom,minecraft:brown_mushroom,4,0,8,,label sign at y=2
+148,Brown Mushroom Block,minecraft:brown_mushroom_block,6,0,8,"down=true,east=true,north=true,south=true,up=true,west=true",label sign at y=2
+149,Brown Shulker Box,minecraft:brown_shulker_box,8,0,8,,label sign at y=2
+150,Brown Stained Glass,minecraft:brown_stained_glass,10,0,8,,label sign at y=2
+151,Brown Stained Glass Pane,minecraft:brown_stained_glass_pane,12,0,8,"east=true,north=true,south=true,west=true",label sign at y=2
+152,Brown Terracotta,minecraft:brown_terracotta,14,0,8,,label sign at y=2
+153,,minecraft:brown_wall_banner,16,0,8,,label sign at y=2
+154,Brown Wool,minecraft:brown_wool,18,0,8,,label sign at y=2
+155,Brown Wool Slab,minecraft:brown_wool_slab,20,0,8,type=bottom,label sign at y=2
+156,Brown Wool Stairs,minecraft:brown_wool_stairs,22,0,8,"facing=north,half=bottom,shape=straight",label sign at y=2
+157,Bubble Column,minecraft:bubble_column,24,0,8,,label sign at y=2
+158,Bubble Coral,minecraft:bubble_coral,26,0,8,,label sign at y=2
+159,Bubble Coral Block,minecraft:bubble_coral_block,28,0,8,,label sign at y=2
+160,Bubble Coral Fan,minecraft:bubble_coral_fan,30,0,8,,label sign at y=2
+161,Bubble Coral Wall Fan,minecraft:bubble_coral_wall_fan,32,0,8,facing=north,label sign at y=2
+162,Budding Amethyst,minecraft:budding_amethyst,34,0,8,,label sign at y=2
+163,Bush,minecraft:bush,36,0,8,,label sign at y=2
+164,Cactus,minecraft:cactus,38,0,8,,label sign at y=2
+165,Cactus Flower,minecraft:cactus_flower,40,0,8,,label sign at y=2
+166,Cake,minecraft:cake,42,0,8,bites=0,label sign at y=2
+167,Calcite,minecraft:calcite,44,0,8,,label sign at y=2
+168,Calibrated Sculk Sensor,minecraft:calibrated_sculk_sensor,46,0,8,"facing=north,sculk_sensor_phase=inactive",label sign at y=2
+169,Campfire,minecraft:campfire,48,0,8,"facing=north,lit=false",label sign at y=2
+170,Candle,minecraft:candle,50,0,8,"candles=1,lit=false",label sign at y=2
+171,Cake with Candle,minecraft:candle_cake,52,0,8,lit=false,label sign at y=2
+172,Carrots,minecraft:carrots,54,0,8,age=0,label sign at y=2
+173,Cartography Table,minecraft:cartography_table,56,0,8,,label sign at y=2
+174,Carved Pumpkin,minecraft:carved_pumpkin,58,0,8,facing=north,label sign at y=2
+175,Cauldron,minecraft:cauldron,60,0,8,,label sign at y=2
+176,Cave Vines,minecraft:cave_vines,62,0,8,berries=false,label sign at y=2
+177,Cave Vines Plant,minecraft:cave_vines_plant,64,0,8,berries=false,label sign at y=2
+178,Chain Command Block,minecraft:chain_command_block,66,0,8,"conditional=false,facing=north",label sign at y=2
+179,Cherry Button,minecraft:cherry_button,68,0,8,"face=floor,facing=north,powered=false",label sign at y=2
+180,Cherry Door,minecraft:cherry_door,70,0,8,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+181,Cherry Fence,minecraft:cherry_fence,0,0,10,"east=true,north=true,south=true,west=true",label sign at y=2
+182,Cherry Fence Gate,minecraft:cherry_fence_gate,2,0,10,"facing=north,in_wall=false,open=false",label sign at y=2
+183,Cherry Hanging Sign,minecraft:cherry_hanging_sign,4,0,10,"attached=false,rotation=0",label sign at y=2
+184,Cherry Leaves,minecraft:cherry_leaves,6,0,10,,label sign at y=2
+185,Cherry Log,minecraft:cherry_log,8,0,10,axis=y,label sign at y=2
+186,Cherry Planks,minecraft:cherry_planks,10,0,10,,label sign at y=2
+187,Cherry Pressure Plate,minecraft:cherry_pressure_plate,12,0,10,powered=false,label sign at y=2
+188,Cherry Sapling,minecraft:cherry_sapling,14,0,10,,label sign at y=2
+189,Cherry Shelf,minecraft:cherry_shelf,16,0,10,"facing=north,powered=false",label sign at y=2
+190,Cherry Sign,minecraft:cherry_sign,18,0,10,rotation=0,label sign at y=2
+191,Cherry Slab,minecraft:cherry_slab,20,0,10,type=bottom,label sign at y=2
+192,Cherry Stairs,minecraft:cherry_stairs,22,0,10,"facing=north,half=bottom,shape=straight",label sign at y=2
+193,Cherry Trapdoor,minecraft:cherry_trapdoor,24,0,10,"facing=north,half=bottom,open=false",label sign at y=2
+194,Cherry Wall Hanging Sign,minecraft:cherry_wall_hanging_sign,26,0,10,facing=north,label sign at y=2
+195,Cherry Wall Sign,minecraft:cherry_wall_sign,28,0,10,facing=north,label sign at y=2
+196,Cherry Wood,minecraft:cherry_wood,30,0,10,axis=y,label sign at y=2
+197,Chest,minecraft:chest,32,0,10,,label sign at y=2
+198,Chipped Anvil,minecraft:chipped_anvil,34,0,10,facing=north,label sign at y=2
+199,Chiseled Bookshelf,minecraft:chiseled_bookshelf,36,0,10,"facing=north,slot_0_occupied=true,slot_1_occupied=true,slot_2_occupied=true,slot_3_occupied=true,slot_4_occupied=true,slot_5_occupied=true",label sign at y=2
+200,Chiseled Cinnabar,minecraft:chiseled_cinnabar,38,0,10,,label sign at y=2
+201,Chiseled Copper,minecraft:chiseled_copper,40,0,10,,label sign at y=2
+202,Chiseled Deepslate,minecraft:chiseled_deepslate,42,0,10,,label sign at y=2
+203,Chiseled Nether Bricks,minecraft:chiseled_nether_bricks,44,0,10,,label sign at y=2
+204,Chiseled Polished Blackstone,minecraft:chiseled_polished_blackstone,46,0,10,,label sign at y=2
+205,Chiseled Quartz Block,minecraft:chiseled_quartz_block,48,0,10,,label sign at y=2
+206,Chiseled Red Sandstone,minecraft:chiseled_red_sandstone,50,0,10,,label sign at y=2
+207,Chiseled Resin Bricks,minecraft:chiseled_resin_bricks,52,0,10,,label sign at y=2
+208,Chiseled Sandstone,minecraft:chiseled_sandstone,54,0,10,,label sign at y=2
+209,Chiseled Stone Bricks,minecraft:chiseled_stone_bricks,56,0,10,,label sign at y=2
+210,Chiseled Sulfur,minecraft:chiseled_sulfur,58,0,10,,label sign at y=2
+211,Chiseled Tuff,minecraft:chiseled_tuff,60,0,10,,label sign at y=2
+212,Chiseled Tuff Bricks,minecraft:chiseled_tuff_bricks,62,0,10,,label sign at y=2
+213,Chorus Flower,minecraft:chorus_flower,64,0,10,age=0,label sign at y=2
+214,Chorus Plant,minecraft:chorus_plant,66,0,10,"down=true,east=true,north=true,south=true,up=true,west=true",label sign at y=2
+215,Cinnabar,minecraft:cinnabar,68,0,10,,label sign at y=2
+216,Cinnabar Brick Slab,minecraft:cinnabar_brick_slab,70,0,10,type=bottom,label sign at y=2
+217,Cinnabar Brick Stairs,minecraft:cinnabar_brick_stairs,0,0,12,"facing=north,half=bottom,shape=straight",label sign at y=2
+218,Cinnabar Brick Wall,minecraft:cinnabar_brick_wall,2,0,12,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+219,Cinnabar Bricks,minecraft:cinnabar_bricks,4,0,12,,label sign at y=2
+220,Cinnabar Slab,minecraft:cinnabar_slab,6,0,12,type=bottom,label sign at y=2
+221,Cinnabar Stairs,minecraft:cinnabar_stairs,8,0,12,"facing=north,half=bottom,shape=straight",label sign at y=2
+222,Cinnabar Wall,minecraft:cinnabar_wall,10,0,12,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+223,Clay,minecraft:clay,12,0,12,,label sign at y=2
+224,Closed Eyeblossom,minecraft:closed_eyeblossom,14,0,12,,label sign at y=2
+225,Block of Coal,minecraft:coal_block,16,0,12,,label sign at y=2
+226,Coal Ore,minecraft:coal_ore,18,0,12,,label sign at y=2
+227,Coarse Dirt,minecraft:coarse_dirt,20,0,12,,label sign at y=2
+228,Cobbled Deepslate,minecraft:cobbled_deepslate,22,0,12,,label sign at y=2
+229,Cobbled Deepslate Slab,minecraft:cobbled_deepslate_slab,24,0,12,type=bottom,label sign at y=2
+230,Cobbled Deepslate Stairs,minecraft:cobbled_deepslate_stairs,26,0,12,"facing=north,half=bottom,shape=straight",label sign at y=2
+231,Cobbled Deepslate Wall,minecraft:cobbled_deepslate_wall,28,0,12,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+232,Cobblestone,minecraft:cobblestone,30,0,12,,label sign at y=2
+233,Cobblestone Slab,minecraft:cobblestone_slab,32,0,12,type=bottom,label sign at y=2
+234,Cobblestone Stairs,minecraft:cobblestone_stairs,34,0,12,"facing=north,half=bottom,shape=straight",label sign at y=2
+235,Cobblestone Wall,minecraft:cobblestone_wall,36,0,12,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+236,Cobweb,minecraft:cobweb,38,0,12,,label sign at y=2
+237,Cocoa,minecraft:cocoa,40,0,12,"age=0,facing=north",label sign at y=2
+238,Command Block,minecraft:command_block,42,0,12,"conditional=false,facing=north",label sign at y=2
+239,Redstone Comparator,minecraft:comparator,44,0,12,"facing=north,mode=compare,powered=false",label sign at y=2
+240,Composter,minecraft:composter,46,0,12,level=1,label sign at y=2
+241,Conduit,minecraft:conduit,48,0,12,,label sign at y=2
+242,Copper Bars,minecraft:copper_bars,50,0,12,"east=false,north=false,south=false,west=false",label sign at y=2
+243,Block of Copper,minecraft:copper_block,52,0,12,,label sign at y=2
+244,Copper Bulb,minecraft:copper_bulb,54,0,12,"lit=false,powered=false",label sign at y=2
+245,Copper Chain,minecraft:copper_chain,56,0,12,axis=y,label sign at y=2
+246,Copper Chest,minecraft:copper_chest,58,0,12,,label sign at y=2
+247,Copper Door,minecraft:copper_door,60,0,12,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+248,Copper Golem Statue,minecraft:copper_golem_statue,62,0,12,,label sign at y=2
+249,Copper Grate,minecraft:copper_grate,64,0,12,,label sign at y=2
+250,Copper Lantern,minecraft:copper_lantern,66,0,12,hanging=false,label sign at y=2
+251,Copper Ore,minecraft:copper_ore,68,0,12,,label sign at y=2
+252,Copper Torch,minecraft:copper_torch,70,0,12,,label sign at y=2
+253,Copper Trapdoor,minecraft:copper_trapdoor,0,0,14,"facing=north,half=bottom,open=false",label sign at y=2
+254,Copper Wall Torch,minecraft:copper_wall_torch,2,0,14,facing=north,label sign at y=2
+255,Cornflower,minecraft:cornflower,4,0,14,,label sign at y=2
+256,Cracked Deepslate Bricks,minecraft:cracked_deepslate_bricks,6,0,14,,label sign at y=2
+257,Cracked Deepslate Tiles,minecraft:cracked_deepslate_tiles,8,0,14,,label sign at y=2
+258,Cracked Nether Bricks,minecraft:cracked_nether_bricks,10,0,14,,label sign at y=2
+259,Cracked Polished Blackstone Bricks,minecraft:cracked_polished_blackstone_bricks,12,0,14,,label sign at y=2
+260,Cracked Stone Bricks,minecraft:cracked_stone_bricks,14,0,14,,label sign at y=2
+261,Crafter,minecraft:crafter,16,0,14,"crafting=false,orientation=down_east,triggered=false",label sign at y=2
+262,Crafting Table,minecraft:crafting_table,18,0,14,,label sign at y=2
+263,Creaking Heart,minecraft:creaking_heart,20,0,14,"axis=y,creaking_heart_state=awake",label sign at y=2
+264,Creeper Head,minecraft:creeper_head,22,0,14,,label sign at y=2
+265,Creeper Wall Head,minecraft:creeper_wall_head,24,0,14,,label sign at y=2
+266,Crimson Button,minecraft:crimson_button,26,0,14,"face=floor,facing=north,powered=false",label sign at y=2
+267,Crimson Door,minecraft:crimson_door,28,0,14,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+268,Crimson Fence,minecraft:crimson_fence,30,0,14,"east=true,north=true,south=true,west=true",label sign at y=2
+269,Crimson Fence Gate,minecraft:crimson_fence_gate,32,0,14,"facing=north,in_wall=false,open=false",label sign at y=2
+270,Crimson Fungus,minecraft:crimson_fungus,34,0,14,,label sign at y=2
+271,Crimson Hanging Sign,minecraft:crimson_hanging_sign,36,0,14,"attached=false,rotation=0",label sign at y=2
+272,Crimson Hyphae,minecraft:crimson_hyphae,38,0,14,axis=y,label sign at y=2
+273,Crimson Nylium,minecraft:crimson_nylium,40,0,14,,label sign at y=2
+274,Crimson Planks,minecraft:crimson_planks,42,0,14,,label sign at y=2
+275,Crimson Pressure Plate,minecraft:crimson_pressure_plate,44,0,14,powered=false,label sign at y=2
+276,Crimson Roots,minecraft:crimson_roots,46,0,14,,label sign at y=2
+277,Crimson Shelf,minecraft:crimson_shelf,48,0,14,"facing=north,powered=false",label sign at y=2
+278,Crimson Sign,minecraft:crimson_sign,50,0,14,rotation=0,label sign at y=2
+279,Crimson Slab,minecraft:crimson_slab,52,0,14,type=bottom,label sign at y=2
+280,Crimson Stairs,minecraft:crimson_stairs,54,0,14,"facing=north,half=bottom,shape=straight",label sign at y=2
+281,Crimson Stem,minecraft:crimson_stem,56,0,14,axis=y,label sign at y=2
+282,Crimson Trapdoor,minecraft:crimson_trapdoor,58,0,14,"facing=north,half=bottom,open=false",label sign at y=2
+283,Crimson Wall Hanging Sign,minecraft:crimson_wall_hanging_sign,60,0,14,facing=north,label sign at y=2
+284,Crimson Wall Sign,minecraft:crimson_wall_sign,62,0,14,facing=north,label sign at y=2
+285,Crying Obsidian,minecraft:crying_obsidian,64,0,14,,label sign at y=2
+286,Cut Copper,minecraft:cut_copper,66,0,14,,label sign at y=2
+287,Cut Copper Slab,minecraft:cut_copper_slab,68,0,14,type=bottom,label sign at y=2
+288,Cut Copper Stairs,minecraft:cut_copper_stairs,70,0,14,"facing=north,half=bottom,shape=straight",label sign at y=2
+289,Cut Red Sandstone,minecraft:cut_red_sandstone,0,0,16,,label sign at y=2
+290,Cut Red Sandstone Slab,minecraft:cut_red_sandstone_slab,2,0,16,type=bottom,label sign at y=2
+291,Cut Sandstone,minecraft:cut_sandstone,4,0,16,,label sign at y=2
+292,Cut Sandstone Slab,minecraft:cut_sandstone_slab,6,0,16,type=bottom,label sign at y=2
+293,Cyan Banner,minecraft:cyan_banner,8,0,16,,label sign at y=2
+294,Cyan Bed,minecraft:cyan_bed,10,0,16,"facing=north,part=foot",label sign at y=2
+295,Cyan Candle,minecraft:cyan_candle,12,0,16,"candles=1,lit=false",label sign at y=2
+296,Cake with Cyan Candle,minecraft:cyan_candle_cake,14,0,16,lit=false,label sign at y=2
+297,Cyan Carpet,minecraft:cyan_carpet,16,0,16,,label sign at y=2
+298,Cyan Concrete,minecraft:cyan_concrete,18,0,16,,label sign at y=2
+299,Cyan Concrete Powder,minecraft:cyan_concrete_powder,20,0,16,,label sign at y=2
+300,Cyan Concrete Slab,minecraft:cyan_concrete_slab,22,0,16,type=bottom,label sign at y=2
+301,Cyan Concrete Stairs,minecraft:cyan_concrete_stairs,24,0,16,"facing=north,half=bottom,shape=straight",label sign at y=2
+302,Cyan Glazed Terracotta,minecraft:cyan_glazed_terracotta,26,0,16,facing=north,label sign at y=2
+303,Cyan Shulker Box,minecraft:cyan_shulker_box,28,0,16,,label sign at y=2
+304,Cyan Stained Glass,minecraft:cyan_stained_glass,30,0,16,,label sign at y=2
+305,Cyan Stained Glass Pane,minecraft:cyan_stained_glass_pane,32,0,16,"east=true,north=true,south=true,west=true",label sign at y=2
+306,Cyan Terracotta,minecraft:cyan_terracotta,34,0,16,,label sign at y=2
+307,,minecraft:cyan_wall_banner,36,0,16,,label sign at y=2
+308,Cyan Wool,minecraft:cyan_wool,38,0,16,,label sign at y=2
+309,Cyan Wool Slab,minecraft:cyan_wool_slab,40,0,16,type=bottom,label sign at y=2
+310,Cyan Wool Stairs,minecraft:cyan_wool_stairs,42,0,16,"facing=north,half=bottom,shape=straight",label sign at y=2
+311,Damaged Anvil,minecraft:damaged_anvil,44,0,16,facing=north,label sign at y=2
+312,Dandelion,minecraft:dandelion,46,0,16,,label sign at y=2
+313,Dark Oak Button,minecraft:dark_oak_button,48,0,16,"face=floor,facing=north,powered=false",label sign at y=2
+314,Dark Oak Door,minecraft:dark_oak_door,50,0,16,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+315,Dark Oak Fence,minecraft:dark_oak_fence,52,0,16,"east=true,north=true,south=true,west=true",label sign at y=2
+316,Dark Oak Fence Gate,minecraft:dark_oak_fence_gate,54,0,16,"facing=north,in_wall=false,open=false",label sign at y=2
+317,Dark Oak Hanging Sign,minecraft:dark_oak_hanging_sign,56,0,16,"attached=false,rotation=0",label sign at y=2
+318,Dark Oak Leaves,minecraft:dark_oak_leaves,58,0,16,,label sign at y=2
+319,Dark Oak Log,minecraft:dark_oak_log,60,0,16,axis=y,label sign at y=2
+320,Dark Oak Planks,minecraft:dark_oak_planks,62,0,16,,label sign at y=2
+321,Dark Oak Pressure Plate,minecraft:dark_oak_pressure_plate,64,0,16,powered=false,label sign at y=2
+322,Dark Oak Sapling,minecraft:dark_oak_sapling,66,0,16,,label sign at y=2
+323,Dark Oak Shelf,minecraft:dark_oak_shelf,68,0,16,"facing=north,powered=false",label sign at y=2
+324,Dark Oak Sign,minecraft:dark_oak_sign,70,0,16,rotation=0,label sign at y=2
+325,Dark Oak Slab,minecraft:dark_oak_slab,0,0,18,type=bottom,label sign at y=2
+326,Dark Oak Stairs,minecraft:dark_oak_stairs,2,0,18,"facing=north,half=bottom,shape=straight",label sign at y=2
+327,Dark Oak Trapdoor,minecraft:dark_oak_trapdoor,4,0,18,"facing=north,half=bottom,open=false",label sign at y=2
+328,Dark Oak Wall Hanging Sign,minecraft:dark_oak_wall_hanging_sign,6,0,18,facing=north,label sign at y=2
+329,Dark Oak Wall Sign,minecraft:dark_oak_wall_sign,8,0,18,facing=north,label sign at y=2
+330,Dark Oak Wood,minecraft:dark_oak_wood,10,0,18,axis=y,label sign at y=2
+331,Dark Prismarine,minecraft:dark_prismarine,12,0,18,,label sign at y=2
+332,Dark Prismarine Slab,minecraft:dark_prismarine_slab,14,0,18,type=bottom,label sign at y=2
+333,Dark Prismarine Stairs,minecraft:dark_prismarine_stairs,16,0,18,"facing=north,half=bottom,shape=straight",label sign at y=2
+334,Daylight Detector,minecraft:daylight_detector,18,0,18,inverted=false,label sign at y=2
+335,Dead Brain Coral,minecraft:dead_brain_coral,20,0,18,,label sign at y=2
+336,Dead Brain Coral Block,minecraft:dead_brain_coral_block,22,0,18,,label sign at y=2
+337,Dead Brain Coral Fan,minecraft:dead_brain_coral_fan,24,0,18,,label sign at y=2
+338,Dead Brain Coral Wall Fan,minecraft:dead_brain_coral_wall_fan,26,0,18,facing=north,label sign at y=2
+339,Dead Bubble Coral,minecraft:dead_bubble_coral,28,0,18,,label sign at y=2
+340,Dead Bubble Coral Block,minecraft:dead_bubble_coral_block,30,0,18,,label sign at y=2
+341,Dead Bubble Coral Fan,minecraft:dead_bubble_coral_fan,32,0,18,,label sign at y=2
+342,Dead Bubble Coral Wall Fan,minecraft:dead_bubble_coral_wall_fan,34,0,18,facing=north,label sign at y=2
+343,Dead Bush,minecraft:dead_bush,36,0,18,,label sign at y=2
+344,Dead Fire Coral,minecraft:dead_fire_coral,38,0,18,,label sign at y=2
+345,Dead Fire Coral Block,minecraft:dead_fire_coral_block,40,0,18,,label sign at y=2
+346,Dead Fire Coral Fan,minecraft:dead_fire_coral_fan,42,0,18,,label sign at y=2
+347,Dead Fire Coral Wall Fan,minecraft:dead_fire_coral_wall_fan,44,0,18,facing=north,label sign at y=2
+348,Dead Horn Coral,minecraft:dead_horn_coral,46,0,18,,label sign at y=2
+349,Dead Horn Coral Block,minecraft:dead_horn_coral_block,48,0,18,,label sign at y=2
+350,Dead Horn Coral Fan,minecraft:dead_horn_coral_fan,50,0,18,,label sign at y=2
+351,Dead Horn Coral Wall Fan,minecraft:dead_horn_coral_wall_fan,52,0,18,facing=north,label sign at y=2
+352,Dead Tube Coral,minecraft:dead_tube_coral,54,0,18,,label sign at y=2
+353,Dead Tube Coral Block,minecraft:dead_tube_coral_block,56,0,18,,label sign at y=2
+354,Dead Tube Coral Fan,minecraft:dead_tube_coral_fan,58,0,18,,label sign at y=2
+355,Dead Tube Coral Wall Fan,minecraft:dead_tube_coral_wall_fan,60,0,18,facing=north,label sign at y=2
+356,Decorated Pot,minecraft:decorated_pot,62,0,18,,label sign at y=2
+357,Deepslate,minecraft:deepslate,64,0,18,axis=y,label sign at y=2
+358,Deepslate Brick Slab,minecraft:deepslate_brick_slab,66,0,18,type=bottom,label sign at y=2
+359,Deepslate Brick Stairs,minecraft:deepslate_brick_stairs,68,0,18,"facing=north,half=bottom,shape=straight",label sign at y=2
+360,Deepslate Brick Wall,minecraft:deepslate_brick_wall,70,0,18,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+361,Deepslate Bricks,minecraft:deepslate_bricks,0,0,20,,label sign at y=2
+362,Deepslate Coal Ore,minecraft:deepslate_coal_ore,2,0,20,,label sign at y=2
+363,Deepslate Copper Ore,minecraft:deepslate_copper_ore,4,0,20,,label sign at y=2
+364,Deepslate Diamond Ore,minecraft:deepslate_diamond_ore,6,0,20,,label sign at y=2
+365,Deepslate Emerald Ore,minecraft:deepslate_emerald_ore,8,0,20,,label sign at y=2
+366,Deepslate Gold Ore,minecraft:deepslate_gold_ore,10,0,20,,label sign at y=2
+367,Deepslate Iron Ore,minecraft:deepslate_iron_ore,12,0,20,,label sign at y=2
+368,Deepslate Lapis Lazuli Ore,minecraft:deepslate_lapis_ore,14,0,20,,label sign at y=2
+369,Deepslate Redstone Ore,minecraft:deepslate_redstone_ore,16,0,20,,label sign at y=2
+370,Deepslate Tile Slab,minecraft:deepslate_tile_slab,18,0,20,type=bottom,label sign at y=2
+371,Deepslate Tile Stairs,minecraft:deepslate_tile_stairs,20,0,20,"facing=north,half=bottom,shape=straight",label sign at y=2
+372,Deepslate Tile Wall,minecraft:deepslate_tile_wall,22,0,20,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+373,Deepslate Tiles,minecraft:deepslate_tiles,24,0,20,,label sign at y=2
+374,Detector Rail,minecraft:detector_rail,26,0,20,"powered=false,shape=north_south",label sign at y=2
+375,Block of Diamond,minecraft:diamond_block,28,0,20,,label sign at y=2
+376,Diamond Ore,minecraft:diamond_ore,30,0,20,,label sign at y=2
+377,Diorite,minecraft:diorite,32,0,20,,label sign at y=2
+378,Diorite Slab,minecraft:diorite_slab,34,0,20,type=bottom,label sign at y=2
+379,Diorite Stairs,minecraft:diorite_stairs,36,0,20,"facing=north,half=bottom,shape=straight",label sign at y=2
+380,Diorite Wall,minecraft:diorite_wall,38,0,20,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+381,Dirt,minecraft:dirt,40,0,20,,label sign at y=2
+382,Dirt Path,minecraft:dirt_path,42,0,20,,label sign at y=2
+383,Dispenser,minecraft:dispenser,44,0,20,facing=north,label sign at y=2
+384,Dragon Egg,minecraft:dragon_egg,46,0,20,,label sign at y=2
+385,Dragon Head,minecraft:dragon_head,48,0,20,,label sign at y=2
+386,Dragon Wall Head,minecraft:dragon_wall_head,50,0,20,,label sign at y=2
+387,Dried Ghast,minecraft:dried_ghast,52,0,20,"facing=north,hydration=0",label sign at y=2
+388,Dried Kelp Block,minecraft:dried_kelp_block,54,0,20,,label sign at y=2
+389,Dripstone Block,minecraft:dripstone_block,56,0,20,,label sign at y=2
+390,Dropper,minecraft:dropper,58,0,20,facing=north,label sign at y=2
+391,Block of Emerald,minecraft:emerald_block,60,0,20,,label sign at y=2
+392,Emerald Ore,minecraft:emerald_ore,62,0,20,,label sign at y=2
+393,Enchanting Table,minecraft:enchanting_table,64,0,20,,label sign at y=2
+394,End Gateway,minecraft:end_gateway,66,0,20,,label sign at y=2
+395,End Portal,minecraft:end_portal,68,0,20,,label sign at y=2
+396,End Portal Frame,minecraft:end_portal_frame,70,0,20,"eye=false,facing=north",label sign at y=2
+397,End Rod,minecraft:end_rod,0,0,22,facing=north,label sign at y=2
+398,End Stone,minecraft:end_stone,2,0,22,,label sign at y=2
+399,End Stone Brick Slab,minecraft:end_stone_brick_slab,4,0,22,type=bottom,label sign at y=2
+400,End Stone Brick Stairs,minecraft:end_stone_brick_stairs,6,0,22,"facing=north,half=bottom,shape=straight",label sign at y=2
+401,End Stone Brick Wall,minecraft:end_stone_brick_wall,8,0,22,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+402,End Stone Bricks,minecraft:end_stone_bricks,10,0,22,,label sign at y=2
+403,Ender Chest,minecraft:ender_chest,12,0,22,,label sign at y=2
+404,Exposed Chiseled Copper,minecraft:exposed_chiseled_copper,14,0,22,,label sign at y=2
+405,Exposed Copper,minecraft:exposed_copper,16,0,22,,label sign at y=2
+406,Exposed Copper Bars,minecraft:exposed_copper_bars,18,0,22,"east=false,north=false,south=false,west=false",label sign at y=2
+407,Exposed Copper Bulb,minecraft:exposed_copper_bulb,20,0,22,"lit=false,powered=false",label sign at y=2
+408,Exposed Copper Chain,minecraft:exposed_copper_chain,22,0,22,axis=y,label sign at y=2
+409,Exposed Copper Chest,minecraft:exposed_copper_chest,24,0,22,,label sign at y=2
+410,Exposed Copper Door,minecraft:exposed_copper_door,26,0,22,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+411,Exposed Copper Golem Statue,minecraft:exposed_copper_golem_statue,28,0,22,,label sign at y=2
+412,Exposed Copper Grate,minecraft:exposed_copper_grate,30,0,22,,label sign at y=2
+413,Exposed Copper Lantern,minecraft:exposed_copper_lantern,32,0,22,hanging=false,label sign at y=2
+414,Exposed Copper Trapdoor,minecraft:exposed_copper_trapdoor,34,0,22,"facing=north,half=bottom,open=false",label sign at y=2
+415,Exposed Cut Copper,minecraft:exposed_cut_copper,36,0,22,,label sign at y=2
+416,Exposed Cut Copper Slab,minecraft:exposed_cut_copper_slab,38,0,22,type=bottom,label sign at y=2
+417,Exposed Cut Copper Stairs,minecraft:exposed_cut_copper_stairs,40,0,22,"facing=north,half=bottom,shape=straight",label sign at y=2
+418,Exposed Lightning Rod,minecraft:exposed_lightning_rod,42,0,22,"facing=north,powered=false",label sign at y=2
+419,Farmland,minecraft:farmland,44,0,22,moisture=0,label sign at y=2
+420,Fern,minecraft:fern,46,0,22,,label sign at y=2
+421,Fire,minecraft:fire,48,0,22,"east=false,north=false,south=false,up=false,west=false",label sign at y=2
+422,Fire Coral,minecraft:fire_coral,50,0,22,,label sign at y=2
+423,Fire Coral Block,minecraft:fire_coral_block,52,0,22,,label sign at y=2
+424,Fire Coral Fan,minecraft:fire_coral_fan,54,0,22,,label sign at y=2
+425,Fire Coral Wall Fan,minecraft:fire_coral_wall_fan,56,0,22,facing=north,label sign at y=2
+426,Firefly Bush,minecraft:firefly_bush,58,0,22,,label sign at y=2
+427,Fletching Table,minecraft:fletching_table,60,0,22,,label sign at y=2
+428,Flower Pot,minecraft:flower_pot,62,0,22,,label sign at y=2
+429,Flowering Azalea,minecraft:flowering_azalea,64,0,22,,label sign at y=2
+430,Flowering Azalea Leaves,minecraft:flowering_azalea_leaves,66,0,22,,label sign at y=2
+431,Frogspawn,minecraft:frogspawn,68,0,22,,label sign at y=2
+432,Frosted Ice,minecraft:frosted_ice,70,0,22,age=0,label sign at y=2
+433,Furnace,minecraft:furnace,0,0,24,"facing=north,lit=false",label sign at y=2
+434,Gilded Blackstone,minecraft:gilded_blackstone,2,0,24,,label sign at y=2
+435,Glass,minecraft:glass,4,0,24,,label sign at y=2
+436,Glass Pane,minecraft:glass_pane,6,0,24,"east=true,north=true,south=true,west=true",label sign at y=2
+437,Glow Lichen,minecraft:glow_lichen,8,0,24,"down=true,east=true,north=true,south=true,up=true,west=true",label sign at y=2
+438,Glowstone,minecraft:glowstone,10,0,24,,label sign at y=2
+439,Block of Gold,minecraft:gold_block,12,0,24,,label sign at y=2
+440,Gold Ore,minecraft:gold_ore,14,0,24,,label sign at y=2
+441,Golden Dandelion,minecraft:golden_dandelion,16,0,24,,label sign at y=2
+442,Granite,minecraft:granite,18,0,24,,label sign at y=2
+443,Granite Slab,minecraft:granite_slab,20,0,24,type=bottom,label sign at y=2
+444,Granite Stairs,minecraft:granite_stairs,22,0,24,"facing=north,half=bottom,shape=straight",label sign at y=2
+445,Granite Wall,minecraft:granite_wall,24,0,24,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+446,Grass Block,minecraft:grass_block,26,0,24,snowy=false,label sign at y=2
+447,Gravel,minecraft:gravel,28,0,24,,label sign at y=2
+448,Gray Banner,minecraft:gray_banner,30,0,24,,label sign at y=2
+449,Gray Bed,minecraft:gray_bed,32,0,24,"facing=north,part=foot",label sign at y=2
+450,Gray Candle,minecraft:gray_candle,34,0,24,"candles=1,lit=false",label sign at y=2
+451,Cake with Gray Candle,minecraft:gray_candle_cake,36,0,24,lit=false,label sign at y=2
+452,Gray Carpet,minecraft:gray_carpet,38,0,24,,label sign at y=2
+453,Gray Concrete,minecraft:gray_concrete,40,0,24,,label sign at y=2
+454,Gray Concrete Powder,minecraft:gray_concrete_powder,42,0,24,,label sign at y=2
+455,Gray Concrete Slab,minecraft:gray_concrete_slab,44,0,24,type=bottom,label sign at y=2
+456,Gray Concrete Stairs,minecraft:gray_concrete_stairs,46,0,24,"facing=north,half=bottom,shape=straight",label sign at y=2
+457,Gray Glazed Terracotta,minecraft:gray_glazed_terracotta,48,0,24,facing=north,label sign at y=2
+458,Gray Shulker Box,minecraft:gray_shulker_box,50,0,24,,label sign at y=2
+459,Gray Stained Glass,minecraft:gray_stained_glass,52,0,24,,label sign at y=2
+460,Gray Stained Glass Pane,minecraft:gray_stained_glass_pane,54,0,24,"east=true,north=true,south=true,west=true",label sign at y=2
+461,Gray Terracotta,minecraft:gray_terracotta,56,0,24,,label sign at y=2
+462,,minecraft:gray_wall_banner,58,0,24,,label sign at y=2
+463,Gray Wool,minecraft:gray_wool,60,0,24,,label sign at y=2
+464,Gray Wool Slab,minecraft:gray_wool_slab,62,0,24,type=bottom,label sign at y=2
+465,Gray Wool Stairs,minecraft:gray_wool_stairs,64,0,24,"facing=north,half=bottom,shape=straight",label sign at y=2
+466,Green Banner,minecraft:green_banner,66,0,24,,label sign at y=2
+467,Green Bed,minecraft:green_bed,68,0,24,"facing=north,part=foot",label sign at y=2
+468,Green Candle,minecraft:green_candle,70,0,24,"candles=1,lit=false",label sign at y=2
+469,Cake with Green Candle,minecraft:green_candle_cake,0,0,26,lit=false,label sign at y=2
+470,Green Carpet,minecraft:green_carpet,2,0,26,,label sign at y=2
+471,Green Concrete,minecraft:green_concrete,4,0,26,,label sign at y=2
+472,Green Concrete Powder,minecraft:green_concrete_powder,6,0,26,,label sign at y=2
+473,Green Concrete Slab,minecraft:green_concrete_slab,8,0,26,type=bottom,label sign at y=2
+474,Green Concrete Stairs,minecraft:green_concrete_stairs,10,0,26,"facing=north,half=bottom,shape=straight",label sign at y=2
+475,Green Glazed Terracotta,minecraft:green_glazed_terracotta,12,0,26,facing=north,label sign at y=2
+476,Green Shulker Box,minecraft:green_shulker_box,14,0,26,,label sign at y=2
+477,Green Stained Glass,minecraft:green_stained_glass,16,0,26,,label sign at y=2
+478,Green Stained Glass Pane,minecraft:green_stained_glass_pane,18,0,26,"east=true,north=true,south=true,west=true",label sign at y=2
+479,Green Terracotta,minecraft:green_terracotta,20,0,26,,label sign at y=2
+480,,minecraft:green_wall_banner,22,0,26,,label sign at y=2
+481,Green Wool,minecraft:green_wool,24,0,26,,label sign at y=2
+482,Green Wool Slab,minecraft:green_wool_slab,26,0,26,type=bottom,label sign at y=2
+483,Green Wool Stairs,minecraft:green_wool_stairs,28,0,26,"facing=north,half=bottom,shape=straight",label sign at y=2
+484,Grindstone,minecraft:grindstone,30,0,26,"face=floor,facing=north",label sign at y=2
+485,Hanging Roots,minecraft:hanging_roots,32,0,26,,label sign at y=2
+486,Hay Bale,minecraft:hay_block,34,0,26,axis=y,label sign at y=2
+487,Heavy Core,minecraft:heavy_core,36,0,26,,label sign at y=2
+488,Heavy Weighted Pressure Plate,minecraft:heavy_weighted_pressure_plate,38,0,26,power=0,label sign at y=2
+489,Honey Block,minecraft:honey_block,40,0,26,,label sign at y=2
+490,Honeycomb Block,minecraft:honeycomb_block,42,0,26,,label sign at y=2
+491,Hopper,minecraft:hopper,44,0,26,facing=north,label sign at y=2
+492,Horn Coral,minecraft:horn_coral,46,0,26,,label sign at y=2
+493,Horn Coral Block,minecraft:horn_coral_block,48,0,26,,label sign at y=2
+494,Horn Coral Fan,minecraft:horn_coral_fan,50,0,26,,label sign at y=2
+495,Horn Coral Wall Fan,minecraft:horn_coral_wall_fan,52,0,26,facing=north,label sign at y=2
+496,Ice,minecraft:ice,54,0,26,,label sign at y=2
+497,Infested Chiseled Stone Bricks,minecraft:infested_chiseled_stone_bricks,56,0,26,,label sign at y=2
+498,Infested Cobblestone,minecraft:infested_cobblestone,58,0,26,,label sign at y=2
+499,Infested Cracked Stone Bricks,minecraft:infested_cracked_stone_bricks,60,0,26,,label sign at y=2
+500,Infested Deepslate,minecraft:infested_deepslate,62,0,26,axis=y,label sign at y=2
+501,Infested Mossy Stone Bricks,minecraft:infested_mossy_stone_bricks,64,0,26,,label sign at y=2
+502,Infested Stone,minecraft:infested_stone,66,0,26,,label sign at y=2
+503,Infested Stone Bricks,minecraft:infested_stone_bricks,68,0,26,,label sign at y=2
+504,Iron Bars,minecraft:iron_bars,70,0,26,"east=false,north=false,south=false,west=false",label sign at y=2
+505,Block of Iron,minecraft:iron_block,0,0,28,,label sign at y=2
+506,Iron Chain,minecraft:iron_chain,2,0,28,axis=y,label sign at y=2
+507,Iron Door,minecraft:iron_door,4,0,28,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+508,Iron Ore,minecraft:iron_ore,6,0,28,,label sign at y=2
+509,Iron Trapdoor,minecraft:iron_trapdoor,8,0,28,"facing=north,half=bottom,open=false",label sign at y=2
+510,Jack o'Lantern,minecraft:jack_o_lantern,10,0,28,facing=north,label sign at y=2
+511,Jigsaw Block,minecraft:jigsaw,12,0,28,orientation=down_east,label sign at y=2
+512,Jukebox,minecraft:jukebox,14,0,28,,label sign at y=2
+513,Jungle Button,minecraft:jungle_button,16,0,28,"face=floor,facing=north,powered=false",label sign at y=2
+514,Jungle Door,minecraft:jungle_door,18,0,28,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+515,Jungle Fence,minecraft:jungle_fence,20,0,28,"east=true,north=true,south=true,west=true",label sign at y=2
+516,Jungle Fence Gate,minecraft:jungle_fence_gate,22,0,28,"facing=north,in_wall=false,open=false",label sign at y=2
+517,Jungle Hanging Sign,minecraft:jungle_hanging_sign,24,0,28,"attached=false,rotation=0",label sign at y=2
+518,Jungle Leaves,minecraft:jungle_leaves,26,0,28,,label sign at y=2
+519,Jungle Log,minecraft:jungle_log,28,0,28,axis=y,label sign at y=2
+520,Jungle Planks,minecraft:jungle_planks,30,0,28,,label sign at y=2
+521,Jungle Pressure Plate,minecraft:jungle_pressure_plate,32,0,28,powered=false,label sign at y=2
+522,Jungle Sapling,minecraft:jungle_sapling,34,0,28,,label sign at y=2
+523,Jungle Shelf,minecraft:jungle_shelf,36,0,28,"facing=north,powered=false",label sign at y=2
+524,Jungle Sign,minecraft:jungle_sign,38,0,28,rotation=0,label sign at y=2
+525,Jungle Slab,minecraft:jungle_slab,40,0,28,type=bottom,label sign at y=2
+526,Jungle Stairs,minecraft:jungle_stairs,42,0,28,"facing=north,half=bottom,shape=straight",label sign at y=2
+527,Jungle Trapdoor,minecraft:jungle_trapdoor,44,0,28,"facing=north,half=bottom,open=false",label sign at y=2
+528,Jungle Wall Hanging Sign,minecraft:jungle_wall_hanging_sign,46,0,28,facing=north,label sign at y=2
+529,Jungle Wall Sign,minecraft:jungle_wall_sign,48,0,28,facing=north,label sign at y=2
+530,Jungle Wood,minecraft:jungle_wood,50,0,28,axis=y,label sign at y=2
+531,Kelp,minecraft:kelp,52,0,28,,label sign at y=2
+532,Kelp Plant,minecraft:kelp_plant,54,0,28,,label sign at y=2
+533,Ladder,minecraft:ladder,56,0,28,facing=north,label sign at y=2
+534,Lantern,minecraft:lantern,58,0,28,hanging=false,label sign at y=2
+535,Block of Lapis Lazuli,minecraft:lapis_block,60,0,28,,label sign at y=2
+536,Lapis Lazuli Ore,minecraft:lapis_ore,62,0,28,,label sign at y=2
+537,Large Amethyst Bud,minecraft:large_amethyst_bud,64,0,28,facing=north,label sign at y=2
+538,Large Fern,minecraft:large_fern,66,0,28,half=lower,upper half at y=1; label sign at y=2
+539,Lava,minecraft:lava,68,0,28,,label sign at y=2
+540,Lava Cauldron,minecraft:lava_cauldron,70,0,28,,label sign at y=2
+541,Leaf Litter,minecraft:leaf_litter,0,0,30,"facing=north,segment_amount=1",label sign at y=2
+542,Lectern,minecraft:lectern,2,0,30,facing=north,label sign at y=2
+543,Lever,minecraft:lever,4,0,30,"face=floor,facing=north,powered=false",label sign at y=2
+544,Light,minecraft:light,6,0,30,level=0,label sign at y=2
+545,Light Blue Banner,minecraft:light_blue_banner,8,0,30,,label sign at y=2
+546,Light Blue Bed,minecraft:light_blue_bed,10,0,30,"facing=north,part=foot",label sign at y=2
+547,Light Blue Candle,minecraft:light_blue_candle,12,0,30,"candles=1,lit=false",label sign at y=2
+548,Cake with Light Blue Candle,minecraft:light_blue_candle_cake,14,0,30,lit=false,label sign at y=2
+549,Light Blue Carpet,minecraft:light_blue_carpet,16,0,30,,label sign at y=2
+550,Light Blue Concrete,minecraft:light_blue_concrete,18,0,30,,label sign at y=2
+551,Light Blue Concrete Powder,minecraft:light_blue_concrete_powder,20,0,30,,label sign at y=2
+552,Light Blue Concrete Slab,minecraft:light_blue_concrete_slab,22,0,30,type=bottom,label sign at y=2
+553,Light Blue Concrete Stairs,minecraft:light_blue_concrete_stairs,24,0,30,"facing=north,half=bottom,shape=straight",label sign at y=2
+554,Light Blue Glazed Terracotta,minecraft:light_blue_glazed_terracotta,26,0,30,facing=north,label sign at y=2
+555,Light Blue Shulker Box,minecraft:light_blue_shulker_box,28,0,30,,label sign at y=2
+556,Light Blue Stained Glass,minecraft:light_blue_stained_glass,30,0,30,,label sign at y=2
+557,Light Blue Stained Glass Pane,minecraft:light_blue_stained_glass_pane,32,0,30,"east=true,north=true,south=true,west=true",label sign at y=2
+558,Light Blue Terracotta,minecraft:light_blue_terracotta,34,0,30,,label sign at y=2
+559,,minecraft:light_blue_wall_banner,36,0,30,,label sign at y=2
+560,Light Blue Wool,minecraft:light_blue_wool,38,0,30,,label sign at y=2
+561,Light Blue Wool Slab,minecraft:light_blue_wool_slab,40,0,30,type=bottom,label sign at y=2
+562,Light Blue Wool Stairs,minecraft:light_blue_wool_stairs,42,0,30,"facing=north,half=bottom,shape=straight",label sign at y=2
+563,Light Gray Banner,minecraft:light_gray_banner,44,0,30,,label sign at y=2
+564,Light Gray Bed,minecraft:light_gray_bed,46,0,30,"facing=north,part=foot",label sign at y=2
+565,Light Gray Candle,minecraft:light_gray_candle,48,0,30,"candles=1,lit=false",label sign at y=2
+566,Cake with Light Gray Candle,minecraft:light_gray_candle_cake,50,0,30,lit=false,label sign at y=2
+567,Light Gray Carpet,minecraft:light_gray_carpet,52,0,30,,label sign at y=2
+568,Light Gray Concrete,minecraft:light_gray_concrete,54,0,30,,label sign at y=2
+569,Light Gray Concrete Powder,minecraft:light_gray_concrete_powder,56,0,30,,label sign at y=2
+570,Light Gray Concrete Slab,minecraft:light_gray_concrete_slab,58,0,30,type=bottom,label sign at y=2
+571,Light Gray Concrete Stairs,minecraft:light_gray_concrete_stairs,60,0,30,"facing=north,half=bottom,shape=straight",label sign at y=2
+572,Light Gray Glazed Terracotta,minecraft:light_gray_glazed_terracotta,62,0,30,facing=north,label sign at y=2
+573,Light Gray Shulker Box,minecraft:light_gray_shulker_box,64,0,30,,label sign at y=2
+574,Light Gray Stained Glass,minecraft:light_gray_stained_glass,66,0,30,,label sign at y=2
+575,Light Gray Stained Glass Pane,minecraft:light_gray_stained_glass_pane,68,0,30,"east=true,north=true,south=true,west=true",label sign at y=2
+576,Light Gray Terracotta,minecraft:light_gray_terracotta,70,0,30,,label sign at y=2
+577,,minecraft:light_gray_wall_banner,0,0,32,,label sign at y=2
+578,Light Gray Wool,minecraft:light_gray_wool,2,0,32,,label sign at y=2
+579,Light Gray Wool Slab,minecraft:light_gray_wool_slab,4,0,32,type=bottom,label sign at y=2
+580,Light Gray Wool Stairs,minecraft:light_gray_wool_stairs,6,0,32,"facing=north,half=bottom,shape=straight",label sign at y=2
+581,Light Weighted Pressure Plate,minecraft:light_weighted_pressure_plate,8,0,32,power=0,label sign at y=2
+582,Lightning Rod,minecraft:lightning_rod,10,0,32,"facing=north,powered=false",label sign at y=2
+583,Lilac,minecraft:lilac,12,0,32,half=lower,upper half at y=1; label sign at y=2
+584,Lily of the Valley,minecraft:lily_of_the_valley,14,0,32,,label sign at y=2
+585,Lily Pad,minecraft:lily_pad,16,0,32,,label sign at y=2
+586,Lime Banner,minecraft:lime_banner,18,0,32,,label sign at y=2
+587,Lime Bed,minecraft:lime_bed,20,0,32,"facing=north,part=foot",label sign at y=2
+588,Lime Candle,minecraft:lime_candle,22,0,32,"candles=1,lit=false",label sign at y=2
+589,Cake with Lime Candle,minecraft:lime_candle_cake,24,0,32,lit=false,label sign at y=2
+590,Lime Carpet,minecraft:lime_carpet,26,0,32,,label sign at y=2
+591,Lime Concrete,minecraft:lime_concrete,28,0,32,,label sign at y=2
+592,Lime Concrete Powder,minecraft:lime_concrete_powder,30,0,32,,label sign at y=2
+593,Lime Concrete Slab,minecraft:lime_concrete_slab,32,0,32,type=bottom,label sign at y=2
+594,Lime Concrete Stairs,minecraft:lime_concrete_stairs,34,0,32,"facing=north,half=bottom,shape=straight",label sign at y=2
+595,Lime Glazed Terracotta,minecraft:lime_glazed_terracotta,36,0,32,facing=north,label sign at y=2
+596,Lime Shulker Box,minecraft:lime_shulker_box,38,0,32,,label sign at y=2
+597,Lime Stained Glass,minecraft:lime_stained_glass,40,0,32,,label sign at y=2
+598,Lime Stained Glass Pane,minecraft:lime_stained_glass_pane,42,0,32,"east=true,north=true,south=true,west=true",label sign at y=2
+599,Lime Terracotta,minecraft:lime_terracotta,44,0,32,,label sign at y=2
+600,,minecraft:lime_wall_banner,46,0,32,,label sign at y=2
+601,Lime Wool,minecraft:lime_wool,48,0,32,,label sign at y=2
+602,Lime Wool Slab,minecraft:lime_wool_slab,50,0,32,type=bottom,label sign at y=2
+603,Lime Wool Stairs,minecraft:lime_wool_stairs,52,0,32,"facing=north,half=bottom,shape=straight",label sign at y=2
+604,Lodestone,minecraft:lodestone,54,0,32,,label sign at y=2
+605,Loom,minecraft:loom,56,0,32,facing=north,label sign at y=2
+606,Magenta Banner,minecraft:magenta_banner,58,0,32,,label sign at y=2
+607,Magenta Bed,minecraft:magenta_bed,60,0,32,"facing=north,part=foot",label sign at y=2
+608,Magenta Candle,minecraft:magenta_candle,62,0,32,"candles=1,lit=false",label sign at y=2
+609,Cake with Magenta Candle,minecraft:magenta_candle_cake,64,0,32,lit=false,label sign at y=2
+610,Magenta Carpet,minecraft:magenta_carpet,66,0,32,,label sign at y=2
+611,Magenta Concrete,minecraft:magenta_concrete,68,0,32,,label sign at y=2
+612,Magenta Concrete Powder,minecraft:magenta_concrete_powder,70,0,32,,label sign at y=2
+613,Magenta Concrete Slab,minecraft:magenta_concrete_slab,0,0,34,type=bottom,label sign at y=2
+614,Magenta Concrete Stairs,minecraft:magenta_concrete_stairs,2,0,34,"facing=north,half=bottom,shape=straight",label sign at y=2
+615,Magenta Glazed Terracotta,minecraft:magenta_glazed_terracotta,4,0,34,facing=north,label sign at y=2
+616,Magenta Shulker Box,minecraft:magenta_shulker_box,6,0,34,,label sign at y=2
+617,Magenta Stained Glass,minecraft:magenta_stained_glass,8,0,34,,label sign at y=2
+618,Magenta Stained Glass Pane,minecraft:magenta_stained_glass_pane,10,0,34,"east=true,north=true,south=true,west=true",label sign at y=2
+619,Magenta Terracotta,minecraft:magenta_terracotta,12,0,34,,label sign at y=2
+620,,minecraft:magenta_wall_banner,14,0,34,,label sign at y=2
+621,Magenta Wool,minecraft:magenta_wool,16,0,34,,label sign at y=2
+622,Magenta Wool Slab,minecraft:magenta_wool_slab,18,0,34,type=bottom,label sign at y=2
+623,Magenta Wool Stairs,minecraft:magenta_wool_stairs,20,0,34,"facing=north,half=bottom,shape=straight",label sign at y=2
+624,Magma Block,minecraft:magma_block,22,0,34,,label sign at y=2
+625,Mangrove Button,minecraft:mangrove_button,24,0,34,"face=floor,facing=north,powered=false",label sign at y=2
+626,Mangrove Door,minecraft:mangrove_door,26,0,34,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+627,Mangrove Fence,minecraft:mangrove_fence,28,0,34,"east=true,north=true,south=true,west=true",label sign at y=2
+628,Mangrove Fence Gate,minecraft:mangrove_fence_gate,30,0,34,"facing=north,in_wall=false,open=false",label sign at y=2
+629,Mangrove Hanging Sign,minecraft:mangrove_hanging_sign,32,0,34,"attached=false,rotation=0",label sign at y=2
+630,Mangrove Leaves,minecraft:mangrove_leaves,34,0,34,,label sign at y=2
+631,Mangrove Log,minecraft:mangrove_log,36,0,34,axis=y,label sign at y=2
+632,Mangrove Planks,minecraft:mangrove_planks,38,0,34,,label sign at y=2
+633,Mangrove Pressure Plate,minecraft:mangrove_pressure_plate,40,0,34,powered=false,label sign at y=2
+634,Mangrove Propagule,minecraft:mangrove_propagule,42,0,34,"age=0,hanging=false",label sign at y=2
+635,Mangrove Roots,minecraft:mangrove_roots,44,0,34,,label sign at y=2
+636,Mangrove Shelf,minecraft:mangrove_shelf,46,0,34,"facing=north,powered=false",label sign at y=2
+637,Mangrove Sign,minecraft:mangrove_sign,48,0,34,rotation=0,label sign at y=2
+638,Mangrove Slab,minecraft:mangrove_slab,50,0,34,type=bottom,label sign at y=2
+639,Mangrove Stairs,minecraft:mangrove_stairs,52,0,34,"facing=north,half=bottom,shape=straight",label sign at y=2
+640,Mangrove Trapdoor,minecraft:mangrove_trapdoor,54,0,34,"facing=north,half=bottom,open=false",label sign at y=2
+641,Mangrove Wall Hanging Sign,minecraft:mangrove_wall_hanging_sign,56,0,34,facing=north,label sign at y=2
+642,Mangrove Wall Sign,minecraft:mangrove_wall_sign,58,0,34,facing=north,label sign at y=2
+643,Mangrove Wood,minecraft:mangrove_wood,60,0,34,axis=y,label sign at y=2
+644,Medium Amethyst Bud,minecraft:medium_amethyst_bud,62,0,34,facing=north,label sign at y=2
+645,Melon,minecraft:melon,64,0,34,,label sign at y=2
+646,Melon Stem,minecraft:melon_stem,66,0,34,age=0,label sign at y=2
+647,Moss Block,minecraft:moss_block,68,0,34,,label sign at y=2
+648,Moss Carpet,minecraft:moss_carpet,70,0,34,,label sign at y=2
+649,Mossy Cobblestone,minecraft:mossy_cobblestone,0,0,36,,label sign at y=2
+650,Mossy Cobblestone Slab,minecraft:mossy_cobblestone_slab,2,0,36,type=bottom,label sign at y=2
+651,Mossy Cobblestone Stairs,minecraft:mossy_cobblestone_stairs,4,0,36,"facing=north,half=bottom,shape=straight",label sign at y=2
+652,Mossy Cobblestone Wall,minecraft:mossy_cobblestone_wall,6,0,36,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+653,Mossy Stone Brick Slab,minecraft:mossy_stone_brick_slab,8,0,36,type=bottom,label sign at y=2
+654,Mossy Stone Brick Stairs,minecraft:mossy_stone_brick_stairs,10,0,36,"facing=north,half=bottom,shape=straight",label sign at y=2
+655,Mossy Stone Brick Wall,minecraft:mossy_stone_brick_wall,12,0,36,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+656,Mossy Stone Bricks,minecraft:mossy_stone_bricks,14,0,36,,label sign at y=2
+657,Moving Piston,minecraft:moving_piston,16,0,36,,label sign at y=2
+658,Mud,minecraft:mud,18,0,36,,label sign at y=2
+659,Mud Brick Slab,minecraft:mud_brick_slab,20,0,36,type=bottom,label sign at y=2
+660,Mud Brick Stairs,minecraft:mud_brick_stairs,22,0,36,"facing=north,half=bottom,shape=straight",label sign at y=2
+661,Mud Brick Wall,minecraft:mud_brick_wall,24,0,36,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+662,Mud Bricks,minecraft:mud_bricks,26,0,36,,label sign at y=2
+663,Muddy Mangrove Roots,minecraft:muddy_mangrove_roots,28,0,36,axis=y,label sign at y=2
+664,Mushroom Stem,minecraft:mushroom_stem,30,0,36,"down=true,east=true,north=true,south=true,up=true,west=true",label sign at y=2
+665,Mycelium,minecraft:mycelium,32,0,36,snowy=false,label sign at y=2
+666,Nether Brick Fence,minecraft:nether_brick_fence,34,0,36,"east=true,north=true,south=true,west=true",label sign at y=2
+667,Nether Brick Slab,minecraft:nether_brick_slab,36,0,36,type=bottom,label sign at y=2
+668,Nether Brick Stairs,minecraft:nether_brick_stairs,38,0,36,"facing=north,half=bottom,shape=straight",label sign at y=2
+669,Nether Brick Wall,minecraft:nether_brick_wall,40,0,36,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+670,Nether Bricks,minecraft:nether_bricks,42,0,36,,label sign at y=2
+671,Nether Gold Ore,minecraft:nether_gold_ore,44,0,36,,label sign at y=2
+672,Nether Portal,minecraft:nether_portal,46,0,36,axis=x,label sign at y=2
+673,Nether Quartz Ore,minecraft:nether_quartz_ore,48,0,36,,label sign at y=2
+674,Nether Sprouts,minecraft:nether_sprouts,50,0,36,,label sign at y=2
+675,Nether Wart,minecraft:nether_wart,52,0,36,age=0,label sign at y=2
+676,Nether Wart Block,minecraft:nether_wart_block,54,0,36,,label sign at y=2
+677,Block of Netherite,minecraft:netherite_block,56,0,36,,label sign at y=2
+678,Netherrack,minecraft:netherrack,58,0,36,,label sign at y=2
+679,Note Block,minecraft:note_block,60,0,36,,label sign at y=2
+680,Oak Button,minecraft:oak_button,62,0,36,"face=floor,facing=north,powered=false",label sign at y=2
+681,Oak Door,minecraft:oak_door,64,0,36,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+682,Oak Fence,minecraft:oak_fence,66,0,36,"east=true,north=true,south=true,west=true",label sign at y=2
+683,Oak Fence Gate,minecraft:oak_fence_gate,68,0,36,"facing=north,in_wall=false,open=false",label sign at y=2
+684,Oak Hanging Sign,minecraft:oak_hanging_sign,70,0,36,"attached=false,rotation=0",label sign at y=2
+685,Oak Leaves,minecraft:oak_leaves,0,0,38,,label sign at y=2
+686,Oak Log,minecraft:oak_log,2,0,38,axis=y,label sign at y=2
+687,Oak Planks,minecraft:oak_planks,4,0,38,,label sign at y=2
+688,Oak Pressure Plate,minecraft:oak_pressure_plate,6,0,38,powered=false,label sign at y=2
+689,Oak Sapling,minecraft:oak_sapling,8,0,38,,label sign at y=2
+690,Oak Shelf,minecraft:oak_shelf,10,0,38,"facing=north,powered=false",label sign at y=2
+691,Oak Sign,minecraft:oak_sign,12,0,38,rotation=0,label sign at y=2
+692,Oak Slab,minecraft:oak_slab,14,0,38,type=bottom,label sign at y=2
+693,Oak Stairs,minecraft:oak_stairs,16,0,38,"facing=north,half=bottom,shape=straight",label sign at y=2
+694,Oak Trapdoor,minecraft:oak_trapdoor,18,0,38,"facing=north,half=bottom,open=false",label sign at y=2
+695,Oak Wall Hanging Sign,minecraft:oak_wall_hanging_sign,20,0,38,facing=north,label sign at y=2
+696,Oak Wall Sign,minecraft:oak_wall_sign,22,0,38,facing=north,label sign at y=2
+697,Oak Wood,minecraft:oak_wood,24,0,38,axis=y,label sign at y=2
+698,Observer,minecraft:observer,26,0,38,"facing=north,powered=false",label sign at y=2
+699,Obsidian,minecraft:obsidian,28,0,38,,label sign at y=2
+700,Ochre Froglight,minecraft:ochre_froglight,30,0,38,axis=y,label sign at y=2
+701,Open Eyeblossom,minecraft:open_eyeblossom,32,0,38,,label sign at y=2
+702,Orange Banner,minecraft:orange_banner,34,0,38,,label sign at y=2
+703,Orange Bed,minecraft:orange_bed,36,0,38,"facing=north,part=foot",label sign at y=2
+704,Orange Candle,minecraft:orange_candle,38,0,38,"candles=1,lit=false",label sign at y=2
+705,Cake with Orange Candle,minecraft:orange_candle_cake,40,0,38,lit=false,label sign at y=2
+706,Orange Carpet,minecraft:orange_carpet,42,0,38,,label sign at y=2
+707,Orange Concrete,minecraft:orange_concrete,44,0,38,,label sign at y=2
+708,Orange Concrete Powder,minecraft:orange_concrete_powder,46,0,38,,label sign at y=2
+709,Orange Concrete Slab,minecraft:orange_concrete_slab,48,0,38,type=bottom,label sign at y=2
+710,Orange Concrete Stairs,minecraft:orange_concrete_stairs,50,0,38,"facing=north,half=bottom,shape=straight",label sign at y=2
+711,Orange Glazed Terracotta,minecraft:orange_glazed_terracotta,52,0,38,facing=north,label sign at y=2
+712,Orange Poplar Leaves,minecraft:orange_poplar_leaves,54,0,38,,label sign at y=2
+713,Orange Shulker Box,minecraft:orange_shulker_box,56,0,38,,label sign at y=2
+714,Orange Stained Glass,minecraft:orange_stained_glass,58,0,38,,label sign at y=2
+715,Orange Stained Glass Pane,minecraft:orange_stained_glass_pane,60,0,38,"east=true,north=true,south=true,west=true",label sign at y=2
+716,Orange Terracotta,minecraft:orange_terracotta,62,0,38,,label sign at y=2
+717,Orange Tulip,minecraft:orange_tulip,64,0,38,,label sign at y=2
+718,,minecraft:orange_wall_banner,66,0,38,,label sign at y=2
+719,Orange Wool,minecraft:orange_wool,68,0,38,,label sign at y=2
+720,Orange Wool Slab,minecraft:orange_wool_slab,70,0,38,type=bottom,label sign at y=2
+721,Orange Wool Stairs,minecraft:orange_wool_stairs,0,0,40,"facing=north,half=bottom,shape=straight",label sign at y=2
+722,Oxeye Daisy,minecraft:oxeye_daisy,2,0,40,,label sign at y=2
+723,Oxidized Chiseled Copper,minecraft:oxidized_chiseled_copper,4,0,40,,label sign at y=2
+724,Oxidized Copper,minecraft:oxidized_copper,6,0,40,,label sign at y=2
+725,Oxidized Copper Bars,minecraft:oxidized_copper_bars,8,0,40,"east=false,north=false,south=false,west=false",label sign at y=2
+726,Oxidized Copper Bulb,minecraft:oxidized_copper_bulb,10,0,40,"lit=false,powered=false",label sign at y=2
+727,Oxidized Copper Chain,minecraft:oxidized_copper_chain,12,0,40,axis=y,label sign at y=2
+728,Oxidized Copper Chest,minecraft:oxidized_copper_chest,14,0,40,,label sign at y=2
+729,Oxidized Copper Door,minecraft:oxidized_copper_door,16,0,40,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+730,Oxidized Copper Golem Statue,minecraft:oxidized_copper_golem_statue,18,0,40,,label sign at y=2
+731,Oxidized Copper Grate,minecraft:oxidized_copper_grate,20,0,40,,label sign at y=2
+732,Oxidized Copper Lantern,minecraft:oxidized_copper_lantern,22,0,40,hanging=false,label sign at y=2
+733,Oxidized Copper Trapdoor,minecraft:oxidized_copper_trapdoor,24,0,40,"facing=north,half=bottom,open=false",label sign at y=2
+734,Oxidized Cut Copper,minecraft:oxidized_cut_copper,26,0,40,,label sign at y=2
+735,Oxidized Cut Copper Slab,minecraft:oxidized_cut_copper_slab,28,0,40,type=bottom,label sign at y=2
+736,Oxidized Cut Copper Stairs,minecraft:oxidized_cut_copper_stairs,30,0,40,"facing=north,half=bottom,shape=straight",label sign at y=2
+737,Oxidized Lightning Rod,minecraft:oxidized_lightning_rod,32,0,40,"facing=north,powered=false",label sign at y=2
+738,Packed Ice,minecraft:packed_ice,34,0,40,,label sign at y=2
+739,Packed Mud,minecraft:packed_mud,36,0,40,,label sign at y=2
+740,Pale Hanging Moss,minecraft:pale_hanging_moss,38,0,40,tip=false,label sign at y=2
+741,Pale Moss Block,minecraft:pale_moss_block,40,0,40,,label sign at y=2
+742,Pale Moss Carpet,minecraft:pale_moss_carpet,42,0,40,"bottom=true,east=tall,north=tall,south=tall,west=tall",label sign at y=2
+743,Pale Oak Button,minecraft:pale_oak_button,44,0,40,"face=floor,facing=north,powered=false",label sign at y=2
+744,Pale Oak Door,minecraft:pale_oak_door,46,0,40,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+745,Pale Oak Fence,minecraft:pale_oak_fence,48,0,40,"east=true,north=true,south=true,west=true",label sign at y=2
+746,Pale Oak Fence Gate,minecraft:pale_oak_fence_gate,50,0,40,"facing=north,in_wall=false,open=false",label sign at y=2
+747,Pale Oak Hanging Sign,minecraft:pale_oak_hanging_sign,52,0,40,"attached=false,rotation=0",label sign at y=2
+748,Pale Oak Leaves,minecraft:pale_oak_leaves,54,0,40,,label sign at y=2
+749,Pale Oak Log,minecraft:pale_oak_log,56,0,40,axis=y,label sign at y=2
+750,Pale Oak Planks,minecraft:pale_oak_planks,58,0,40,,label sign at y=2
+751,Pale Oak Pressure Plate,minecraft:pale_oak_pressure_plate,60,0,40,powered=false,label sign at y=2
+752,Pale Oak Sapling,minecraft:pale_oak_sapling,62,0,40,,label sign at y=2
+753,Pale Oak Shelf,minecraft:pale_oak_shelf,64,0,40,"facing=north,powered=false",label sign at y=2
+754,Pale Oak Sign,minecraft:pale_oak_sign,66,0,40,rotation=0,label sign at y=2
+755,Pale Oak Slab,minecraft:pale_oak_slab,68,0,40,type=bottom,label sign at y=2
+756,Pale Oak Stairs,minecraft:pale_oak_stairs,70,0,40,"facing=north,half=bottom,shape=straight",label sign at y=2
+757,Pale Oak Trapdoor,minecraft:pale_oak_trapdoor,0,0,42,"facing=north,half=bottom,open=false",label sign at y=2
+758,Pale Oak Wall Hanging Sign,minecraft:pale_oak_wall_hanging_sign,2,0,42,facing=north,label sign at y=2
+759,Pale Oak Wall Sign,minecraft:pale_oak_wall_sign,4,0,42,facing=north,label sign at y=2
+760,Pale Oak Wood,minecraft:pale_oak_wood,6,0,42,axis=y,label sign at y=2
+761,Pearlescent Froglight,minecraft:pearlescent_froglight,8,0,42,axis=y,label sign at y=2
+762,Peony,minecraft:peony,10,0,42,half=lower,upper half at y=1; label sign at y=2
+763,Petrified Oak Slab,minecraft:petrified_oak_slab,12,0,42,type=bottom,label sign at y=2
+764,Piglin Head,minecraft:piglin_head,14,0,42,,label sign at y=2
+765,Piglin Wall Head,minecraft:piglin_wall_head,16,0,42,,label sign at y=2
+766,Pink Banner,minecraft:pink_banner,18,0,42,,label sign at y=2
+767,Pink Bed,minecraft:pink_bed,20,0,42,"facing=north,part=foot",label sign at y=2
+768,Pink Candle,minecraft:pink_candle,22,0,42,"candles=1,lit=false",label sign at y=2
+769,Cake with Pink Candle,minecraft:pink_candle_cake,24,0,42,lit=false,label sign at y=2
+770,Pink Carpet,minecraft:pink_carpet,26,0,42,,label sign at y=2
+771,Pink Concrete,minecraft:pink_concrete,28,0,42,,label sign at y=2
+772,Pink Concrete Powder,minecraft:pink_concrete_powder,30,0,42,,label sign at y=2
+773,Pink Concrete Slab,minecraft:pink_concrete_slab,32,0,42,type=bottom,label sign at y=2
+774,Pink Concrete Stairs,minecraft:pink_concrete_stairs,34,0,42,"facing=north,half=bottom,shape=straight",label sign at y=2
+775,Pink Glazed Terracotta,minecraft:pink_glazed_terracotta,36,0,42,facing=north,label sign at y=2
+776,Pink Petals,minecraft:pink_petals,38,0,42,"facing=north,flower_amount=2",label sign at y=2
+777,Pink Shulker Box,minecraft:pink_shulker_box,40,0,42,,label sign at y=2
+778,Pink Stained Glass,minecraft:pink_stained_glass,42,0,42,,label sign at y=2
+779,Pink Stained Glass Pane,minecraft:pink_stained_glass_pane,44,0,42,"east=true,north=true,south=true,west=true",label sign at y=2
+780,Pink Terracotta,minecraft:pink_terracotta,46,0,42,,label sign at y=2
+781,Pink Tulip,minecraft:pink_tulip,48,0,42,,label sign at y=2
+782,,minecraft:pink_wall_banner,50,0,42,,label sign at y=2
+783,Pink Wool,minecraft:pink_wool,52,0,42,,label sign at y=2
+784,Pink Wool Slab,minecraft:pink_wool_slab,54,0,42,type=bottom,label sign at y=2
+785,Pink Wool Stairs,minecraft:pink_wool_stairs,56,0,42,"facing=north,half=bottom,shape=straight",label sign at y=2
+786,Piston,minecraft:piston,58,0,42,"extended=false,facing=north",label sign at y=2
+787,Piston Head,minecraft:piston_head,60,0,42,"facing=north,short=false,type=normal",label sign at y=2
+788,Pitcher Crop,minecraft:pitcher_crop,62,0,42,"age=0,half=lower",upper half at y=1; label sign at y=2
+789,Pitcher Plant,minecraft:pitcher_plant,64,0,42,half=lower,upper half at y=1; label sign at y=2
+790,Player Head,minecraft:player_head,66,0,42,,label sign at y=2
+791,Player Wall Head,minecraft:player_wall_head,68,0,42,,label sign at y=2
+792,Podzol,minecraft:podzol,70,0,42,snowy=false,label sign at y=2
+793,Pointed Dripstone,minecraft:pointed_dripstone,0,0,44,"thickness=base,vertical_direction=down",label sign at y=2
+794,Polished Andesite,minecraft:polished_andesite,2,0,44,,label sign at y=2
+795,Polished Andesite Slab,minecraft:polished_andesite_slab,4,0,44,type=bottom,label sign at y=2
+796,Polished Andesite Stairs,minecraft:polished_andesite_stairs,6,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+797,Polished Basalt,minecraft:polished_basalt,8,0,44,axis=y,label sign at y=2
+798,Polished Blackstone,minecraft:polished_blackstone,10,0,44,,label sign at y=2
+799,Polished Blackstone Brick Slab,minecraft:polished_blackstone_brick_slab,12,0,44,type=bottom,label sign at y=2
+800,Polished Blackstone Brick Stairs,minecraft:polished_blackstone_brick_stairs,14,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+801,Polished Blackstone Brick Wall,minecraft:polished_blackstone_brick_wall,16,0,44,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+802,Polished Blackstone Bricks,minecraft:polished_blackstone_bricks,18,0,44,,label sign at y=2
+803,Polished Blackstone Button,minecraft:polished_blackstone_button,20,0,44,"face=floor,facing=north,powered=false",label sign at y=2
+804,Polished Blackstone Pressure Plate,minecraft:polished_blackstone_pressure_plate,22,0,44,powered=false,label sign at y=2
+805,Polished Blackstone Slab,minecraft:polished_blackstone_slab,24,0,44,type=bottom,label sign at y=2
+806,Polished Blackstone Stairs,minecraft:polished_blackstone_stairs,26,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+807,Polished Blackstone Wall,minecraft:polished_blackstone_wall,28,0,44,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+808,Polished Cinnabar,minecraft:polished_cinnabar,30,0,44,,label sign at y=2
+809,Polished Cinnabar Slab,minecraft:polished_cinnabar_slab,32,0,44,type=bottom,label sign at y=2
+810,Polished Cinnabar Stairs,minecraft:polished_cinnabar_stairs,34,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+811,Polished Cinnabar Wall,minecraft:polished_cinnabar_wall,36,0,44,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+812,Polished Deepslate,minecraft:polished_deepslate,38,0,44,,label sign at y=2
+813,Polished Deepslate Slab,minecraft:polished_deepslate_slab,40,0,44,type=bottom,label sign at y=2
+814,Polished Deepslate Stairs,minecraft:polished_deepslate_stairs,42,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+815,Polished Deepslate Wall,minecraft:polished_deepslate_wall,44,0,44,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+816,Polished Diorite,minecraft:polished_diorite,46,0,44,,label sign at y=2
+817,Polished Diorite Slab,minecraft:polished_diorite_slab,48,0,44,type=bottom,label sign at y=2
+818,Polished Diorite Stairs,minecraft:polished_diorite_stairs,50,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+819,Polished Granite,minecraft:polished_granite,52,0,44,,label sign at y=2
+820,Polished Granite Slab,minecraft:polished_granite_slab,54,0,44,type=bottom,label sign at y=2
+821,Polished Granite Stairs,minecraft:polished_granite_stairs,56,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+822,Polished Sulfur,minecraft:polished_sulfur,58,0,44,,label sign at y=2
+823,Polished Sulfur Slab,minecraft:polished_sulfur_slab,60,0,44,type=bottom,label sign at y=2
+824,Polished Sulfur Stairs,minecraft:polished_sulfur_stairs,62,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+825,Polished Sulfur Wall,minecraft:polished_sulfur_wall,64,0,44,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+826,Polished Tuff,minecraft:polished_tuff,66,0,44,,label sign at y=2
+827,Polished Tuff Slab,minecraft:polished_tuff_slab,68,0,44,type=bottom,label sign at y=2
+828,Polished Tuff Stairs,minecraft:polished_tuff_stairs,70,0,44,"facing=north,half=bottom,shape=straight",label sign at y=2
+829,Polished Tuff Wall,minecraft:polished_tuff_wall,0,0,46,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+830,Poplar Button,minecraft:poplar_button,2,0,46,"face=floor,facing=north,powered=false",label sign at y=2
+831,Poplar Door,minecraft:poplar_door,4,0,46,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+832,Poplar Fence,minecraft:poplar_fence,6,0,46,"east=true,north=true,south=true,west=true",label sign at y=2
+833,Poplar Fence Gate,minecraft:poplar_fence_gate,8,0,46,"facing=north,in_wall=false,open=false",label sign at y=2
+834,Poplar Hanging Sign,minecraft:poplar_hanging_sign,10,0,46,"attached=false,rotation=0",label sign at y=2
+835,Poplar Log,minecraft:poplar_log,12,0,46,axis=y,label sign at y=2
+836,Poplar Planks,minecraft:poplar_planks,14,0,46,,label sign at y=2
+837,Poplar Pressure Plate,minecraft:poplar_pressure_plate,16,0,46,powered=false,label sign at y=2
+838,Poplar Sapling,minecraft:poplar_sapling,18,0,46,,label sign at y=2
+839,Poplar Shelf,minecraft:poplar_shelf,20,0,46,"facing=north,powered=false",label sign at y=2
+840,Poplar Sign,minecraft:poplar_sign,22,0,46,rotation=0,label sign at y=2
+841,Poplar Slab,minecraft:poplar_slab,24,0,46,type=bottom,label sign at y=2
+842,Poplar Stairs,minecraft:poplar_stairs,26,0,46,"facing=north,half=bottom,shape=straight",label sign at y=2
+843,Poplar Trapdoor,minecraft:poplar_trapdoor,28,0,46,"facing=north,half=bottom,open=false",label sign at y=2
+844,Poplar Wall Hanging Sign,minecraft:poplar_wall_hanging_sign,30,0,46,facing=north,label sign at y=2
+845,Poplar Wall Sign,minecraft:poplar_wall_sign,32,0,46,facing=north,label sign at y=2
+846,Poplar Wood,minecraft:poplar_wood,34,0,46,axis=y,label sign at y=2
+847,Poppy,minecraft:poppy,36,0,46,,label sign at y=2
+848,Potatoes,minecraft:potatoes,38,0,46,age=0,label sign at y=2
+849,Potent Sulfur,minecraft:potent_sulfur,40,0,46,,label sign at y=2
+850,Potted Acacia Sapling,minecraft:potted_acacia_sapling,42,0,46,,label sign at y=2
+851,Potted Allium,minecraft:potted_allium,44,0,46,,label sign at y=2
+852,Potted Azalea,minecraft:potted_azalea_bush,46,0,46,,label sign at y=2
+853,Potted Azure Bluet,minecraft:potted_azure_bluet,48,0,46,,label sign at y=2
+854,Potted Bamboo,minecraft:potted_bamboo,50,0,46,,label sign at y=2
+855,Potted Birch Sapling,minecraft:potted_birch_sapling,52,0,46,,label sign at y=2
+856,Potted Blue Orchid,minecraft:potted_blue_orchid,54,0,46,,label sign at y=2
+857,Potted Brown Mushroom,minecraft:potted_brown_mushroom,56,0,46,,label sign at y=2
+858,Potted Cactus,minecraft:potted_cactus,58,0,46,,label sign at y=2
+859,Potted Cherry Sapling,minecraft:potted_cherry_sapling,60,0,46,,label sign at y=2
+860,Potted Closed Eyeblossom,minecraft:potted_closed_eyeblossom,62,0,46,,label sign at y=2
+861,Potted Cornflower,minecraft:potted_cornflower,64,0,46,,label sign at y=2
+862,Potted Crimson Fungus,minecraft:potted_crimson_fungus,66,0,46,,label sign at y=2
+863,Potted Crimson Roots,minecraft:potted_crimson_roots,68,0,46,,label sign at y=2
+864,Potted Dandelion,minecraft:potted_dandelion,70,0,46,,label sign at y=2
+865,Potted Dark Oak Sapling,minecraft:potted_dark_oak_sapling,0,0,48,,label sign at y=2
+866,Potted Dead Bush,minecraft:potted_dead_bush,2,0,48,,label sign at y=2
+867,Potted Fern,minecraft:potted_fern,4,0,48,,label sign at y=2
+868,Potted Flowering Azalea,minecraft:potted_flowering_azalea_bush,6,0,48,,label sign at y=2
+869,Potted Golden Dandelion,minecraft:potted_golden_dandelion,8,0,48,,label sign at y=2
+870,Potted Jungle Sapling,minecraft:potted_jungle_sapling,10,0,48,,label sign at y=2
+871,Potted Lily of the Valley,minecraft:potted_lily_of_the_valley,12,0,48,,label sign at y=2
+872,Potted Mangrove Propagule,minecraft:potted_mangrove_propagule,14,0,48,,label sign at y=2
+873,Potted Oak Sapling,minecraft:potted_oak_sapling,16,0,48,,label sign at y=2
+874,Potted Open Eyeblossom,minecraft:potted_open_eyeblossom,18,0,48,,label sign at y=2
+875,Potted Orange Tulip,minecraft:potted_orange_tulip,20,0,48,,label sign at y=2
+876,Potted Oxeye Daisy,minecraft:potted_oxeye_daisy,22,0,48,,label sign at y=2
+877,Potted Pale Oak Sapling,minecraft:potted_pale_oak_sapling,24,0,48,,label sign at y=2
+878,Potted Pink Tulip,minecraft:potted_pink_tulip,26,0,48,,label sign at y=2
+879,Potted Poplar Sapling,minecraft:potted_poplar_sapling,28,0,48,,label sign at y=2
+880,Potted Poppy,minecraft:potted_poppy,30,0,48,,label sign at y=2
+881,Potted Red Mushroom,minecraft:potted_red_mushroom,32,0,48,,label sign at y=2
+882,Potted Red Tulip,minecraft:potted_red_tulip,34,0,48,,label sign at y=2
+883,Potted Spruce Sapling,minecraft:potted_spruce_sapling,36,0,48,,label sign at y=2
+884,Potted Torchflower,minecraft:potted_torchflower,38,0,48,,label sign at y=2
+885,Potted Warped Fungus,minecraft:potted_warped_fungus,40,0,48,,label sign at y=2
+886,Potted Warped Roots,minecraft:potted_warped_roots,42,0,48,,label sign at y=2
+887,Potted White Tulip,minecraft:potted_white_tulip,44,0,48,,label sign at y=2
+888,Potted Wither Rose,minecraft:potted_wither_rose,46,0,48,,label sign at y=2
+889,Powder Snow,minecraft:powder_snow,48,0,48,,label sign at y=2
+890,Powder Snow Cauldron,minecraft:powder_snow_cauldron,50,0,48,level=1,label sign at y=2
+891,Powered Rail,minecraft:powered_rail,52,0,48,"powered=false,shape=north_south",label sign at y=2
+892,Prismarine,minecraft:prismarine,54,0,48,,label sign at y=2
+893,Prismarine Brick Slab,minecraft:prismarine_brick_slab,56,0,48,type=bottom,label sign at y=2
+894,Prismarine Brick Stairs,minecraft:prismarine_brick_stairs,58,0,48,"facing=north,half=bottom,shape=straight",label sign at y=2
+895,Prismarine Bricks,minecraft:prismarine_bricks,60,0,48,,label sign at y=2
+896,Prismarine Slab,minecraft:prismarine_slab,62,0,48,type=bottom,label sign at y=2
+897,Prismarine Stairs,minecraft:prismarine_stairs,64,0,48,"facing=north,half=bottom,shape=straight",label sign at y=2
+898,Prismarine Wall,minecraft:prismarine_wall,66,0,48,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+899,Pumpkin,minecraft:pumpkin,68,0,48,,label sign at y=2
+900,Pumpkin Stem,minecraft:pumpkin_stem,70,0,48,age=0,label sign at y=2
+901,Purple Banner,minecraft:purple_banner,0,0,50,,label sign at y=2
+902,Purple Bed,minecraft:purple_bed,2,0,50,"facing=north,part=foot",label sign at y=2
+903,Purple Candle,minecraft:purple_candle,4,0,50,"candles=1,lit=false",label sign at y=2
+904,Cake with Purple Candle,minecraft:purple_candle_cake,6,0,50,lit=false,label sign at y=2
+905,Purple Carpet,minecraft:purple_carpet,8,0,50,,label sign at y=2
+906,Purple Concrete,minecraft:purple_concrete,10,0,50,,label sign at y=2
+907,Purple Concrete Powder,minecraft:purple_concrete_powder,12,0,50,,label sign at y=2
+908,Purple Concrete Slab,minecraft:purple_concrete_slab,14,0,50,type=bottom,label sign at y=2
+909,Purple Concrete Stairs,minecraft:purple_concrete_stairs,16,0,50,"facing=north,half=bottom,shape=straight",label sign at y=2
+910,Purple Glazed Terracotta,minecraft:purple_glazed_terracotta,18,0,50,facing=north,label sign at y=2
+911,Purple Shulker Box,minecraft:purple_shulker_box,20,0,50,,label sign at y=2
+912,Purple Stained Glass,minecraft:purple_stained_glass,22,0,50,,label sign at y=2
+913,Purple Stained Glass Pane,minecraft:purple_stained_glass_pane,24,0,50,"east=true,north=true,south=true,west=true",label sign at y=2
+914,Purple Terracotta,minecraft:purple_terracotta,26,0,50,,label sign at y=2
+915,,minecraft:purple_wall_banner,28,0,50,,label sign at y=2
+916,Purple Wool,minecraft:purple_wool,30,0,50,,label sign at y=2
+917,Purple Wool Slab,minecraft:purple_wool_slab,32,0,50,type=bottom,label sign at y=2
+918,Purple Wool Stairs,minecraft:purple_wool_stairs,34,0,50,"facing=north,half=bottom,shape=straight",label sign at y=2
+919,Purpur Block,minecraft:purpur_block,36,0,50,,label sign at y=2
+920,Purpur Pillar,minecraft:purpur_pillar,38,0,50,axis=y,label sign at y=2
+921,Purpur Slab,minecraft:purpur_slab,40,0,50,type=bottom,label sign at y=2
+922,Purpur Stairs,minecraft:purpur_stairs,42,0,50,"facing=north,half=bottom,shape=straight",label sign at y=2
+923,Block of Quartz,minecraft:quartz_block,44,0,50,,label sign at y=2
+924,Quartz Bricks,minecraft:quartz_bricks,46,0,50,,label sign at y=2
+925,Quartz Pillar,minecraft:quartz_pillar,48,0,50,axis=y,label sign at y=2
+926,Quartz Slab,minecraft:quartz_slab,50,0,50,type=bottom,label sign at y=2
+927,Quartz Stairs,minecraft:quartz_stairs,52,0,50,"facing=north,half=bottom,shape=straight",label sign at y=2
+928,Rail,minecraft:rail,54,0,50,shape=north_south,label sign at y=2
+929,Block of Raw Copper,minecraft:raw_copper_block,56,0,50,,label sign at y=2
+930,Block of Raw Gold,minecraft:raw_gold_block,58,0,50,,label sign at y=2
+931,Block of Raw Iron,minecraft:raw_iron_block,60,0,50,,label sign at y=2
+932,Red Banner,minecraft:red_banner,62,0,50,,label sign at y=2
+933,Red Bed,minecraft:red_bed,64,0,50,"facing=north,part=foot",label sign at y=2
+934,Red Candle,minecraft:red_candle,66,0,50,"candles=1,lit=false",label sign at y=2
+935,Cake with Red Candle,minecraft:red_candle_cake,68,0,50,lit=false,label sign at y=2
+936,Red Carpet,minecraft:red_carpet,70,0,50,,label sign at y=2
+937,Red Concrete,minecraft:red_concrete,0,0,52,,label sign at y=2
+938,Red Concrete Powder,minecraft:red_concrete_powder,2,0,52,,label sign at y=2
+939,Red Concrete Slab,minecraft:red_concrete_slab,4,0,52,type=bottom,label sign at y=2
+940,Red Concrete Stairs,minecraft:red_concrete_stairs,6,0,52,"facing=north,half=bottom,shape=straight",label sign at y=2
+941,Red Glazed Terracotta,minecraft:red_glazed_terracotta,8,0,52,facing=north,label sign at y=2
+942,Red Mushroom,minecraft:red_mushroom,10,0,52,,label sign at y=2
+943,Red Mushroom Block,minecraft:red_mushroom_block,12,0,52,"down=true,east=true,north=true,south=true,up=true,west=true",label sign at y=2
+944,Red Nether Brick Slab,minecraft:red_nether_brick_slab,14,0,52,type=bottom,label sign at y=2
+945,Red Nether Brick Stairs,minecraft:red_nether_brick_stairs,16,0,52,"facing=north,half=bottom,shape=straight",label sign at y=2
+946,Red Nether Brick Wall,minecraft:red_nether_brick_wall,18,0,52,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+947,Red Nether Bricks,minecraft:red_nether_bricks,20,0,52,,label sign at y=2
+948,Red Poplar Leaves,minecraft:red_poplar_leaves,22,0,52,,label sign at y=2
+949,Red Sand,minecraft:red_sand,24,0,52,,label sign at y=2
+950,Red Sandstone,minecraft:red_sandstone,26,0,52,,label sign at y=2
+951,Red Sandstone Slab,minecraft:red_sandstone_slab,28,0,52,type=bottom,label sign at y=2
+952,Red Sandstone Stairs,minecraft:red_sandstone_stairs,30,0,52,"facing=north,half=bottom,shape=straight",label sign at y=2
+953,Red Sandstone Wall,minecraft:red_sandstone_wall,32,0,52,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+954,Red Shrub,minecraft:red_shrub,34,0,52,,label sign at y=2
+955,Red Shulker Box,minecraft:red_shulker_box,36,0,52,,label sign at y=2
+956,Red Stained Glass,minecraft:red_stained_glass,38,0,52,,label sign at y=2
+957,Red Stained Glass Pane,minecraft:red_stained_glass_pane,40,0,52,"east=true,north=true,south=true,west=true",label sign at y=2
+958,Red Terracotta,minecraft:red_terracotta,42,0,52,,label sign at y=2
+959,Red Tulip,minecraft:red_tulip,44,0,52,,label sign at y=2
+960,,minecraft:red_wall_banner,46,0,52,,label sign at y=2
+961,Red Wool,minecraft:red_wool,48,0,52,,label sign at y=2
+962,Red Wool Slab,minecraft:red_wool_slab,50,0,52,type=bottom,label sign at y=2
+963,Red Wool Stairs,minecraft:red_wool_stairs,52,0,52,"facing=north,half=bottom,shape=straight",label sign at y=2
+964,Block of Redstone,minecraft:redstone_block,54,0,52,,label sign at y=2
+965,Redstone Lamp,minecraft:redstone_lamp,56,0,52,lit=false,label sign at y=2
+966,Redstone Ore,minecraft:redstone_ore,58,0,52,,label sign at y=2
+967,Redstone Torch,minecraft:redstone_torch,60,0,52,lit=false,label sign at y=2
+968,Redstone Wall Torch,minecraft:redstone_wall_torch,62,0,52,"facing=north,lit=false",label sign at y=2
+969,Redstone Wire,minecraft:redstone_wire,64,0,52,"east=none,north=none,south=none,west=none",label sign at y=2
+970,Reinforced Deepslate,minecraft:reinforced_deepslate,66,0,52,,label sign at y=2
+971,Redstone Repeater,minecraft:repeater,68,0,52,"delay=1,facing=north,locked=false,powered=false",label sign at y=2
+972,Repeating Command Block,minecraft:repeating_command_block,70,0,52,"conditional=false,facing=north",label sign at y=2
+973,Block of Resin,minecraft:resin_block,0,0,54,,label sign at y=2
+974,Resin Brick Slab,minecraft:resin_brick_slab,2,0,54,type=bottom,label sign at y=2
+975,Resin Brick Stairs,minecraft:resin_brick_stairs,4,0,54,"facing=north,half=bottom,shape=straight",label sign at y=2
+976,Resin Brick Wall,minecraft:resin_brick_wall,6,0,54,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+977,Resin Bricks,minecraft:resin_bricks,8,0,54,,label sign at y=2
+978,Resin Clump,minecraft:resin_clump,10,0,54,"down=true,east=true,north=true,south=true,up=true,west=true",label sign at y=2
+979,Respawn Anchor,minecraft:respawn_anchor,12,0,54,charges=0,label sign at y=2
+980,Rooted Dirt,minecraft:rooted_dirt,14,0,54,,label sign at y=2
+981,Rose Bush,minecraft:rose_bush,16,0,54,half=lower,upper half at y=1; label sign at y=2
+982,Sand,minecraft:sand,18,0,54,,label sign at y=2
+983,Sandstone,minecraft:sandstone,20,0,54,,label sign at y=2
+984,Sandstone Slab,minecraft:sandstone_slab,22,0,54,type=bottom,label sign at y=2
+985,Sandstone Stairs,minecraft:sandstone_stairs,24,0,54,"facing=north,half=bottom,shape=straight",label sign at y=2
+986,Sandstone Wall,minecraft:sandstone_wall,26,0,54,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+987,Scaffolding,minecraft:scaffolding,28,0,54,bottom=false,label sign at y=2
+988,Sculk,minecraft:sculk,30,0,54,,label sign at y=2
+989,Sculk Catalyst,minecraft:sculk_catalyst,32,0,54,bloom=false,label sign at y=2
+990,Sculk Sensor,minecraft:sculk_sensor,34,0,54,sculk_sensor_phase=inactive,label sign at y=2
+991,Sculk Shrieker,minecraft:sculk_shrieker,36,0,54,can_summon=false,label sign at y=2
+992,Sculk Vein,minecraft:sculk_vein,38,0,54,"down=true,east=true,north=true,south=true,up=true,west=true",label sign at y=2
+993,Sea Lantern,minecraft:sea_lantern,40,0,54,,label sign at y=2
+994,Sea Pickle,minecraft:sea_pickle,42,0,54,"pickles=1,waterlogged=false",label sign at y=2
+995,Seagrass,minecraft:seagrass,44,0,54,,label sign at y=2
+996,Shelf Mushroom,minecraft:shelf_mushroom,46,0,54,"age=0,facing=north",label sign at y=2
+997,Short Dry Grass,minecraft:short_dry_grass,48,0,54,,label sign at y=2
+998,Short Grass,minecraft:short_grass,50,0,54,,label sign at y=2
+999,Shroomlight,minecraft:shroomlight,52,0,54,,label sign at y=2
+1000,Shulker Box,minecraft:shulker_box,54,0,54,,label sign at y=2
+1001,Skeleton Skull,minecraft:skeleton_skull,56,0,54,,label sign at y=2
+1002,Skeleton Wall Skull,minecraft:skeleton_wall_skull,58,0,54,,label sign at y=2
+1003,Slime Block,minecraft:slime_block,60,0,54,,label sign at y=2
+1004,Small Amethyst Bud,minecraft:small_amethyst_bud,62,0,54,facing=north,label sign at y=2
+1005,Small Dripleaf,minecraft:small_dripleaf,64,0,54,"facing=north,half=lower",upper half at y=1; label sign at y=2
+1006,Smithing Table,minecraft:smithing_table,66,0,54,,label sign at y=2
+1007,Smoker,minecraft:smoker,68,0,54,"facing=north,lit=false",label sign at y=2
+1008,Smooth Basalt,minecraft:smooth_basalt,70,0,54,,label sign at y=2
+1009,Smooth Quartz Block,minecraft:smooth_quartz,0,0,56,,label sign at y=2
+1010,Smooth Quartz Slab,minecraft:smooth_quartz_slab,2,0,56,type=bottom,label sign at y=2
+1011,Smooth Quartz Stairs,minecraft:smooth_quartz_stairs,4,0,56,"facing=north,half=bottom,shape=straight",label sign at y=2
+1012,Smooth Red Sandstone,minecraft:smooth_red_sandstone,6,0,56,,label sign at y=2
+1013,Smooth Red Sandstone Slab,minecraft:smooth_red_sandstone_slab,8,0,56,type=bottom,label sign at y=2
+1014,Smooth Red Sandstone Stairs,minecraft:smooth_red_sandstone_stairs,10,0,56,"facing=north,half=bottom,shape=straight",label sign at y=2
+1015,Smooth Sandstone,minecraft:smooth_sandstone,12,0,56,,label sign at y=2
+1016,Smooth Sandstone Slab,minecraft:smooth_sandstone_slab,14,0,56,type=bottom,label sign at y=2
+1017,Smooth Sandstone Stairs,minecraft:smooth_sandstone_stairs,16,0,56,"facing=north,half=bottom,shape=straight",label sign at y=2
+1018,Smooth Stone,minecraft:smooth_stone,18,0,56,,label sign at y=2
+1019,Smooth Stone Slab,minecraft:smooth_stone_slab,20,0,56,type=bottom,label sign at y=2
+1020,Sniffer Egg,minecraft:sniffer_egg,22,0,56,hatch=0,label sign at y=2
+1021,Snow,minecraft:snow,24,0,56,layers=1,label sign at y=2
+1022,Snow Block,minecraft:snow_block,26,0,56,,label sign at y=2
+1023,Soul Campfire,minecraft:soul_campfire,28,0,56,"facing=north,lit=false",label sign at y=2
+1024,Soul Fire,minecraft:soul_fire,30,0,56,,label sign at y=2
+1025,Soul Lantern,minecraft:soul_lantern,32,0,56,hanging=false,label sign at y=2
+1026,Soul Sand,minecraft:soul_sand,34,0,56,,label sign at y=2
+1027,Soul Soil,minecraft:soul_soil,36,0,56,,label sign at y=2
+1028,Soul Torch,minecraft:soul_torch,38,0,56,,label sign at y=2
+1029,Soul Wall Torch,minecraft:soul_wall_torch,40,0,56,facing=north,label sign at y=2
+1030,Monster Spawner,minecraft:spawner,42,0,56,,label sign at y=2
+1031,Sponge,minecraft:sponge,44,0,56,,label sign at y=2
+1032,Spore Blossom,minecraft:spore_blossom,46,0,56,,label sign at y=2
+1033,Spruce Button,minecraft:spruce_button,48,0,56,"face=floor,facing=north,powered=false",label sign at y=2
+1034,Spruce Door,minecraft:spruce_door,50,0,56,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+1035,Spruce Fence,minecraft:spruce_fence,52,0,56,"east=true,north=true,south=true,west=true",label sign at y=2
+1036,Spruce Fence Gate,minecraft:spruce_fence_gate,54,0,56,"facing=north,in_wall=false,open=false",label sign at y=2
+1037,Spruce Hanging Sign,minecraft:spruce_hanging_sign,56,0,56,"attached=false,rotation=0",label sign at y=2
+1038,Spruce Leaves,minecraft:spruce_leaves,58,0,56,,label sign at y=2
+1039,Spruce Log,minecraft:spruce_log,60,0,56,axis=y,label sign at y=2
+1040,Spruce Planks,minecraft:spruce_planks,62,0,56,,label sign at y=2
+1041,Spruce Pressure Plate,minecraft:spruce_pressure_plate,64,0,56,powered=false,label sign at y=2
+1042,Spruce Sapling,minecraft:spruce_sapling,66,0,56,,label sign at y=2
+1043,Spruce Shelf,minecraft:spruce_shelf,68,0,56,"facing=north,powered=false",label sign at y=2
+1044,Spruce Sign,minecraft:spruce_sign,70,0,56,rotation=0,label sign at y=2
+1045,Spruce Slab,minecraft:spruce_slab,0,0,58,type=bottom,label sign at y=2
+1046,Spruce Stairs,minecraft:spruce_stairs,2,0,58,"facing=north,half=bottom,shape=straight",label sign at y=2
+1047,Spruce Trapdoor,minecraft:spruce_trapdoor,4,0,58,"facing=north,half=bottom,open=false",label sign at y=2
+1048,Spruce Wall Hanging Sign,minecraft:spruce_wall_hanging_sign,6,0,58,facing=north,label sign at y=2
+1049,Spruce Wall Sign,minecraft:spruce_wall_sign,8,0,58,facing=north,label sign at y=2
+1050,Spruce Wood,minecraft:spruce_wood,10,0,58,axis=y,label sign at y=2
+1051,Sticky Piston,minecraft:sticky_piston,12,0,58,"extended=false,facing=north",label sign at y=2
+1052,Stone,minecraft:stone,14,0,58,,label sign at y=2
+1053,Stone Brick Slab,minecraft:stone_brick_slab,16,0,58,type=bottom,label sign at y=2
+1054,Stone Brick Stairs,minecraft:stone_brick_stairs,18,0,58,"facing=north,half=bottom,shape=straight",label sign at y=2
+1055,Stone Brick Wall,minecraft:stone_brick_wall,20,0,58,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+1056,Stone Bricks,minecraft:stone_bricks,22,0,58,,label sign at y=2
+1057,Stone Button,minecraft:stone_button,24,0,58,"face=floor,facing=north,powered=false",label sign at y=2
+1058,Stone Pressure Plate,minecraft:stone_pressure_plate,26,0,58,powered=false,label sign at y=2
+1059,Stone Slab,minecraft:stone_slab,28,0,58,type=bottom,label sign at y=2
+1060,Stone Stairs,minecraft:stone_stairs,30,0,58,"facing=north,half=bottom,shape=straight",label sign at y=2
+1061,Stonecutter,minecraft:stonecutter,32,0,58,facing=north,label sign at y=2
+1062,Straw Bed,minecraft:straw_bed,34,0,58,"facing=north,part=foot",label sign at y=2
+1063,Stripped Acacia Log,minecraft:stripped_acacia_log,36,0,58,axis=y,label sign at y=2
+1064,Stripped Acacia Wood,minecraft:stripped_acacia_wood,38,0,58,axis=y,label sign at y=2
+1065,Block of Stripped Bamboo,minecraft:stripped_bamboo_block,40,0,58,axis=y,label sign at y=2
+1066,Stripped Birch Log,minecraft:stripped_birch_log,42,0,58,axis=y,label sign at y=2
+1067,Stripped Birch Wood,minecraft:stripped_birch_wood,44,0,58,axis=y,label sign at y=2
+1068,Stripped Cherry Log,minecraft:stripped_cherry_log,46,0,58,axis=y,label sign at y=2
+1069,Stripped Cherry Wood,minecraft:stripped_cherry_wood,48,0,58,axis=y,label sign at y=2
+1070,Stripped Crimson Hyphae,minecraft:stripped_crimson_hyphae,50,0,58,axis=y,label sign at y=2
+1071,Stripped Crimson Stem,minecraft:stripped_crimson_stem,52,0,58,axis=y,label sign at y=2
+1072,Stripped Dark Oak Log,minecraft:stripped_dark_oak_log,54,0,58,axis=y,label sign at y=2
+1073,Stripped Dark Oak Wood,minecraft:stripped_dark_oak_wood,56,0,58,axis=y,label sign at y=2
+1074,Stripped Jungle Log,minecraft:stripped_jungle_log,58,0,58,axis=y,label sign at y=2
+1075,Stripped Jungle Wood,minecraft:stripped_jungle_wood,60,0,58,axis=y,label sign at y=2
+1076,Stripped Mangrove Log,minecraft:stripped_mangrove_log,62,0,58,axis=y,label sign at y=2
+1077,Stripped Mangrove Wood,minecraft:stripped_mangrove_wood,64,0,58,axis=y,label sign at y=2
+1078,Stripped Oak Log,minecraft:stripped_oak_log,66,0,58,axis=y,label sign at y=2
+1079,Stripped Oak Wood,minecraft:stripped_oak_wood,68,0,58,axis=y,label sign at y=2
+1080,Stripped Pale Oak Log,minecraft:stripped_pale_oak_log,70,0,58,axis=y,label sign at y=2
+1081,Stripped Pale Oak Wood,minecraft:stripped_pale_oak_wood,0,0,60,axis=y,label sign at y=2
+1082,Stripped Poplar Log,minecraft:stripped_poplar_log,2,0,60,axis=y,label sign at y=2
+1083,Stripped Poplar Wood,minecraft:stripped_poplar_wood,4,0,60,axis=y,label sign at y=2
+1084,Stripped Spruce Log,minecraft:stripped_spruce_log,6,0,60,axis=y,label sign at y=2
+1085,Stripped Spruce Wood,minecraft:stripped_spruce_wood,8,0,60,axis=y,label sign at y=2
+1086,Stripped Warped Hyphae,minecraft:stripped_warped_hyphae,10,0,60,axis=y,label sign at y=2
+1087,Stripped Warped Stem,minecraft:stripped_warped_stem,12,0,60,axis=y,label sign at y=2
+1088,Structure Block,minecraft:structure_block,14,0,60,mode=corner,label sign at y=2
+1089,Structure Void,minecraft:structure_void,16,0,60,,label sign at y=2
+1090,Sugar Cane,minecraft:sugar_cane,18,0,60,,label sign at y=2
+1091,Sulfur,minecraft:sulfur,20,0,60,,label sign at y=2
+1092,Sulfur Brick Slab,minecraft:sulfur_brick_slab,22,0,60,type=bottom,label sign at y=2
+1093,Sulfur Brick Stairs,minecraft:sulfur_brick_stairs,24,0,60,"facing=north,half=bottom,shape=straight",label sign at y=2
+1094,Sulfur Brick Wall,minecraft:sulfur_brick_wall,26,0,60,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+1095,Sulfur Bricks,minecraft:sulfur_bricks,28,0,60,,label sign at y=2
+1096,Sulfur Slab,minecraft:sulfur_slab,30,0,60,type=bottom,label sign at y=2
+1097,Sulfur Spike,minecraft:sulfur_spike,32,0,60,"thickness=base,vertical_direction=down",label sign at y=2
+1098,Sulfur Stairs,minecraft:sulfur_stairs,34,0,60,"facing=north,half=bottom,shape=straight",label sign at y=2
+1099,Sulfur Wall,minecraft:sulfur_wall,36,0,60,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+1100,Sunflower,minecraft:sunflower,38,0,60,half=lower,upper half at y=1; label sign at y=2
+1101,Suspicious Gravel,minecraft:suspicious_gravel,40,0,60,dusted=0,label sign at y=2
+1102,Suspicious Sand,minecraft:suspicious_sand,42,0,60,dusted=0,label sign at y=2
+1103,Sweet Berry Bush,minecraft:sweet_berry_bush,44,0,60,age=0,label sign at y=2
+1104,Tall Dry Grass,minecraft:tall_dry_grass,46,0,60,,label sign at y=2
+1105,Tall Grass,minecraft:tall_grass,48,0,60,half=lower,upper half at y=1; label sign at y=2
+1106,Tall Seagrass,minecraft:tall_seagrass,50,0,60,half=lower,upper half at y=1; label sign at y=2
+1107,Target,minecraft:target,52,0,60,,label sign at y=2
+1108,Terracotta,minecraft:terracotta,54,0,60,,label sign at y=2
+1109,Test Block,minecraft:test_block,56,0,60,mode=accept,label sign at y=2
+1110,Test Instance Block,minecraft:test_instance_block,58,0,60,,label sign at y=2
+1111,Tinted Glass,minecraft:tinted_glass,60,0,60,,label sign at y=2
+1112,TNT,minecraft:tnt,62,0,60,,label sign at y=2
+1113,Torch,minecraft:torch,64,0,60,,label sign at y=2
+1114,Torchflower,minecraft:torchflower,66,0,60,,label sign at y=2
+1115,Torchflower Crop,minecraft:torchflower_crop,68,0,60,age=0,label sign at y=2
+1116,Trapped Chest,minecraft:trapped_chest,70,0,60,,label sign at y=2
+1117,Trial Spawner,minecraft:trial_spawner,0,0,62,"ominous=false,trial_spawner_state=inactive",label sign at y=2
+1118,Tripwire,minecraft:tripwire,2,0,62,"attached=false,east=false,north=false,south=false,west=false",label sign at y=2
+1119,Tripwire Hook,minecraft:tripwire_hook,4,0,62,"attached=false,facing=north,powered=false",label sign at y=2
+1120,Tube Coral,minecraft:tube_coral,6,0,62,,label sign at y=2
+1121,Tube Coral Block,minecraft:tube_coral_block,8,0,62,,label sign at y=2
+1122,Tube Coral Fan,minecraft:tube_coral_fan,10,0,62,,label sign at y=2
+1123,Tube Coral Wall Fan,minecraft:tube_coral_wall_fan,12,0,62,facing=north,label sign at y=2
+1124,Tuff,minecraft:tuff,14,0,62,,label sign at y=2
+1125,Tuff Brick Slab,minecraft:tuff_brick_slab,16,0,62,type=bottom,label sign at y=2
+1126,Tuff Brick Stairs,minecraft:tuff_brick_stairs,18,0,62,"facing=north,half=bottom,shape=straight",label sign at y=2
+1127,Tuff Brick Wall,minecraft:tuff_brick_wall,20,0,62,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+1128,Tuff Bricks,minecraft:tuff_bricks,22,0,62,,label sign at y=2
+1129,Tuff Slab,minecraft:tuff_slab,24,0,62,type=bottom,label sign at y=2
+1130,Tuff Stairs,minecraft:tuff_stairs,26,0,62,"facing=north,half=bottom,shape=straight",label sign at y=2
+1131,Tuff Wall,minecraft:tuff_wall,28,0,62,"east=low,north=low,south=low,up=true,west=low",label sign at y=2
+1132,Turtle Egg,minecraft:turtle_egg,30,0,62,"eggs=1,hatch=0",label sign at y=2
+1133,Twisting Vines,minecraft:twisting_vines,32,0,62,,label sign at y=2
+1134,Twisting Vines Plant,minecraft:twisting_vines_plant,34,0,62,,label sign at y=2
+1135,Vault,minecraft:vault,36,0,62,"facing=north,ominous=false,vault_state=inactive",label sign at y=2
+1136,Verdant Froglight,minecraft:verdant_froglight,38,0,62,axis=y,label sign at y=2
+1137,Vines,minecraft:vine,40,0,62,"east=true,north=true,south=true,up=true,west=true",label sign at y=2
+1138,Wall Torch,minecraft:wall_torch,42,0,62,facing=north,label sign at y=2
+1139,Warped Button,minecraft:warped_button,44,0,62,"face=floor,facing=north,powered=false",label sign at y=2
+1140,Warped Door,minecraft:warped_door,46,0,62,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+1141,Warped Fence,minecraft:warped_fence,48,0,62,"east=true,north=true,south=true,west=true",label sign at y=2
+1142,Warped Fence Gate,minecraft:warped_fence_gate,50,0,62,"facing=north,in_wall=false,open=false",label sign at y=2
+1143,Warped Fungus,minecraft:warped_fungus,52,0,62,,label sign at y=2
+1144,Warped Hanging Sign,minecraft:warped_hanging_sign,54,0,62,"attached=false,rotation=0",label sign at y=2
+1145,Warped Hyphae,minecraft:warped_hyphae,56,0,62,axis=y,label sign at y=2
+1146,Warped Nylium,minecraft:warped_nylium,58,0,62,,label sign at y=2
+1147,Warped Planks,minecraft:warped_planks,60,0,62,,label sign at y=2
+1148,Warped Pressure Plate,minecraft:warped_pressure_plate,62,0,62,powered=false,label sign at y=2
+1149,Warped Roots,minecraft:warped_roots,64,0,62,,label sign at y=2
+1150,Warped Shelf,minecraft:warped_shelf,66,0,62,"facing=north,powered=false",label sign at y=2
+1151,Warped Sign,minecraft:warped_sign,68,0,62,rotation=0,label sign at y=2
+1152,Warped Slab,minecraft:warped_slab,70,0,62,type=bottom,label sign at y=2
+1153,Warped Stairs,minecraft:warped_stairs,0,0,64,"facing=north,half=bottom,shape=straight",label sign at y=2
+1154,Warped Stem,minecraft:warped_stem,2,0,64,axis=y,label sign at y=2
+1155,Warped Trapdoor,minecraft:warped_trapdoor,4,0,64,"facing=north,half=bottom,open=false",label sign at y=2
+1156,Warped Wall Hanging Sign,minecraft:warped_wall_hanging_sign,6,0,64,facing=north,label sign at y=2
+1157,Warped Wall Sign,minecraft:warped_wall_sign,8,0,64,facing=north,label sign at y=2
+1158,Warped Wart Block,minecraft:warped_wart_block,10,0,64,,label sign at y=2
+1159,Water,minecraft:water,12,0,64,,label sign at y=2
+1160,Water Cauldron,minecraft:water_cauldron,14,0,64,level=1,label sign at y=2
+1161,Waxed Chiseled Copper,minecraft:waxed_chiseled_copper,16,0,64,,label sign at y=2
+1162,Waxed Copper Bars,minecraft:waxed_copper_bars,18,0,64,"east=false,north=false,south=false,west=false",label sign at y=2
+1163,Waxed Block of Copper,minecraft:waxed_copper_block,20,0,64,,label sign at y=2
+1164,Waxed Copper Bulb,minecraft:waxed_copper_bulb,22,0,64,"lit=false,powered=false",label sign at y=2
+1165,Waxed Copper Chain,minecraft:waxed_copper_chain,24,0,64,axis=y,label sign at y=2
+1166,Waxed Copper Chest,minecraft:waxed_copper_chest,26,0,64,,label sign at y=2
+1167,Waxed Copper Door,minecraft:waxed_copper_door,28,0,64,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+1168,Waxed Copper Golem Statue,minecraft:waxed_copper_golem_statue,30,0,64,,label sign at y=2
+1169,Waxed Copper Grate,minecraft:waxed_copper_grate,32,0,64,,label sign at y=2
+1170,Waxed Copper Lantern,minecraft:waxed_copper_lantern,34,0,64,hanging=false,label sign at y=2
+1171,Waxed Copper Trapdoor,minecraft:waxed_copper_trapdoor,36,0,64,"facing=north,half=bottom,open=false",label sign at y=2
+1172,Waxed Cut Copper,minecraft:waxed_cut_copper,38,0,64,,label sign at y=2
+1173,Waxed Cut Copper Slab,minecraft:waxed_cut_copper_slab,40,0,64,type=bottom,label sign at y=2
+1174,Waxed Cut Copper Stairs,minecraft:waxed_cut_copper_stairs,42,0,64,"facing=north,half=bottom,shape=straight",label sign at y=2
+1175,Waxed Exposed Chiseled Copper,minecraft:waxed_exposed_chiseled_copper,44,0,64,,label sign at y=2
+1176,Waxed Exposed Copper,minecraft:waxed_exposed_copper,46,0,64,,label sign at y=2
+1177,Waxed Exposed Copper Bars,minecraft:waxed_exposed_copper_bars,48,0,64,"east=false,north=false,south=false,west=false",label sign at y=2
+1178,Waxed Exposed Copper Bulb,minecraft:waxed_exposed_copper_bulb,50,0,64,"lit=false,powered=false",label sign at y=2
+1179,Waxed Exposed Copper Chain,minecraft:waxed_exposed_copper_chain,52,0,64,axis=y,label sign at y=2
+1180,Waxed Exposed Copper Chest,minecraft:waxed_exposed_copper_chest,54,0,64,,label sign at y=2
+1181,Waxed Exposed Copper Door,minecraft:waxed_exposed_copper_door,56,0,64,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+1182,Waxed Exposed Copper Golem Statue,minecraft:waxed_exposed_copper_golem_statue,58,0,64,,label sign at y=2
+1183,Waxed Exposed Copper Grate,minecraft:waxed_exposed_copper_grate,60,0,64,,label sign at y=2
+1184,Waxed Exposed Copper Lantern,minecraft:waxed_exposed_copper_lantern,62,0,64,hanging=false,label sign at y=2
+1185,Waxed Exposed Copper Trapdoor,minecraft:waxed_exposed_copper_trapdoor,64,0,64,"facing=north,half=bottom,open=false",label sign at y=2
+1186,Waxed Exposed Cut Copper,minecraft:waxed_exposed_cut_copper,66,0,64,,label sign at y=2
+1187,Waxed Exposed Cut Copper Slab,minecraft:waxed_exposed_cut_copper_slab,68,0,64,type=bottom,label sign at y=2
+1188,Waxed Exposed Cut Copper Stairs,minecraft:waxed_exposed_cut_copper_stairs,70,0,64,"facing=north,half=bottom,shape=straight",label sign at y=2
+1189,Waxed Exposed Lightning Rod,minecraft:waxed_exposed_lightning_rod,0,0,66,"facing=north,powered=false",label sign at y=2
+1190,Waxed Lightning Rod,minecraft:waxed_lightning_rod,2,0,66,"facing=north,powered=false",label sign at y=2
+1191,Waxed Oxidized Chiseled Copper,minecraft:waxed_oxidized_chiseled_copper,4,0,66,,label sign at y=2
+1192,Waxed Oxidized Copper,minecraft:waxed_oxidized_copper,6,0,66,,label sign at y=2
+1193,Waxed Oxidized Copper Bars,minecraft:waxed_oxidized_copper_bars,8,0,66,"east=false,north=false,south=false,west=false",label sign at y=2
+1194,Waxed Oxidized Copper Bulb,minecraft:waxed_oxidized_copper_bulb,10,0,66,"lit=false,powered=false",label sign at y=2
+1195,Waxed Oxidized Copper Chain,minecraft:waxed_oxidized_copper_chain,12,0,66,axis=y,label sign at y=2
+1196,Waxed Oxidized Copper Chest,minecraft:waxed_oxidized_copper_chest,14,0,66,,label sign at y=2
+1197,Waxed Oxidized Copper Door,minecraft:waxed_oxidized_copper_door,16,0,66,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+1198,Waxed Oxidized Copper Golem Statue,minecraft:waxed_oxidized_copper_golem_statue,18,0,66,,label sign at y=2
+1199,Waxed Oxidized Copper Grate,minecraft:waxed_oxidized_copper_grate,20,0,66,,label sign at y=2
+1200,Waxed Oxidized Copper Lantern,minecraft:waxed_oxidized_copper_lantern,22,0,66,hanging=false,label sign at y=2
+1201,Waxed Oxidized Copper Trapdoor,minecraft:waxed_oxidized_copper_trapdoor,24,0,66,"facing=north,half=bottom,open=false",label sign at y=2
+1202,Waxed Oxidized Cut Copper,minecraft:waxed_oxidized_cut_copper,26,0,66,,label sign at y=2
+1203,Waxed Oxidized Cut Copper Slab,minecraft:waxed_oxidized_cut_copper_slab,28,0,66,type=bottom,label sign at y=2
+1204,Waxed Oxidized Cut Copper Stairs,minecraft:waxed_oxidized_cut_copper_stairs,30,0,66,"facing=north,half=bottom,shape=straight",label sign at y=2
+1205,Waxed Oxidized Lightning Rod,minecraft:waxed_oxidized_lightning_rod,32,0,66,"facing=north,powered=false",label sign at y=2
+1206,Waxed Weathered Chiseled Copper,minecraft:waxed_weathered_chiseled_copper,34,0,66,,label sign at y=2
+1207,Waxed Weathered Copper,minecraft:waxed_weathered_copper,36,0,66,,label sign at y=2
+1208,Waxed Weathered Copper Bars,minecraft:waxed_weathered_copper_bars,38,0,66,"east=false,north=false,south=false,west=false",label sign at y=2
+1209,Waxed Weathered Copper Bulb,minecraft:waxed_weathered_copper_bulb,40,0,66,"lit=false,powered=false",label sign at y=2
+1210,Waxed Weathered Copper Chain,minecraft:waxed_weathered_copper_chain,42,0,66,axis=y,label sign at y=2
+1211,Waxed Weathered Copper Chest,minecraft:waxed_weathered_copper_chest,44,0,66,,label sign at y=2
+1212,Waxed Weathered Copper Door,minecraft:waxed_weathered_copper_door,46,0,66,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+1213,Waxed Weathered Copper Golem Statue,minecraft:waxed_weathered_copper_golem_statue,48,0,66,,label sign at y=2
+1214,Waxed Weathered Copper Grate,minecraft:waxed_weathered_copper_grate,50,0,66,,label sign at y=2
+1215,Waxed Weathered Copper Lantern,minecraft:waxed_weathered_copper_lantern,52,0,66,hanging=false,label sign at y=2
+1216,Waxed Weathered Copper Trapdoor,minecraft:waxed_weathered_copper_trapdoor,54,0,66,"facing=north,half=bottom,open=false",label sign at y=2
+1217,Waxed Weathered Cut Copper,minecraft:waxed_weathered_cut_copper,56,0,66,,label sign at y=2
+1218,Waxed Weathered Cut Copper Slab,minecraft:waxed_weathered_cut_copper_slab,58,0,66,type=bottom,label sign at y=2
+1219,Waxed Weathered Cut Copper Stairs,minecraft:waxed_weathered_cut_copper_stairs,60,0,66,"facing=north,half=bottom,shape=straight",label sign at y=2
+1220,Waxed Weathered Lightning Rod,minecraft:waxed_weathered_lightning_rod,62,0,66,"facing=north,powered=false",label sign at y=2
+1221,Weathered Chiseled Copper,minecraft:weathered_chiseled_copper,64,0,66,,label sign at y=2
+1222,Weathered Copper,minecraft:weathered_copper,66,0,66,,label sign at y=2
+1223,Weathered Copper Bars,minecraft:weathered_copper_bars,68,0,66,"east=false,north=false,south=false,west=false",label sign at y=2
+1224,Weathered Copper Bulb,minecraft:weathered_copper_bulb,70,0,66,"lit=false,powered=false",label sign at y=2
+1225,Weathered Copper Chain,minecraft:weathered_copper_chain,0,0,68,axis=y,label sign at y=2
+1226,Weathered Copper Chest,minecraft:weathered_copper_chest,2,0,68,,label sign at y=2
+1227,Weathered Copper Door,minecraft:weathered_copper_door,4,0,68,"facing=north,half=lower,hinge=left,open=false",upper half at y=1; label sign at y=2
+1228,Weathered Copper Golem Statue,minecraft:weathered_copper_golem_statue,6,0,68,,label sign at y=2
+1229,Weathered Copper Grate,minecraft:weathered_copper_grate,8,0,68,,label sign at y=2
+1230,Weathered Copper Lantern,minecraft:weathered_copper_lantern,10,0,68,hanging=false,label sign at y=2
+1231,Weathered Copper Trapdoor,minecraft:weathered_copper_trapdoor,12,0,68,"facing=north,half=bottom,open=false",label sign at y=2
+1232,Weathered Cut Copper,minecraft:weathered_cut_copper,14,0,68,,label sign at y=2
+1233,Weathered Cut Copper Slab,minecraft:weathered_cut_copper_slab,16,0,68,type=bottom,label sign at y=2
+1234,Weathered Cut Copper Stairs,minecraft:weathered_cut_copper_stairs,18,0,68,"facing=north,half=bottom,shape=straight",label sign at y=2
+1235,Weathered Lightning Rod,minecraft:weathered_lightning_rod,20,0,68,"facing=north,powered=false",label sign at y=2
+1236,Weeping Vines,minecraft:weeping_vines,22,0,68,,label sign at y=2
+1237,Weeping Vines Plant,minecraft:weeping_vines_plant,24,0,68,,label sign at y=2
+1238,Wet Sponge,minecraft:wet_sponge,26,0,68,,label sign at y=2
+1239,Wheat Crops,minecraft:wheat,28,0,68,age=0,label sign at y=2
+1240,White Banner,minecraft:white_banner,30,0,68,,label sign at y=2
+1241,White Bed,minecraft:white_bed,32,0,68,"facing=north,part=foot",label sign at y=2
+1242,White Candle,minecraft:white_candle,34,0,68,"candles=1,lit=false",label sign at y=2
+1243,Cake with White Candle,minecraft:white_candle_cake,36,0,68,lit=false,label sign at y=2
+1244,White Carpet,minecraft:white_carpet,38,0,68,,label sign at y=2
+1245,White Concrete,minecraft:white_concrete,40,0,68,,label sign at y=2
+1246,White Concrete Powder,minecraft:white_concrete_powder,42,0,68,,label sign at y=2
+1247,White Concrete Slab,minecraft:white_concrete_slab,44,0,68,type=bottom,label sign at y=2
+1248,White Concrete Stairs,minecraft:white_concrete_stairs,46,0,68,"facing=north,half=bottom,shape=straight",label sign at y=2
+1249,White Glazed Terracotta,minecraft:white_glazed_terracotta,48,0,68,facing=north,label sign at y=2
+1250,White Shulker Box,minecraft:white_shulker_box,50,0,68,,label sign at y=2
+1251,White Stained Glass,minecraft:white_stained_glass,52,0,68,,label sign at y=2
+1252,White Stained Glass Pane,minecraft:white_stained_glass_pane,54,0,68,"east=true,north=true,south=true,west=true",label sign at y=2
+1253,White Terracotta,minecraft:white_terracotta,56,0,68,,label sign at y=2
+1254,White Tulip,minecraft:white_tulip,58,0,68,,label sign at y=2
+1255,,minecraft:white_wall_banner,60,0,68,,label sign at y=2
+1256,White Wool,minecraft:white_wool,62,0,68,,label sign at y=2
+1257,White Wool Slab,minecraft:white_wool_slab,64,0,68,type=bottom,label sign at y=2
+1258,White Wool Stairs,minecraft:white_wool_stairs,66,0,68,"facing=north,half=bottom,shape=straight",label sign at y=2
+1259,Wildflowers,minecraft:wildflowers,68,0,68,"facing=north,flower_amount=2",label sign at y=2
+1260,Wither Rose,minecraft:wither_rose,70,0,68,,label sign at y=2
+1261,Wither Skeleton Skull,minecraft:wither_skeleton_skull,0,0,70,,label sign at y=2
+1262,Wither Skeleton Wall Skull,minecraft:wither_skeleton_wall_skull,2,0,70,,label sign at y=2
+1263,Yellow Banner,minecraft:yellow_banner,4,0,70,,label sign at y=2
+1264,Yellow Bed,minecraft:yellow_bed,6,0,70,"facing=north,part=foot",label sign at y=2
+1265,Yellow Candle,minecraft:yellow_candle,8,0,70,"candles=1,lit=false",label sign at y=2
+1266,Cake with Yellow Candle,minecraft:yellow_candle_cake,10,0,70,lit=false,label sign at y=2
+1267,Yellow Carpet,minecraft:yellow_carpet,12,0,70,,label sign at y=2
+1268,Yellow Concrete,minecraft:yellow_concrete,14,0,70,,label sign at y=2
+1269,Yellow Concrete Powder,minecraft:yellow_concrete_powder,16,0,70,,label sign at y=2
+1270,Yellow Concrete Slab,minecraft:yellow_concrete_slab,18,0,70,type=bottom,label sign at y=2
+1271,Yellow Concrete Stairs,minecraft:yellow_concrete_stairs,20,0,70,"facing=north,half=bottom,shape=straight",label sign at y=2
+1272,Yellow Glazed Terracotta,minecraft:yellow_glazed_terracotta,22,0,70,facing=north,label sign at y=2
+1273,Yellow Poplar Leaves,minecraft:yellow_poplar_leaves,24,0,70,,label sign at y=2
+1274,Yellow Shulker Box,minecraft:yellow_shulker_box,26,0,70,,label sign at y=2
+1275,Yellow Stained Glass,minecraft:yellow_stained_glass,28,0,70,,label sign at y=2
+1276,Yellow Stained Glass Pane,minecraft:yellow_stained_glass_pane,30,0,70,"east=true,north=true,south=true,west=true",label sign at y=2
+1277,Yellow Terracotta,minecraft:yellow_terracotta,32,0,70,,label sign at y=2
+1278,,minecraft:yellow_wall_banner,34,0,70,,label sign at y=2
+1279,Yellow Wool,minecraft:yellow_wool,36,0,70,,label sign at y=2
+1280,Yellow Wool Slab,minecraft:yellow_wool_slab,38,0,70,type=bottom,label sign at y=2
+1281,Yellow Wool Stairs,minecraft:yellow_wool_stairs,40,0,70,"facing=north,half=bottom,shape=straight",label sign at y=2
+1282,Zombie Head,minecraft:zombie_head,42,0,70,,label sign at y=2
+1283,Zombie Wall Head,minecraft:zombie_wall_head,44,0,70,,label sign at y=2
