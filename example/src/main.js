@@ -1,4 +1,4 @@
-import { SchematicRenderer, BlueprintLoader, ItemAssets, nameFor, filterMaterials, materialsToCsv, materialsToTsv, captureScreenshot, readRenderSettings } from "@rsw/mc-java-render-ts";
+import { createWorkshopRenderer, countLitematicMaterials, BlueprintLoader, ItemAssets, nameFor, filterMaterials, materialsToCsv, materialsToTsv, captureScreenshot, readRenderSettings } from "@rsw/mc-java-render-ts";
 import { ViewControls } from "./view-controls.js";
 import { BlockInspector } from "./block-inspector.js";
 import { RenderSettings } from "./render-settings.js";
@@ -6,6 +6,7 @@ import { PerformanceHUD } from "./performance-hud.js";
 const $ = (id) => document.getElementById(id),
   canvas = $("canvas");
 let blueprints;
+let previewReason = "";
 const DEFAULT_SCHEMATIC = "./schematics/inspection-demo.litematic",
   PACK_VERSION = "vanilla-layout-fixed-20261101";
 let renderer,
@@ -61,11 +62,11 @@ function setBusy(value, message = "生成方块模型与贴图…") {
   $("loading-card").classList.remove("error");
   $("loading-title").textContent = "正在打开蓝图";
   $("loading-message").textContent = message;
-  $("scene-status").textContent = value ? "加载中" : "蓝图已就绪";
+  $("scene-status").textContent = value ? "加载中" : previewReason ? "材料预览" : "蓝图已就绪";
   for (const b of document.querySelectorAll(
     "[data-view],#open-file,#fit-view,#toggle-grid,#take-screenshot,#demo-select,#axis-buttons button",
   ))
-    b.disabled = value;
+    b.disabled = value || (Boolean(previewReason) && !["open-file", "demo-select"].includes(b.id));
   $("copy-materials").disabled = $("export-materials").disabled =
     value || !allMaterials.length;
   $("container-select").disabled = value || !inspector?.targets.length;
@@ -82,7 +83,7 @@ function showError(error) {
   $("loading-card").classList.add("error");
   $("loading-title").textContent = "暂时无法打开蓝图";
   $("loading-message").textContent = error.message;
-  if (!views)
+  if (!views && !previewReason)
     for (const b of document.querySelectorAll(
       "[data-view],#fit-view,#toggle-grid,#take-screenshot,#open-file,#demo-select",
     ))
@@ -183,11 +184,17 @@ $("take-screenshot").addEventListener("click", async () => {
     toast("截图已导出");
   } catch (error) { toast(`截图失败：${error.message}`); }
 });
+async function readMaterialPreview(buffer, filename) {
+  if (!/\.litematic$/i.test(filename)) throw new Error("材料预览支持 .litematic 文件");
+  return countLitematicMaterials(buffer);
+}
 async function loadBlueprint(buffer, filename) {
   setBusy(true, "读取蓝图与容器 NBT…");
   if (views?.locked) views.manager.flyControls.unlock();
   try {
-    const result = await blueprints.load(buffer, filename);
+    const result = previewReason
+      ? await readMaterialPreview(buffer, filename)
+      : await blueprints.load(buffer, filename);
     const schematic = result.schematic;
     allMaterials = result.materials;
     currentFilename = filename;
@@ -204,12 +211,18 @@ async function loadBlueprint(buffer, filename) {
     $("materials-status").textContent =
       `完整蓝图 · ${result.regionCount} 个区域 · 已合并同类方块`;
     $("scene-dimensions").textContent =
-      schematic.getTightDimensions().join(" × ") + " 格";
+      schematic ? schematic.getTightDimensions().join(" × ") + " 格" : "材料预览";
     renderMaterials();
-    inspector.indexContainers();
-    await views.fit();
+    inspector?.indexContainers();
+    await views?.fit();
     setBusy(false);
-    renderer.invalidate();
+    if (previewReason) {
+      $("loading-card").hidden = false;
+      $("loading-title").textContent = "3D 视图暂不可用";
+      $("loading-message").textContent = previewReason + "。已读取材料，可继续打开或导出。";
+    } else {
+      renderer.invalidate();
+    }
   } catch (error) {
     showError(error);
     throw error;
@@ -303,58 +316,38 @@ async function clearSavedResourcePacksIfRequested() {
 async function start() {
   await clearSavedResourcePacksIfRequested();
   setBusy(true, "准备原版资源包…");
-  canvas.addEventListener("rendererError", (e) => showError(e.detail));
-  const resourcePacks = {
-    vanilla_pack_fixed: async () => {
-      const response = await fetch(
-        `./packs/vanilla_pack_fixed.zip?v=${PACK_VERSION}`,
-      );
-      if (!response.ok)
-        throw new Error(`资源包请求失败（HTTP ${response.status}）`);
-      return response.blob();
-    },
-  };
   const performanceSettings = readRenderSettings();
-  renderer = new SchematicRenderer(canvas, {}, resourcePacks, {
-    maxPixelRatio: performanceSettings.maxPixelRatio,
-    targetFPS: performanceSettings.targetFPS,
-    chunkRenderOptions: performanceSettings,
-    postProcessingOptions: { enableSSAO: performanceSettings.ssao },
-    showGrid: true,
-    showAxes: false,
-    enableDragAndDrop: false,
-    enableInteraction: false,
-    singleSchematicMode: false,
-    enableProgressBar: false,
-    sidebarOptions: { enabled: false },
-    resourcePackOptions: { showMissingPackNotice: false },
-    backgroundColor: "#dfe6d7",
-    cameraOptions: {
-      position: [20, 20, 20],
-      defaultCameraPreset: "perspective",
-      preserveCameraOnUpdate: true,
-    },
-    callbacks: {
-      onRendererInitialized: async (ready) => {
-        renderer = ready;
-        blueprints = new BlueprintLoader(renderer, { beforeReplace: () => inspector?.clear() });
-        assets = new ItemAssets(renderer.cubane.getAssetLoader(), { iconBaseUrl: "./ui" });
-        views = new ViewControls(renderer, toast);
-        inspector = new BlockInspector(renderer, views, assets, showTab, toast);
-        renderSettings = new RenderSettings(renderer, performanceSettings);
-        performanceHUD = new PerformanceHUD(renderer);
-        window.mcStudio = {
-          renderer,
-          views,
-          inspector,
-          renderSettings,
-          performanceHUD,
-          loadBlueprint,
-        };
-        await loadUrl(DEFAULT_SCHEMATIC);
+  try {
+    renderer = await createWorkshopRenderer({
+      canvas,
+      resourcePackUrl: `./packs/vanilla_pack_fixed.zip?v=${PACK_VERSION}`,
+      resourcePackName: "vanilla_pack_fixed",
+      rendererOptions: {
+        maxPixelRatio: performanceSettings.maxPixelRatio,
+        targetFPS: performanceSettings.targetFPS,
+        chunkRenderOptions: performanceSettings,
+        postProcessingOptions: { enableSSAO: performanceSettings.ssao },
+        backgroundColor: "#dfe6d7",
+        cameraOptions: {
+          position: [20, 20, 20],
+          defaultCameraPreset: "perspective",
+          preserveCameraOnUpdate: true,
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    previewReason = error instanceof Error ? error.message : String(error);
+    await loadUrl(DEFAULT_SCHEMATIC);
+    return;
+  }
+  blueprints = new BlueprintLoader(renderer, { beforeReplace: () => inspector?.clear() });
+  assets = new ItemAssets(renderer.cubane.getAssetLoader(), { iconBaseUrl: "./ui" });
+  views = new ViewControls(renderer, toast);
+  inspector = new BlockInspector(renderer, views, assets, showTab, toast);
+  renderSettings = new RenderSettings(renderer, performanceSettings);
+  performanceHUD = new PerformanceHUD(renderer);
+  window.mcStudio = { renderer, views, inspector, renderSettings, performanceHUD, loadBlueprint };
+  await loadUrl(DEFAULT_SCHEMATIC);
   window.mcRenderer = renderer;
 }
 window.addEventListener("pagehide", (e) => {

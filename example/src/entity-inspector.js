@@ -18,8 +18,8 @@ export function renderEntityDetails(content, entity) {
       entity.status === "model"
         ? "蓝图保存的静态实体 · 内嵌模型外观"
         : entity.status === "failed"
-          ? "模型加载失败，显示橙色标记。"
-          : "此实体外观暂不支持，显示橙色标记。",
+          ? "模型加载失败，未渲染。"
+          : "没有同名模型，未渲染。",
       "notice",
     ),
   );

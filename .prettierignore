@@ -1,0 +1,10 @@
+dist/
+node_modules/
+*.wasm
+*.tgz
+package-lock.json
+mesh_builder_wasm/
+test/
+src/renderer/wasm/
+src/renderer/custom_models/
+npm/

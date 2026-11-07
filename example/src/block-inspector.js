@@ -214,7 +214,7 @@ export class BlockInspector {
     this.entityTargets = listEntities(this.renderer.schematicManager.getAllSchematics());
     select.replaceChildren(new Option(this.entityTargets.length ? `发现 ${this.entityTargets.length} 个实体 · 选择定位` : "蓝图未保存实体", ""));
     for (const [index, { entity }] of this.entityTargets.entries())
-      select.append(new Option(`${entityName(entity)} · ${entity.position.join(", ")}${entity.status !== "model" ? " · 占位标记" : ""}`, String(index)));
+      select.append(new Option(`${entityName(entity)} · ${entity.position.join(", ")}${entity.status !== "model" ? " · 未渲染" : ""}`, String(index)));
     select.disabled = !this.entityTargets.length;
   }
   render() {
