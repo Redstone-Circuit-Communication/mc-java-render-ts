@@ -39,7 +39,7 @@ describe("actual schematic entities and bundled GLBs", () => {
 	beforeAll(async () => {
 		await load("zombie");
 	});
-	it("loads the four same-named models in five-entities.litematic", async () => {
+	it("loads all five entities in five-entities.litematic, the raft through its alias", async () => {
 		const parent = new THREE.Group();
 		const manager = new EntityManager(
 			parent,
@@ -50,7 +50,7 @@ describe("actual schematic entities and bundled GLBs", () => {
 		);
 		await manager.rebuild();
 		expect(manager.records).toHaveLength(5);
-		expect(manager.records.filter((record) => record.status === "model")).toHaveLength(4);
+		expect(manager.records.filter((record) => record.status === "model")).toHaveLength(5);
 		const allay = manager.group.children.find((node) => node.name === "minecraft:allay");
 		if (!allay) throw new Error("Missing allay model");
 		expect(new THREE.Box3().setFromObject(allay).min.y).toBeCloseTo(0.5);
@@ -66,7 +66,9 @@ describe("actual schematic entities and bundled GLBs", () => {
 		);
 		await manager.rebuild();
 		expect(manager.records).toHaveLength(15);
-		expect(manager.records.filter((record) => record.status === "model")).toHaveLength(13);
+		// Everything but the marker, which the game does not draw and gets a debug shape instead.
+		expect(manager.records.filter((record) => record.status === "model")).toHaveLength(14);
+		expect(manager.records.filter((record) => record.status === "debug")).toHaveLength(1);
 		for (const node of manager.group.children.filter((node) => node.name === "minecraft:zombie")) {
 			const record = node.userData.entity;
 			const bounds = new THREE.Box3().setFromObject(node);

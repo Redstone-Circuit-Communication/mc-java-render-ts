@@ -49,7 +49,7 @@ describe("entity snapshots", () => {
 		expect(records[0].key).not.toBe(records[1].key);
 		expect(resolveEntityModel(records[0])).toBe("zombie");
 	});
-	it("maps every vanilla id to the model of the same name, ignoring NBT", () => {
+	it("maps vanilla ids to catalog models, through aliases, ignoring age", () => {
 		const [raft, boat, baby, modded] = normalizeEntities(
 			[
 				entity("minecraft:bamboo_raft"),
@@ -59,25 +59,22 @@ describe("entity snapshots", () => {
 			],
 			"s"
 		);
-		expect(resolveEntityModel(raft)).toBe("bamboo_raft");
+		expect(resolveEntityModel(raft)).toBe("raft");
 		expect(resolveEntityModel(boat)).toBe("boat");
 		expect(resolveEntityModel(baby)).toBe("pig");
 		expect(resolveEntityModel(modded)).toBeUndefined();
 	});
-	it("resolves ids only when the catalog ships a same-named model", () => {
+	it("resolves ids only when the catalog ships the model", () => {
 		const [wolf, item, dragon] = normalizeEntities(
 			[entity("minecraft:wolf"), entity("minecraft:item"), entity("minecraft:ender_dragon")],
 			"s"
 		);
 		expect(resolveEntityModel(wolf, bundled)).toBe("wolf");
 		expect(resolveEntityModel(item, bundled)).toBeUndefined();
-		expect(resolveEntityModel(dragon, bundled)).toBeUndefined();
+		expect(resolveEntityModel(dragon, bundled)).toBe("dragon");
 	});
-	it("renders same-named models and adds nothing for the rest", async () => {
-		const { manager, load } = fixture(
-			[entity("minecraft:wolf"), entity("minecraft:item")],
-			bundled
-		);
+	it("renders catalog models and adds nothing for the rest", async () => {
+		const { manager, load } = fixture([entity("minecraft:wolf"), entity("mod:unknown")], bundled);
 		await manager.rebuild();
 		expect(manager.records.map((record) => record.status)).toEqual(["model", "unsupported"]);
 		expect(load).toHaveBeenCalledWith("wolf");

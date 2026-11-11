@@ -412,6 +412,18 @@ const LEGACY_ENTITIES = new Set(["boat", "chest_boat", "creaking_transient"]);
 const HUGE_ENTITIES = new Set(["ender_dragon", "giant"]);
 const stack = (id) => compound({ id: string(id), count: int(1) });
 const frame = { Facing: byte(3), Item: stack("minecraft:compass"), ItemRotation: byte(0) };
+/**
+ * Where an entity's position is not its feet. A painting or frame stands 0.46875 behind the centre of
+ * its block, facing the way listed (a painting's facing 3 is east, a frame's Facing 3 is south); item
+ * and text displays are centred on their position. Everything else stands on y = 1.
+ */
+const HANGING = { painting: [1, 0, 0], item_frame: [0, 0, 1], glow_item_frame: [0, 0, 1] };
+const CENTRED = new Set(["item_display", "text_display"]);
+function entityPos(id, x, z) {
+	const facing = HANGING[id];
+	if (facing) return [x + 0.5 - facing[0] * 0.46875, 1.5, z + 0.5 - facing[2] * 0.46875];
+	return [x + 0.5, CENTRED.has(id) ? 1.5 : 1, z + 0.5];
+}
 const ENTITY_DATA = {
 	item: { Item: stack("minecraft:diamond"), Age: short(0), PickupDelay: short(0) },
 	falling_block: { BlockState: compound({ Name: string("minecraft:sand") }), Time: int(1) },
@@ -466,19 +478,18 @@ function buildEntities(zip) {
 		cells[at(x, labelY, z)] = of("minecraft:oak_sign", { rotation: "0" });
 		tileEntities.push(signEntity(x, labelY, z, signLines(name, `minecraft:${id}`)));
 		// Entity positions are block corners; +0.5 centres each one on its cell.
+		const pos = entityPos(id, x, z);
 		index.push([
 			i + 1,
 			name ?? "",
 			`minecraft:${id}`,
-			x + 0.5,
-			1,
-			z + 0.5,
+			...pos,
 			labelY,
 			models.has(id) ? "yes" : "no",
 			LEGACY_ENTITIES.has(id) ? "legacy name" : "",
 		]);
 		return compound({
-			Pos: list(6, [double(x + 0.5), double(1), double(z + 0.5)]),
+			Pos: list(6, pos.map(double)),
 			Rotation: list(5, [float(0), float(0)]),
 			UUID: ints([1, 2, 3, i + 1]),
 			id: string(`minecraft:${id}`),

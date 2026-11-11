@@ -315,3 +315,51 @@ describe("texture alpha classification", () => {
 		expect(context.drawImage).toHaveBeenCalledWith(image, 16, 32, 16, 16, 0, 0, 16, 16);
 	});
 });
+
+describe("elements with reversed corners", () => {
+	/**
+	 * cube_all_inner_faces, as spawners, trial spawners and vaults use it: the cube, and a mirrored copy
+	 * a hair inside whose x runs from 16 to 0, so that its faces point inward.
+	 */
+	const faces = (uv: [number, number, number, number]): BlockModelElement["faces"] => ({
+		north: { texture: "block/spawner", uv, cullface: "south" },
+		east: { texture: "block/spawner", uv, cullface: "west" },
+		south: { texture: "block/spawner", uv, cullface: "north" },
+		west: { texture: "block/spawner", uv, cullface: "east" },
+		up: { texture: "block/spawner", uv, cullface: "up" },
+		down: { texture: "block/spawner", uv, cullface: "down" },
+	});
+	const spawner: BlockModel = {
+		elements: [
+			{ from: [0, 0, 0], to: [16, 16, 16], faces: faces([0, 0, 16, 16]) },
+			{ from: [15.998, 0.002, 0.002], to: [0.002, 15.998, 15.998], faces: faces([16, 0, 0, 16]) },
+		],
+	};
+
+	it("keeps the mirrored cube inside its block instead of half a block to the east", async () => {
+		const { builder } = fixtureBuilder();
+		const box = new THREE.Box3().setFromObject(await builder.createBlockMesh(spawner));
+		expect(box.min.toArray().map((v) => Math.round(v * 1000) / 1000)).toEqual([-0.5, -0.5, -0.5]);
+		expect(box.max.toArray().map((v) => Math.round(v * 1000) / 1000)).toEqual([0.5, 0.5, 0.5]);
+	});
+
+	it("does the same in the optimised path, where the faces used to collapse to nothing", async () => {
+		const { builder } = fixtureBuilder();
+		const data = await builder.createOptimizedFaceData(spawner);
+		const all = [...[...data.cullableFaces.values()].flat(), ...data.nonCullableFaces];
+		expect(all).toHaveLength(12);
+		for (const face of all) {
+			face.geometry.computeBoundingBox();
+			const { min, max } = face.geometry.boundingBox as THREE.Box3;
+			for (const axis of [min.x, min.y, min.z, max.x, max.y, max.z])
+				expect(Math.abs(axis)).toBeLessThanOrEqual(0.5001);
+		}
+		// Faces of the inner cube have width in x again, instead of being flattened to a line.
+		const widths = all.map((face) => {
+			face.geometry.computeBoundingBox();
+			const box = face.geometry.boundingBox as THREE.Box3;
+			return box.max.x - box.min.x;
+		});
+		expect(widths.filter((width) => width > 0.99)).toHaveLength(8);
+	});
+});

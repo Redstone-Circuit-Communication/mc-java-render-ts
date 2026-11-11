@@ -4,6 +4,19 @@ import { createBannerOverlay, resolveBannerBlockState } from "./banners";
 import { createCopperChestOverlay, resolveCopperChestStage } from "./copper-chests";
 import { createDecoratedPotOverlay } from "./decorated-pots";
 import { createShulkerBoxOverlay, resolveShulkerBoxVariant } from "./shulker-boxes";
+import {
+	createConduitOverlay,
+	createCopperGolemStatueOverlay,
+	createEndPortalOverlay,
+	createInvisibleBlockOverlay,
+	createSkullOverlay,
+} from "./model-overlays";
+import {
+	resolvePortalKind,
+	resolveMarkerKind,
+	resolveSkullBlock,
+	resolveStatueStage,
+} from "./model-placements";
 import { captureBlockEntitySnapshot, filterBlockEntitySnapshot } from "./types";
 import type { BlockEntityResources, BlockEntitySchematic, BlockEntitySnapshot } from "./types";
 
@@ -13,6 +26,8 @@ export * from "./decorated-pots";
 export * from "./copper-chests";
 export * from "./shulker-boxes";
 export * from "./banners";
+export * from "./model-placements";
+export * from "./model-overlays";
 
 export interface BlockEntityOverlay {
 	readonly count: number;
@@ -45,6 +60,12 @@ export interface BlockEntityOptions {
 	/** Additional renderers, or replacements for a built-in ID. */
 	renderers?: readonly BlockEntityRenderer[];
 	playerHeads?: PlayerHeadOptions;
+	/**
+	 * Defaults to true. A barrier, light block, structure void or moving piston has no model, so the game
+	 * draws nothing for it; with this on, a small marker shows where each is. The markers are one overlay
+	 * named INVISIBLE_BLOCKS_OVERLAY_NAME, which a viewer can hide without a rebuild.
+	 */
+	invisibleBlocks?: boolean;
 	/** Optional diagnostic hook. Rendering failures are isolated per renderer. */
 	onError?: (rendererId: string, error: unknown) => void;
 }
@@ -80,6 +101,39 @@ export const DEFAULT_BLOCK_ENTITY_RENDERERS: readonly BlockEntityRenderer[] = [
 		supportsBlock: (name) => resolveBannerBlockState({ name, properties: {} }) !== null,
 		render: ({ schematic, signal, snapshot, resources }) =>
 			createBannerOverlay(schematic, signal, snapshot, resources),
+	},
+	// Everything below has no geometry in its block model; the look comes from a catalog model or a marker.
+	{
+		id: "minecraft:skull",
+		supportsBlock: (name) => resolveSkullBlock(name) !== null,
+		render: ({ schematic, signal, snapshot, resources }) =>
+			createSkullOverlay(schematic, signal, snapshot, resources),
+	},
+	{
+		id: "minecraft:copper_golem_statue",
+		supportsBlock: (name) => resolveStatueStage(name) !== null,
+		render: ({ schematic, signal, snapshot, resources }) =>
+			createCopperGolemStatueOverlay(schematic, signal, snapshot, resources),
+	},
+	{
+		id: "minecraft:conduit",
+		supportsBlock: (name) => name === "minecraft:conduit",
+		render: ({ schematic, signal, snapshot, resources }) =>
+			createConduitOverlay(schematic, signal, snapshot, resources),
+	},
+	{
+		id: "minecraft:end_portal",
+		supportsBlock: (name) => resolvePortalKind(name) !== null,
+		render: ({ schematic, signal, snapshot, resources }) =>
+			createEndPortalOverlay(schematic, signal, snapshot, resources),
+	},
+	{
+		id: "minecraft:invisible_blocks",
+		supportsBlock: (name) => resolveMarkerKind(name) !== null,
+		render: async ({ schematic, signal, snapshot, options }) =>
+			options.invisibleBlocks === false
+				? { count: 0, dispose() {} }
+				: createInvisibleBlockOverlay(schematic, signal, snapshot),
 	},
 ];
 

@@ -273,19 +273,13 @@ export class BlockMeshBuilder {
 		const from = fromJSON.map((c) => c / 16 - 0.5);
 		const to = toJSON.map((c) => c / 16 - 0.5);
 
-		let size = [to[0] - from[0], to[1] - from[1], to[2] - from[2]];
-		size = size.map((s) => Math.max(0, s));
-
-		let center = [from[0] + size[0] / 2, from[1] + size[1] / 2, from[2] + size[2] / 2];
-
 		// Water level adjustment
 		if (blockData && this.isWaterBlock(blockData) && toJSON[1] === 16) {
 			const adjustedToY_mc = 14;
 			to[1] = adjustedToY_mc / 16 - 0.5;
-			size[1] = to[1] - from[1];
-			size[1] = Math.max(0, size[1]);
-			center[1] = from[1] + size[1] / 2;
 		}
+
+		const center = this.elementCenter(from, to);
 
 		// USE the new indexed approach
 		const indexedResult = await this.createIndexedElementGeometry(
@@ -304,6 +298,15 @@ export class BlockMeshBuilder {
 		}
 
 		return indexedResult;
+	}
+
+	/**
+	 * Centre of an element in block space, whichever way round its corners are listed. A few models
+	 * reverse them deliberately: the inner faces of a spawner, trial spawner or vault are a cube whose
+	 * x runs from 16 to 0. `from + |size| / 2` put that cube half a block off its block.
+	 */
+	private elementCenter(from: number[], to: number[]): number[] {
+		return from.map((corner, axis) => (corner + to[axis]) / 2);
 	}
 
 	private async createIndexedElementGeometry(
@@ -931,18 +934,16 @@ export class BlockMeshBuilder {
 		const toJSON = element.to || [16, 16, 16];
 		const from = fromJSON.map((c) => c / 16 - 0.5);
 		const to = toJSON.map((c) => c / 16 - 0.5);
-		let size = [to[0] - from[0], to[1] - from[1], to[2] - from[2]];
-		size = size.map((s) => Math.max(0, s));
-		let center = [from[0] + size[0] / 2, from[1] + size[1] / 2, from[2] + size[2] / 2];
-
 		// Water level adjustment (same as existing code)
 		if (blockData && this.isWaterBlock(blockData) && toJSON[1] === 16) {
 			const adjustedToY_mc = 14;
 			to[1] = adjustedToY_mc / 16 - 0.5;
-			size[1] = to[1] - from[1];
-			size[1] = Math.max(0, size[1]);
-			center[1] = from[1] + size[1] / 2;
 		}
+
+		const center = this.elementCenter(from, to);
+		// Signed on purpose: an element whose corners are reversed on an axis is a mirrored cube, and
+		// its faces have to point inward.
+		const elementSize = [to[0] - from[0], to[1] - from[1], to[2] - from[2]];
 
 		const faceDirections = ["down", "up", "north", "south", "west", "east"] as const;
 
@@ -954,7 +955,7 @@ export class BlockMeshBuilder {
 			// Create the face geometry (reuse existing logic)
 			const { geometry, material } = await this.createFaceGeometry(
 				direction,
-				size,
+				elementSize,
 				faceData,
 				model,
 				transform,

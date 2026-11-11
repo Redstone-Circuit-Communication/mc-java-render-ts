@@ -27,6 +27,13 @@ const MESSAGES = {
   missing: "蓝图未保存此容器的物品列表，无法判断是否为空。",
   partial: "大型箱子有一侧未保存物品列表，以下仅显示已保存的内容。",
 };
+/** The overlay that marks barriers, light blocks, structure voids and moving pistons, which the game does not draw. */
+const INVISIBLE_BLOCKS_OVERLAY = "schematic-renderer:invisible-blocks";
+function showInvisibleBlockMarkers(schematic, shown) {
+  const overlay = schematic.group?.getObjectByName(INVISIBLE_BLOCKS_OVERLAY);
+  if (overlay) overlay.visible = shown;
+}
+
 export class BlockInspector {
   constructor(renderer, views, assets, showTab, notify) {
     Object.assign(this, { renderer, views, assets, showTab, notify });
@@ -120,6 +127,13 @@ export class BlockInspector {
         schematic.entityManager?.setVisible(event.target.checked);
       if (this.selection?.kind === "entity") this.clear();
     }, { signal });
+    document.getElementById("show-debug-entities").addEventListener("change", (event) => {
+      for (const schematic of renderer.schematicManager.getAllSchematics()) {
+        schematic.entityManager?.setShowDebug(event.target.checked);
+        showInvisibleBlockMarkers(schematic, event.target.checked);
+      }
+      renderer.invalidate?.();
+    }, { signal });
     const box = new BoxGeometry(1, 1, 1);
     this.highlight = new LineSegments(
       new EdgesGeometry(box),
@@ -207,14 +221,16 @@ export class BlockInspector {
     this.entityTargets = [];
     const select = document.getElementById("entity-select");
     const shown = document.getElementById("show-entities").checked;
+    const debugShown = document.getElementById("show-debug-entities").checked;
     for (const schematic of this.renderer.schematicManager.getAllSchematics()) {
       schematic.entityManager?.setVisible(shown);
-
+      schematic.entityManager?.setShowDebug(debugShown);
+      showInvisibleBlockMarkers(schematic, debugShown);
     }
     this.entityTargets = listEntities(this.renderer.schematicManager.getAllSchematics());
     select.replaceChildren(new Option(this.entityTargets.length ? `发现 ${this.entityTargets.length} 个实体 · 选择定位` : "蓝图未保存实体", ""));
     for (const [index, { entity }] of this.entityTargets.entries())
-      select.append(new Option(`${entityName(entity)} · ${entity.position.join(", ")}${entity.status !== "model" ? " · 未渲染" : ""}`, String(index)));
+      select.append(new Option(`${entityName(entity)} · ${entity.position.join(", ")}${entity.status === "model" ? "" : entity.status === "placeholder" ? " · 占位" : entity.status === "debug" ? " · 调试替身" : entity.status === "invisible" ? " · 无内容" : " · 未渲染"}`, String(index)));
     select.disabled = !this.entityTargets.length;
   }
   render() {

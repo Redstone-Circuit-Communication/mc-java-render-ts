@@ -765,7 +765,14 @@ export class SchematicObject extends EventEmitter {
 				this.schematicWrapper,
 				(model) => this.schematicRenderer.cubane.getEntityModel(model),
 				() => this.schematicRenderer.invalidate(),
-				(model) => this.schematicRenderer.cubane.hasEntityModel(model)
+				(model) => this.schematicRenderer.cubane.hasEntityModel(model),
+				(block) => this.schematicRenderer.cubane.getBlockMesh(block, "plains", true),
+				{
+					getResourceString: (path) =>
+						this.schematicRenderer.cubane.getAssetLoader().getResourceString(path),
+					getModel: (path) => this.schematicRenderer.cubane.getAssetLoader().getModel(path),
+					pixels: (path) => this.schematicRenderer.cubane.getAssetLoader().getTexturePixels(path),
+				}
 			);
 			this.entityManager.setOpacity(this.opacity);
 			this.entityManager.setBounds(this.renderingBounds);
