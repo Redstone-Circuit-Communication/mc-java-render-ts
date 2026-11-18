@@ -28,6 +28,11 @@ import { getClampedPixelRatio } from "../utils/pixelRatio";
 let EffectComposer: typeof import("postprocessing").EffectComposer;
 let RenderPass: typeof import("postprocessing").RenderPass;
 let EffectPass: typeof import("postprocessing").EffectPass;
+/** The SSAO numbers per projection (RenderManager.ssaoPresets starts from a copy). */
+const DEFAULT_SSAO_PRESETS: Readonly<Record<"perspective" | "isometric", { aoRadius: number; distanceFalloff: number; intensity: number }>> = {
+	perspective: { aoRadius: 2.0, distanceFalloff: 1.0, intensity: 6.0 },
+	isometric: { aoRadius: 1.2, distanceFalloff: 0.6, intensity: 3.0 },
+};
 let SMAAEffect: typeof import("postprocessing").SMAAEffect;
 let N8AOPostPass: typeof import("n8ao").N8AOPostPass;
 let GammaCorrectionEffect: typeof import("../effects/GammaCorrectionEffect").GammaCorrectionEffect;
@@ -255,17 +260,12 @@ export class RenderManager {
 	private _imageBackground: THREE.Texture | null = null;
 
 	// SSAO presets for different camera modes
+	// SSAO presets for different camera modes. 2026-11-18: stronger than before (1.0 / 0.4 / 5 and 0.3 / 0.1 / 0.8) — the site's
+	// users found the old occlusion barely visible, especially in the orthographic view. Two blocks of radius gives the
+	// contact shadows under overhangs, in corners and between stair steps that make a voxel build read as solid.
 	private ssaoPresets = {
-		perspective: {
-			aoRadius: 1.0,
-			distanceFalloff: 0.4,
-			intensity: 5.0,
-		},
-		isometric: {
-			aoRadius: 0.3,
-			distanceFalloff: 0.1,
-			intensity: 0.8,
-		},
+		perspective: { ...DEFAULT_SSAO_PRESETS.perspective },
+		isometric: { ...DEFAULT_SSAO_PRESETS.isometric },
 	};
 
 	constructor(schematicRenderer: SchematicRenderer) {
@@ -602,7 +602,8 @@ export class RenderManager {
 		if (this.disposed) return;
 
 		if ("isWebGPURenderer" in this.renderer) return;
-		this.composer = new EffectComposer(this.renderer);
+		const samples = this.schematicRenderer.options?.postProcessingOptions?.multisampling ?? 0;
+		this.composer = new EffectComposer(this.renderer, { multisampling: Math.max(0, Math.min(8, Math.round(samples))) });
 		const renderPass = new RenderPass(
 			this.schematicRenderer.sceneManager.scene,
 			this.schematicRenderer.cameraManager.activeCamera.camera
@@ -1185,9 +1186,13 @@ export class RenderManager {
 					Math.max(1, canvas.clientWidth * dpr),
 					Math.max(1, canvas.clientHeight * dpr)
 				);
-				pass.configuration.aoRadius = 1.0;
-				pass.configuration.distanceFalloff = 0.4;
-				pass.configuration.intensity = 5.0;
+				// the preset of the current projection (this used to hard-code the old perspective numbers, so a pass created
+				// in the orthographic view kept them until the next camera switch)
+				const presets = this.ssaoPresets ?? DEFAULT_SSAO_PRESETS;
+				const preset = this.isOrthographicCamera() ? presets.isometric : presets.perspective;
+				pass.configuration.aoRadius = preset.aoRadius;
+				pass.configuration.distanceFalloff = preset.distanceFalloff;
+				pass.configuration.intensity = preset.intensity;
 				pass.configuration.gammaCorrection = false;
 				pass.setQualityMode("Medium");
 				this.passes.set("ssao", pass);

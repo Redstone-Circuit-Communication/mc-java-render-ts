@@ -795,6 +795,13 @@ export class SchematicObject extends EventEmitter {
 	}
 
 	// Track chunk building progress
+	/** chunkLoading 的进度：回调 `onChunkProgress` 与事件 `schematicChunkProgress`（BlueprintLoader 的 onChunk 听的是事件） */
+	private reportChunkProgress(done: number, total: number): void {
+		if (this.disposed) return;
+		this.schematicRenderer.options.callbacks?.onChunkProgress?.(this.id, done, total);
+		this.eventEmitter.emit("schematicChunkProgress", { id: this.id, done, total });
+	}
+
 	private reportBuildProgress(
 		message: string,
 		progress: number,
@@ -832,8 +839,10 @@ export class SchematicObject extends EventEmitter {
 			chunkHeight: 16,
 			chunkLength: 16,
 		},
-		buildMode: "immediate" | "incremental" | "instanced" | "batched" = this.schematicRenderer
-			.options.meshBuildingMode || "incremental"
+		buildMode: "immediate" | "incremental" | "instanced" | "batched" = this.schematicRenderer.options
+			.chunkLoading
+			? "incremental"
+			: this.schematicRenderer.options.meshBuildingMode || "incremental"
 	) {
 		// Start performance monitoring session
 		const sessionId = performanceMonitor.startSession(this.id, buildMode);
@@ -1381,12 +1390,17 @@ export class SchematicObject extends EventEmitter {
 			// visibly water — show along every boundary).
 			const chunkAprons = await this.computeChunkAprons(allChunks, chunkDimensions);
 
-			// Process in batches to avoid overwhelming the worker pool
-			const BATCH_SIZE = 8; // Match worker count
+			// Process in batches to avoid overwhelming the worker pool.
+			// chunkLoading: one chunk per batch, and every chunk takes at least minIntervalMs (the rest is a pause).
+			const pacing = this.schematicRenderer.options.chunkLoading;
+			const minChunkMs = pacing ? Math.max(0, Number(pacing.minIntervalMs) || 0) : 0;
+			const BATCH_SIZE = pacing ? 1 : 8; // Match worker count
 			const totalChunksToProcess = allChunks.length;
+			if (pacing) this.reportChunkProgress(0, totalChunksToProcess);
 
 			for (let batchStart = 0; batchStart < totalChunksToProcess; batchStart += BATCH_SIZE) {
 				this.ensureBuildCurrent(buildVersion);
+				const batchStartedAt = performance.now();
 				const batchEnd = Math.min(batchStart + BATCH_SIZE, totalChunksToProcess);
 				const batch = allChunks.slice(batchStart, batchEnd);
 
@@ -1435,10 +1449,11 @@ export class SchematicObject extends EventEmitter {
 					}
 				}
 
-				// Log progress every batch
-				console.log(
-					`[SceneAdd] batch=${Math.floor(batchStart / BATCH_SIZE) + 1} processed=${processedChunkCount}/${totalChunksToProcess} children=${this.group.children.length}`
-				);
+				// Log progress every batch (not per chunk: chunkLoading reports through onChunkProgress instead)
+				if (!pacing)
+					console.log(
+						`[SceneAdd] batch=${Math.floor(batchStart / BATCH_SIZE) + 1} processed=${processedChunkCount}/${totalChunksToProcess} children=${this.group.children.length}`
+					);
 
 				this.reportBuildProgress(
 					"Processing chunks...",
@@ -1446,6 +1461,12 @@ export class SchematicObject extends EventEmitter {
 					totalChunksToProcess,
 					processedChunkCount
 				);
+				if (pacing) {
+					this.reportChunkProgress(processedChunkCount, totalChunksToProcess);
+					const rest = minChunkMs - (performance.now() - batchStartedAt);
+					if (rest > 0) await new Promise<void>((resolve) => setTimeout(resolve, rest));
+					this.ensureBuildCurrent(buildVersion);
+				}
 			}
 
 			// Final render

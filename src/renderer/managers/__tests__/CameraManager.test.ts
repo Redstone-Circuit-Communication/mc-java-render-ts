@@ -60,7 +60,7 @@ describe("CameraManager", () => {
 			const settings = CameraManager.CAMERA_PRESETS.perspective.controlSettings;
 			expect(settings).toBeDefined();
 			expect(settings?.enableDamping).toBe(true);
-			expect(settings?.minDistance).toBe(1);
+			expect(settings?.minDistance).toBe(0.05);
 			expect(settings?.maxDistance).toBe(1000);
 		});
 	});

@@ -756,7 +756,7 @@ impl MeshBuilder {
             let index_count = valid_indices.len() as u32;
             
             match &mut current_group {
-                Some((start, count, current_mat)) if *current_mat == mat_index => {
+                Some((_start, count, current_mat)) if *current_mat == mat_index => {
                     *count += index_count;
                 }
                 Some(group) => {

@@ -17,32 +17,74 @@ export interface MaterialCounter {
 }
 export interface BlueprintLoaderOptions {
 	counter?: MaterialCounter;
-	/** Runs after the new scene is built and before the old scene is removed. */
+	/** Runs after the new scene is built and before the old scene is removed (with `chunkLoading`: before the new one streams in). */
 	beforeReplace?: () => void;
 }
+/** Third argument of `load` (same in both libraries). */
+export interface LoadHooks {
+	/**
+	 * The new blueprint is in the scene. With the renderer's `chunkLoading` this comes before its first chunk (size known:
+	 * aim the camera here); without it, right before the load resolves.
+	 */
+	onStart?(schematic: LoadedSchematic): void;
+	/** With `chunkLoading`: `done` of `total` chunks are on screen. */
+	onChunk?(done: number, total: number): void;
+	/** Abort to cancel the load (it rejects with an `AbortError`). */
+	signal?: AbortSignal;
+}
+/** The error a cancelled load rejects with (a newer load, `dispose`, an aborted signal). */
+export function abortError(): Error {
+	return typeof DOMException === "function"
+		? new DOMException("结构加载已取消", "AbortError")
+		: Object.assign(new Error("结构加载已取消"), { name: "AbortError" });
+}
+export const isAbortError = (e: unknown): boolean =>
+	!!e && typeof e === "object" && (e as { name?: unknown }).name === "AbortError";
 const AIR = new Set(["minecraft:air", "minecraft:cave_air", "minecraft:void_air"]);
-/** Serializes loads; parse/build failures leave the previous blueprint intact. */
+/**
+ * Serializes loads; parse/build failures leave the previous blueprint intact.
+ * With the renderer's `chunkLoading` the new blueprint streams in chunk by chunk: the previous one stays until the new one
+ * has parsed, and a new `load` cancels the one still streaming (it rejects with an `AbortError`).
+ */
 export class BlueprintLoader {
 	private counter: MaterialCounter;
 	private serial = 0;
 	private queue: Promise<unknown> = Promise.resolve();
 	private disposed = false;
 	private namespace = `workshop-${Math.random().toString(36).slice(2)}`;
+	private streaming?: AbortController;
 	constructor(
 		private renderer: SchematicRenderer,
 		private options: BlueprintLoaderOptions = {}
 	) {
 		this.counter = options.counter ?? new MaterialsCounter();
 	}
-	load(buffer: ArrayBuffer, filename: string): Promise<BlueprintResult> {
+	load(buffer: ArrayBuffer, filename: string, hooks: LoadHooks = {}): Promise<BlueprintResult> {
 		if (this.disposed) return Promise.reject(new Error("蓝图加载器已关闭"));
 		if (!/\.(litematic|schem|schematic|nbt)$/i.test(filename))
 			return Promise.reject(new Error("不支持的蓝图格式"));
 		// Snapshot before queuing so caller mutations cannot corrupt an upcoming load.
 		const copy = buffer.slice(0);
-		const task = this.queue.then(() => this.loadOne(copy, filename));
+		const stop = new AbortController();
+		if (this.chunked) {
+			this.streaming?.abort();
+			this.streaming = stop;
+		}
+		const onAbort = () => stop.abort();
+		if (hooks.signal?.aborted) stop.abort();
+		else hooks.signal?.addEventListener("abort", onAbort, { once: true });
+		const task = this.queue
+			.then(() => this.loadOne(copy, filename, hooks, stop.signal))
+			.finally(() => {
+				hooks.signal?.removeEventListener("abort", onAbort);
+				if (this.streaming === stop) this.streaming = undefined;
+			});
 		this.queue = task.catch(() => undefined);
 		return task;
+	}
+	private get chunked(): boolean {
+		// hosts and tests may hand in a renderer without options: no chunk streaming then
+		return !!this.renderer.options?.chunkLoading;
 	}
 	async loadFile(file: File): Promise<BlueprintResult> {
 		return this.load(await file.arrayBuffer(), file.name);
@@ -57,21 +99,46 @@ export class BlueprintLoader {
 	private assertOpen(): void {
 		if (this.disposed) throw new Error("蓝图加载器已关闭");
 	}
-	private async loadOne(buffer: ArrayBuffer, filename: string): Promise<BlueprintResult> {
+	private async loadOne(
+		buffer: ArrayBuffer,
+		filename: string,
+		hooks: LoadHooks,
+		signal: AbortSignal
+	): Promise<BlueprintResult> {
 		this.assertOpen();
+		if (signal.aborted) throw abortError();
 		const manager = this.renderer.schematicManager;
 		if (!manager) throw new Error("渲染器尚未初始化");
 		const id = `${this.namespace}-${++this.serial}`;
+		const chunked = this.chunked;
+		const events = this.renderer.eventEmitter;
+		const onProgress = (e: { id: string; done: number; total: number }) => {
+			if (e.id === id) hooks.onChunk?.(e.done, e.total);
+		};
+		// removing the schematic stops its build at the next chunk (SchematicObject.ensureBuildCurrent)
+		const onAbort = () => void manager.removeSchematic(id);
+		signal.addEventListener("abort", onAbort, { once: true });
+		const replaceOld = () => {
+			this.options.beforeReplace?.();
+			for (const old of manager.getAllSchematics()) if (old.id !== id) void manager.removeSchematic(old.id);
+		};
 		try {
 			let result = /\.litematic$/i.test(filename) ? await this.counter.count(buffer) : null;
 			this.assertOpen();
+			if (signal.aborted) throw abortError();
+			if (chunked) events?.on("schematicChunkProgress", onProgress);
 			await manager.loadSchematic(id, buffer, { focused: false });
 			this.assertOpen();
 			const schematic = manager.getAllSchematics().find((s) => s.id === id);
-			if (!schematic) throw new Error("蓝图加载后未找到场景");
-			schematic.group.visible = false;
+			if (!schematic) throw signal.aborted ? abortError() : new Error("蓝图加载后未找到场景");
+			if (chunked) {
+				// parsed: the new one streams in where the old one was
+				replaceOld();
+				hooks.onStart?.(schematic);
+			} else schematic.group.visible = false;
 			await schematic.getMeshes();
 			this.assertOpen();
+			if (signal.aborted || !manager.getAllSchematics().includes(schematic)) throw abortError();
 			if (!result) {
 				const counts = JSON.parse(schematic.schematicWrapper.native.countBlocksJson()) as Record<
 					string,
@@ -91,10 +158,11 @@ export class BlueprintLoader {
 				result = { regionCount: 1, materials };
 			}
 			const dimensions = schematic.getTightDimensions();
-			this.options.beforeReplace?.();
-			for (const old of manager.getAllSchematics())
-				if (old.id !== id) await manager.removeSchematic(old.id);
-			schematic.group.visible = true;
+			if (!chunked) {
+				replaceOld();
+				schematic.group.visible = true;
+				hooks.onStart?.(schematic);
+			}
 			this.renderer.invalidate();
 			return {
 				...result,
@@ -110,12 +178,17 @@ export class BlueprintLoader {
 			} catch {
 				/* Preserve the original failure. */
 			}
-			throw error;
+			throw signal.aborted && !this.disposed ? abortError() : error;
+		} finally {
+			signal.removeEventListener("abort", onAbort);
+			// a host renderer without an event emitter (and the tests' stand-in) never subscribed
+			events?.removeListener("schematicChunkProgress", onProgress);
 		}
 	}
 	/** Stops the worker immediately; await completion before disposing the renderer. */
 	async dispose(): Promise<void> {
 		this.disposed = true;
+		this.streaming?.abort();
 		this.counter.dispose();
 		await this.queue;
 	}

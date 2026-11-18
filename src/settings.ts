@@ -1,5 +1,6 @@
 import type { RenderSettingsValue } from "./types.js";
 import type { SchematicRenderer } from "./renderer/index.js";
+import { applyShading } from "./shading.js";
 export const STORAGE_KEY = "mc-studio.render-settings.v1";
 export const RENDER_PRESETS: Record<"performance" | "balanced" | "quality", RenderSettingsValue> = {
 	performance: {
@@ -72,6 +73,8 @@ export function applyRenderSettings(
 	if (renderer.options.maxPixelRatio !== maxPixelRatio)
 		renderer.renderManager.setMaxPixelRatio(maxPixelRatio);
 	renderer.renderManager.setSSAOEnabled(ssao);
+	// lightweight shading (optional key: hosts that never send it keep the original lights)
+	if (typeof input.shading === "boolean") applyShading(renderer, input.shading, input.shadingQuality === "high" ? "high" : "normal");
 	renderer.setTargetFPS(targetFPS);
 	renderer.invalidate();
 	return settings;

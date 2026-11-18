@@ -62,6 +62,10 @@ export interface RedstoneInfo {
 	note: string;
 }
 export interface RenderSettingsValue {
+	/** Lightweight shading: sun light with soft shadows (src/shading.ts). Not part of the presets; hosts opt in. */
+	shading?: boolean;
+	/** Shadow map 2048 (normal) or 4096 (high). */
+	shadingQuality?: "normal" | "high";
 	maxChunks: number;
 	renderDistance: number;
 	maxPixelRatio: number;

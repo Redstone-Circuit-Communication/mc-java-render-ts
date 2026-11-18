@@ -2,6 +2,7 @@ import { SchematicRenderer, type SchematicRendererOptions } from "./renderer/ind
 import { BlueprintLoader } from "./blueprint-loader.js";
 import { CameraControls } from "./camera-controls.js";
 import { captureScreenshot } from "./capture.js";
+import { solidsOf } from "./solids.js";
 export interface WorkshopOptions {
 	canvas: HTMLCanvasElement;
 	resourcePackUrl: string;
@@ -92,6 +93,8 @@ export async function createWorkshop(options: WorkshopOptions) {
 		loadFile: blueprints.loadFile.bind(blueprints),
 		loadUrl: blueprints.loadUrl.bind(blueprints),
 		screenshot: (type?: string, quality?: number) => captureScreenshot(renderer, type, quality),
+		/** The loaded structure as a collision grid for a host-driven first-person camera (null before anything loads). */
+		solids: () => solidsOf(renderer),
 		dispose: () =>
 			(closing ??= (async () => {
 				await blueprints.dispose();

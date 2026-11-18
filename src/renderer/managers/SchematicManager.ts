@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { SchematicObject } from "./SchematicObject";
 import { SchematicWrapper } from "../nucleationExports";
+import { fillFromVanillaStructure, readVanillaStructure } from "../nucleation/vanilla-structure";
 import { EventEmitter } from "events";
 import { SceneManager } from "./SceneManager"; // Adjust the import path
 import { SchematicRenderer } from "../SchematicRenderer";
@@ -77,6 +78,26 @@ export class SchematicManager {
 		);
 	}
 
+	/**
+	 * 字节 → SchematicWrapper。先交给 nucleation 的 fromData（litematic、Sponge schem、mcstructure…）；它不认、而字节是
+	 * Java 原版结构（结构方块存的 .nbt，站点上的 Java 作品都是这种），就自己读（nucleation/vanilla-structure.ts）。
+	 * 两条路都不行时抛 nucleation 原来的错误。
+	 */
+	private async parseSchematicBytes(bytes: Uint8Array): Promise<SchematicWrapper> {
+		const wrapper = new SchematicWrapper();
+		try {
+			wrapper.from_data(bytes);
+			return wrapper;
+		} catch (error) {
+			const structure = await readVanillaStructure(bytes);
+			if (!structure) throw error;
+			const built = new SchematicWrapper();
+			const dropped = fillFromVanillaStructure(built, structure);
+			if (dropped) console.warn(`[SchematicManager] ${dropped} 个方块实体的 NBT 没有写进去（方块本身照常）`);
+			return built;
+		}
+	}
+
 	public async loadSchematic(
 		name: string,
 		schematicData: ArrayBuffer | SchematicWrapper,
@@ -106,8 +127,8 @@ export class SchematicManager {
 		});
 		let schematicWrapper: SchematicWrapper;
 		if (schematicData instanceof ArrayBuffer) {
-			schematicWrapper = new SchematicWrapper();
-			schematicWrapper.from_data(new Uint8Array(schematicData));
+			schematicWrapper = await this.parseSchematicBytes(new Uint8Array(schematicData));
+			if (this.disposed) return;
 		} else if (this.isSchematicWrapper(schematicData)) {
 			schematicWrapper = schematicData as SchematicWrapper;
 		} else {

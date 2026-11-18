@@ -7,3 +7,7 @@ export * from "./item-assets.js";
 export * from "./camera-controls.js";
 export * from "./workshop.js";
 export * from "./picking.js";
+export * from "./sdk.js";
+export * from "./shading.js";
+export * from "./solids.js";
+export * from "./collision.js";

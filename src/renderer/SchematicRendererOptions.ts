@@ -103,6 +103,8 @@ export interface PostProcessingOptions {
 	// Individual effect toggles
 	enableSSAO?: boolean;
 	enableSMAA?: boolean;
+	/** MSAA samples of the composer's render target (0 = off, the default; 4 is the usual "high"). */
+	multisampling?: number;
 	enableGamma?: boolean;
 	/** Enable the tilt-shift miniature-photography effect. Off by default. */
 	enableTiltShift?: boolean;
@@ -266,6 +268,12 @@ export interface SchematicRendererOptions {
 	gamma?: number;
 	chunkSideLength?: number; // Length of each chunk side in blocks
 	meshBuildingMode?: "immediate" | "incremental" | "instanced" | "batched"; // How meshes are built
+	/**
+	 * 逐块加载（与基岩包同名同义）：一次只建一个区块（`chunkSideLength`，默认 16³），自下而上，建好就显示；
+	 * 每块至少用 `minIntervalMs` 毫秒，剩下的时间空着，把主线程让给慢的设备。设了它就按 `incremental` 构建，
+	 * 不管 `meshBuildingMode` 是什么。不设就是原来的整体构建。进度：`callbacks.onChunkProgress`、事件 `schematicChunkProgress`。
+	 */
+	chunkLoading?: { minIntervalMs?: number };
 	// Global toggles for enabling/disabling functionalities
 	enableInteraction?: boolean;
 	enableDragAndDrop?: boolean;
@@ -500,6 +508,8 @@ export interface Callbacks {
 	// File handling callbacks
 	onInvalidFileType?: (file: File) => void | Promise<void>;
 	onLoadingProgress?: (file: File, progress: number) => void | Promise<void>;
+	/** `chunkLoading`：结构 `id` 又有一个区块显示出来了（第 `done` 个，共 `total` 个）。同时发事件 `schematicChunkProgress` `{ id, done, total }` */
+	onChunkProgress?: (id: string, done: number, total: number) => void;
 
 	// Simulation callbacks
 	onSimulationInitialized?: (schematicName: string) => void;

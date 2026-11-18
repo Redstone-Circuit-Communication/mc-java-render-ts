@@ -134,7 +134,8 @@ export class CameraManager extends EventEmitter {
 			controlSettings: {
 				enableDamping: true, // Enable smooth damping for nice feel
 				dampingFactor: 0.08, // Smooth but responsive
-				minDistance: 1,
+				// 0.05 (was 1): the camera can come right up to a block — the site's close-ups and its first-person camera need it
+				minDistance: 0.05,
 				maxDistance: 1000,
 				enableZoom: true,
 				enableRotate: true,

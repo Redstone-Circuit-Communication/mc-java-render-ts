@@ -1,6 +1,7 @@
 {
 	"name": "@rsw/mc-java-render-ts",
-	"version": "1.0.3",
+	"version": "1.2.1",
+	"license": "AGPL-3.0-only",
 	"description": "红石阁 mc java TypeScript SDK：蓝图渲染、材料、容器、红石、实体与相机",
 	"type": "module",
 	"main": "./dist/index.js",
@@ -37,6 +38,7 @@
 	],
 	"scripts": {
 		"build": "vite build && tsc -p tsconfig.json",
+		"build:sdk": "vite build --config vite.sdk.config.mjs",
 		"prepack": "pnpm run build",
 		"typecheck": "tsc -p tsconfig.json --noEmit",
 		"typecheck:consumer": "tsc --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --noEmit tests/public-api.ts",

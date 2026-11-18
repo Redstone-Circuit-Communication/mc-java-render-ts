@@ -7,3 +7,4 @@ coverage/
 mesh_builder_wasm/target/
 example/dist
 example/node_modules
+sdk/
