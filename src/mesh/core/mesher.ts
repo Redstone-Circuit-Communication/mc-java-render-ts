@@ -21,8 +21,43 @@ const EMPTY = new Int32Array();
 const key = (x: number, y: number, z: number) => `${x},${y},${z}`;
 
 /** Stateful palette compiler; no DOM, Three.js, globals or WASM dependency. */
-/** Brightness by the number of occluders at a corner (0–3), as the game's smooth lighting shades it. */
-const AO_LEVELS = [255, 204, 166, 128];
+/**
+ * Brightness by the number of occluders at a corner (0–3). The game's smooth lighting averages four samples per vertex with
+ * an opaque block counting 0.2, which gives 1, 0.8, 0.6 and 0.4.
+ */
+const AO_LEVELS = [255, 204, 153, 102];
+
+/**
+ * Splits a quad (two triangles sharing an edge) along the diagonal whose corners are brighter in sum, as voxel renderers
+ * do with per-vertex occlusion: the other split makes the shading run in a streak across the face. Writes the six indices
+ * at `at` and keeps the winding.
+ */
+function splitByOcclusion(
+	src: ArrayLike<number>,
+	j: number,
+	base: number,
+	ao: Uint8Array,
+	out: Uint16Array | Uint32Array,
+	at: number
+): void {
+	const t1 = [src[j], src[j + 1], src[j + 2]],
+		t2 = [src[j + 3], src[j + 4], src[j + 5]];
+	const shared = t1.filter((v) => t2.includes(v));
+	if (shared.length === 2) {
+		// rotate the first triangle so its own corner is in the middle: (s1, u1, s2), the quad is s1, u1, s2, u2
+		const k = t1.findIndex((v) => !t2.includes(v));
+		const s1 = t1[(k + 2) % 3],
+			u1 = t1[k],
+			s2 = t1[(k + 1) % 3];
+		const u2 = t2.find((v) => !t1.includes(v))!;
+		if (ao[base + u1] + ao[base + u2] > ao[base + s1] + ao[base + s2]) {
+			const quad = [u1, s2, u2, u2, s1, u1];
+			for (let i = 0; i < 6; i++) out[at + i] = base + quad[i];
+			return;
+		}
+	}
+	for (let i = 0; i < 6; i++) out[at + i] = base + src[j + i];
+}
 
 export class MeshBuilder {
 	private palette = new Map<number, PreparedItem>();
@@ -240,7 +275,10 @@ export class MeshBuilder {
 					normals.set(t.packedNormals, vo * 3);
 					if (ao) occlusion(t, x + origin[0], y + origin[1], z + origin[2], ao, vo);
 					uvs.set(t.uvs, vo * 2);
-					for (let j = 0; j < t.indices.length; j++) indices[io++] = vo + t.indices[j];
+					if (ao && t.indices.length % 6 === 0)
+						for (let j = 0; j < t.indices.length; j += 6, io += 6)
+							splitByOcclusion(t.indices, j, vo, ao, indices, io);
+					else for (let j = 0; j < t.indices.length; j++) indices[io++] = vo + t.indices[j];
 					vo += t.positions.length / 3;
 				}
 				groups.push({ start, count: io - start, materialIndex });

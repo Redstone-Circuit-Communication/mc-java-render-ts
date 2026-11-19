@@ -7,7 +7,7 @@
 //               mask, checked against the PNG alpha):
 //                 poplar_boat, poplar_chest_boat   <- oak_boat, oak_chest_boat
 //                 camel_husk                       <- camel
-//                 happy_ghast                      <- ghast (same UV mask, texture is twice as tall)
+//                 happy_ghast, happy_ghast_baby    <- ghast (same UV mask, texture is twice as tall)
 //                 tropical_fish_pattern_{a,b}_1..6 <- tropical_fish_pattern_{a,b} (shared UVs)
 //   Bedrock     the mob's geometry as Mojang publishes it for Bedrock Edition (github.com/Mojang/bedrock-samples, pinned
 //               release), converted with scripts/lib/bedrock-geometry.mjs and textured with the Java texture: nautilus,
@@ -89,6 +89,8 @@ save("camel_husk", reskin("camel", texture("camel/camel_husk")), "camel geometry
 // The catalog's ghast texture is 64x32; the pack's is the same layout at twice the resolution, and
 // happy_ghast.png (128x128) keeps it in the top half, so u is unchanged and v halves.
 save("happy_ghast", reskin("ghast", texture("ghast/happy_ghast"), { vScale: 0.5, size: [128, 128] }), "ghast geometry, ghast/happy_ghast.png (top half = ghast mask x2)");
+// The ghastling (a baby happy ghast) uses the same layout at half the resolution.
+save("happy_ghast_baby", reskin("ghast", texture("ghast/happy_ghast_baby"), { vScale: 0.5, size: [64, 64] }), "ghast geometry, ghast/happy_ghast_baby.png (top half = ghast mask)");
 for (const shape of ["a", "b"])
 	for (let pattern = 1; pattern <= 6; pattern++)
 		save(

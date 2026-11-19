@@ -453,6 +453,8 @@ function buildEntities(zip) {
 		.sort();
 	const regular = ids.filter((id) => !HUGE_ENTITIES.has(id));
 	const huge = ids.filter((id) => HUGE_ENTITIES.has(id));
+	// a baby of each of these as well (the ghastling is a baby happy ghast)
+	const babies = ["happy_ghast"].filter((id) => huge.includes(id));
 	const cols = Math.ceil(Math.sqrt(regular.length));
 	const rows = Math.ceil(regular.length / cols);
 	// Ghasts are four blocks tall and withers 3.5, so labels sit above them;
@@ -460,13 +462,14 @@ function buildEntities(zip) {
 	const LABEL_Y = 6;
 	const HUGE_LABEL_Y = 15;
 	const size = {
-		x: Math.max(cols * 6, huge.length * 24),
+		x: Math.max(cols * 6, (huge.length + babies.length) * 24),
 		y: (huge.length ? HUGE_LABEL_Y : LABEL_Y) + 1,
 		z: rows * 6 + (huge.length ? 24 : 0),
 	};
 	const placed = [
 		...regular.map((id, i) => ({ id, x: (i % cols) * 6 + 3, z: Math.floor(i / cols) * 6 + 3 })),
 		...huge.map((id, i) => ({ id, x: i * 24 + 12, z: rows * 6 + 12 })),
+		...babies.map((id, i) => ({ id, baby: true, x: (huge.length + i) * 24 + 12, z: rows * 6 + 12 })),
 	];
 	const { palette, of } = makePalette();
 	const cells = new Uint16Array(size.x * size.y * size.z);
@@ -474,9 +477,9 @@ function buildEntities(zip) {
 	cells.fill(of("minecraft:smooth_stone"), 0, size.x * size.z);
 	const tileEntities = [];
 	const index = [["index", "name", "id", "x", "y", "z", "label_y", "same_named_model", "note"]];
-	const entities = placed.map(({ id, x, z }, i) => {
+	const entities = placed.map(({ id, x, z, baby }, i) => {
 		const labelY = HUGE_ENTITIES.has(id) ? HUGE_LABEL_Y : LABEL_Y;
-		const name = lang[`entity.minecraft.${id}`];
+		const name = baby ? `${lang[`entity.minecraft.${id}`]} (baby)` : lang[`entity.minecraft.${id}`];
 		cells[at(x, labelY, z)] = of("minecraft:oak_sign", { rotation: "0" });
 		tileEntities.push(signEntity(x, labelY, z, signLines(name, `minecraft:${id}`)));
 		// Entity positions are block corners; +0.5 centres each one on its cell.
@@ -488,7 +491,7 @@ function buildEntities(zip) {
 			...pos,
 			labelY,
 			models.has(id) ? "yes" : "no",
-			LEGACY_ENTITIES.has(id) ? "legacy name" : "",
+			baby ? "baby (Age -24000)" : LEGACY_ENTITIES.has(id) ? "legacy name" : "",
 		]);
 		return compound({
 			Pos: list(6, pos.map(double)),
@@ -496,6 +499,7 @@ function buildEntities(zip) {
 			UUID: ints([1, 2, 3, i + 1]),
 			id: string(`minecraft:${id}`),
 			...(ENTITY_DATA[id] ?? {}),
+			...(baby ? { Age: int(-24000) } : {}),
 		});
 	});
 	const file = litematic({

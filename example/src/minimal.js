@@ -38,6 +38,6 @@ try {
   workshop = await createWorkshop({ canvas: $('canvas'), resourcePackUrl: 'https://piston-data.mojang.com/v1/objects/e877b6a07acd633fb3bb475002175cec036e7b87/client.jar',
     rendererOptions: { backgroundColor: '#dfe6d7', maxPixelRatio: 1, cameraOptions: { position: [20, 20, 20], preserveCameraOnUpdate: true } } });
   window.workshop = workshop;
-  await load(() => workshop.loadUrl('./schematics/inspection-demo.litematic'));
+  await load(() => workshop.loadUrl(`${import.meta.env.BASE_URL}schematics/inspection-demo.litematic`));
 } catch (error) { $('status').textContent = `Initialization failed: ${error.message}`; }
 window.addEventListener('pagehide', event => { if (!event.persisted) workshop?.dispose(); });

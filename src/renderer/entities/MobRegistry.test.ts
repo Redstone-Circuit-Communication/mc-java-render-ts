@@ -45,7 +45,9 @@ describe("entity plans for the coverage schematic", () => {
 	const ids = [...csv.matchAll(/,minecraft:([a-z0-9_]+),/g)].map((match) => match[1]);
 
 	it("gives every entity something to draw", () => {
-		expect(ids).toHaveLength(164);
+		// 164 entity ids, plus a second happy ghast row for the ghastling (a baby)
+		expect(ids).toHaveLength(165);
+		expect(new Set(ids).size).toBe(164);
 		expect(ids.filter((id) => plan(id, DATA[id]).kind === "unsupported")).toEqual([]);
 		expect(ids.filter((id) => plan(id, DATA[id]).kind === "invisible")).toEqual([]);
 	});
@@ -273,5 +275,16 @@ describe("block entities", () => {
 		);
 		expect(blockStateString(undefined, "fallback")).toBe("fallback");
 		expect(blockStateString({ Name: "" }, "fallback")).toBe("fallback");
+	});
+});
+
+describe("ghastlings", () => {
+	it("draw a baby happy ghast with its own model at 0.2375 of the adult", () => {
+		const adult = resolveEntityPlan(record("happy_ghast"), () => true);
+		const baby = resolveEntityPlan({ ...record("happy_ghast"), nbt: { Age: -24000 } }, () => true);
+		expect(adult.kind === "model" && adult.layers[0].model).toBe("happy_ghast");
+		expect(baby.kind === "model" && baby.layers[0].model).toBe("happy_ghast_baby");
+		if (adult.kind !== "model" || baby.kind !== "model") throw new Error("expected models");
+		expect(baby.scale).toBeCloseTo(adult.scale * 0.2375);
 	});
 });

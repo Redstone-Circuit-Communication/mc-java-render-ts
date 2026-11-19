@@ -154,9 +154,9 @@ describe("lazy entity models", () => {
 		renderer.dispose();
 	});
 
-	// 391 since nautilus, zombie_nautilus and parched were added (the count guards against models silently disappearing)
-	it("retains all 391 model names and imports a valid standalone GLB payload", async () => {
-		expect(Object.keys(entityModelLoaders)).toHaveLength(391);
+	// 392 since nautilus, zombie_nautilus, parched and happy_ghast_baby were added (the count guards against models silently disappearing)
+	it("retains all 392 model names and imports a valid standalone GLB payload", async () => {
+		expect(Object.keys(entityModelLoaders)).toHaveLength(392);
 		expect(entityModelLoaders["pig_baby_21.4"]).toBeTypeOf("function");
 		const { default: payload } = await entityModelLoaders.acacia_boat_patch();
 		const binary = atob(payload);

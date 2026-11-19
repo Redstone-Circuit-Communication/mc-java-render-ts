@@ -18,11 +18,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   cushion models are now converted the same way instead of being inferred from their textures.
 
 - **Smooth-lighting ambient occlusion**, as the game shades corners: the shared mesh core darkens each vertex of an
-  axis-aligned face by the full opaque cubes next to its corner, and chunk materials read it as a `blockShade` attribute
+  axis-aligned face by the full opaque cubes next to its corner (brightness 1, 0.8, 0.6 and 0.4, the game's values) and
+  splits each quad along its brighter diagonal so the shading does not streak; chunk materials read it as a `blockShade` attribute
   (meshes sharing those materials without the attribute are unaffected). On by default; renderer option
   `ambientOcclusion: false` turns it off.
 - Render settings gain `shading` and `chunkMs` (chunk-by-chunk loading), applied only when given; the presets match a
   typical host's (power saving 400 ms, balanced 200 ms, quality 5 ms with shading).
+
+- Ghastlings: a happy ghast with a negative `Age` uses the `happy_ghast_baby` model (the happy ghast geometry with
+  `happy_ghast_baby.png`) at 0.2375 of the adult's size; the every-entity example shows one next to the adult.
+- `pistonParts(schematic, position)`: an extended piston's base and head, which the game treats as one piston; the example
+  selects the piston from either part and boxes both, like a large chest.
+
+### Fixed
+
+- Shading after loading another structure: the sweep that refits the sun's shadow box compared mesh counts, so a
+  structure with as many meshes as the previous one kept the old box. It now compares which meshes are in the scene.
 
 ### Changed
 
@@ -30,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 3D item icons draw the item's own model (a wall's post with two sides, a fence's two posts …); blocks without an item
   use their block model, and a special renderer this package lacks falls back to the flat texture.
 - The every-entity example gives the ghasts a row of their own, next to the ender dragon and the giant.
+- The example's Vite base comes from `EXAMPLE_BASE` (relative by default), and the example looks up its structures and
+  icons under it.
 - The example and the development scripts download the official Minecraft client jar from Mojang (the scripts cache it in
   `.cache/`); no Minecraft assets are kept in the repository. The example page is English by default with a Chinese switch.
 

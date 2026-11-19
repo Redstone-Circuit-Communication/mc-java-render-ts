@@ -13,7 +13,7 @@ equal to the entity name used by callers, including any version suffix.
 The resource pack ships entity textures, never entity geometry. `scripts/generate-entity-models.mjs` adds models the catalog
 lacks, textured with the official client jar (downloaded from Mojang into `.cache/` on first run):
 
-- Re-skins of an existing model (same UV mask): `poplar_boat`, `poplar_chest_boat`, `camel_husk`, `happy_ghast`,
+- Re-skins of an existing model (same UV mask): `poplar_boat`, `poplar_chest_boat`, `camel_husk`, `happy_ghast`, `happy_ghast_baby`,
   `tropical_fish_pattern_{a,b}_1..6`.
 - Converted from the mob's official Bedrock Edition geometry (github.com/Mojang/bedrock-samples, pinned release) with
   `scripts/lib/bedrock-geometry.mjs`: `nautilus`, `zombie_nautilus`, `parched`, `copper_golem`, `cushion`. Both editions

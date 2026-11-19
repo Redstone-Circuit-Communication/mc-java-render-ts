@@ -248,6 +248,8 @@ function hiddenParts(name: string, nbt: Nbt): string[] {
 function scaleOf(name: string, nbt: Nbt): number {
 	// A slime of Size n is n + 1 times the model.
 	if (name === "slime" || name === "magma_cube") return Math.max(1, num(nbt.Size) + 1);
+	// the game draws a ghastling at 0.2375 of a happy ghast
+	if (name === "happy_ghast" && num(nbt.Age) < 0) return (SCALES[name] ?? 1) * 0.2375;
 	return SCALES[name] ?? 1;
 }
 
@@ -269,6 +271,9 @@ function tropicalFish(nbt: Nbt, has: (model: string) => boolean): ModelLayer[] {
 /** Layers the game draws on top of a default (adult, untamed, unsaddled) mob. */
 function layersOf(name: string, nbt: Nbt, has: (model: string) => boolean): ModelLayer[] {
 	switch (name) {
+		// a baby happy ghast is a ghastling, with a texture of its own
+		case "happy_ghast":
+			return [{ model: num(nbt.Age) < 0 && has("happy_ghast_baby") ? "happy_ghast_baby" : name }];
 		case "pufferfish": {
 			const state = Math.min(2, Math.max(0, Math.trunc(num(nbt.PuffState))));
 			return [{ model: ["puffer_fish_small", "puffer_fish_medium", "puffer_fish_big"][state] }];

@@ -207,3 +207,57 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 	}
 	return info;
 }
+
+const STEP: Record<string, [number, number, number]> = {
+	north: [0, 0, -1],
+	south: [0, 0, 1],
+	east: [1, 0, 0],
+	west: [-1, 0, 0],
+	up: [0, 1, 0],
+	down: [0, -1, 0],
+};
+type BlockReader = {
+	schematicWrapper: {
+		get_block_string?(x: number, y: number, z: number): string | undefined;
+		get_block?(x: number, y: number, z: number): string | undefined;
+	};
+};
+const blockAt = (schematic: BlockReader, [x, y, z]: [number, number, number]) => {
+	const w = schematic.schematicWrapper;
+	return blockState(w.get_block_string?.(x, y, z) ?? w.get_block?.(x, y, z) ?? "minecraft:air");
+};
+
+/**
+ * An extended piston is two blocks, the base and its head, and the game treats them as one piston. For a position on either
+ * part this returns both, or null when the position is not part of an extended piston.
+ */
+export function pistonParts(
+	schematic: BlockReader,
+	position: [number, number, number]
+): { base: [number, number, number]; head: [number, number, number] } | null {
+	const here = blockAt(schematic, position);
+	const name = here.id.replace(/^minecraft:/, "");
+	const step = STEP[here.properties.facing];
+	if (!step) return null;
+	if ((name === "piston" || name === "sticky_piston") && here.properties.extended === "true") {
+		const head: [number, number, number] = [
+			position[0] + step[0],
+			position[1] + step[1],
+			position[2] + step[2],
+		];
+		return blockAt(schematic, head).id.replace(/^minecraft:/, "") === "piston_head"
+			? { base: position, head }
+			: null;
+	}
+	if (name === "piston_head") {
+		const base: [number, number, number] = [
+			position[0] - step[0],
+			position[1] - step[1],
+			position[2] - step[2],
+		];
+		return /^(sticky_)?piston$/.test(blockAt(schematic, base).id.replace(/^minecraft:/, ""))
+			? { base, head: position }
+			: null;
+	}
+	return null;
+}

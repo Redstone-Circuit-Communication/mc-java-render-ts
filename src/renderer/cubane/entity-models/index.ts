@@ -156,6 +156,7 @@ export const entityModelLoaders: Readonly<Record<string, EntityModelLoader>> = {
 	guardian: () => import("./guardian.json"),
 	hanging_sign: () => import("./hanging_sign.json"),
 	happy_ghast: () => import("./happy_ghast.json"),
+	happy_ghast_baby: () => import("./happy_ghast_baby.json"),
 	head_creeper: () => import("./head_creeper.json"),
 	head_dragon: () => import("./head_dragon.json"),
 	head_piglin: () => import("./head_piglin.json"),

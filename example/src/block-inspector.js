@@ -14,7 +14,7 @@ import {
   nbtJson,
 } from "@rsw/mc-java-render-ts";
 import { nameFor } from "@rsw/mc-java-render-ts";
-import { readRedstone } from "@rsw/mc-java-render-ts";
+import { readRedstone, pistonParts } from "@rsw/mc-java-render-ts";
 import { t, lang, applyI18n } from "./i18n.js";
 function el(tag, cls, text) {
   const node = document.createElement(tag);
@@ -173,9 +173,12 @@ export class BlockInspector {
     if (this.views.locked) this.views.manager.flyControls.unlock();
   }
   select(schematic, position) {
+    // An extended piston is one block in the game: its head selects the piston, and the box covers both, like a large chest.
+    const piston = pistonParts(schematic, position);
+    if (piston) position = piston.base;
     this.selection = { ...readBlockInventory(schematic, position), schematic };
     schematic.group.add(this.highlight);
-    const pair = this.selection.inventory?.pairPosition ?? position;
+    const pair = this.selection.inventory?.pairPosition ?? piston?.head ?? position;
     this.highlight.position.set(...position.map((value, axis) => (value + pair[axis]) / 2));
     this.highlight.scale.set(...position.map((value, axis) => Math.abs(value - pair[axis]) + 1.012));
     this.highlight.visible = true;

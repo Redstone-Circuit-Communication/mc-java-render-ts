@@ -163,3 +163,4 @@ index,name,id,x,y,z,label_y,same_named_model,note
 162,Ghast,minecraft:ghast,36.5,1,90.5,15,yes,
 163,Giant,minecraft:giant,60.5,1,90.5,15,yes,
 164,Happy Ghast,minecraft:happy_ghast,84.5,1,90.5,15,yes,
+165,Happy Ghast (baby),minecraft:happy_ghast,108.5,1,90.5,15,yes,baby (Age -24000)

@@ -22,7 +22,7 @@ interface Saved {
 	chunks?: SchematicRenderer["options"]["chunkRenderOptions"];
 	/** marks meshes added later (chunks streaming in, block entities, entities) as casting and receiving shadows */
 	sweep: ReturnType<typeof setInterval>;
-	meshes: number;
+	meshes: string;
 }
 
 /**
@@ -31,24 +31,26 @@ interface Saved {
  * mesh has no back face towards the sun (a slab, a carpet, a plant quad, a surface whose hidden faces the mesher removed)
  * then let the sunlight straight through.
  */
-function markShadows(scene: THREE.Scene): number {
-	let n = 0;
+function markShadows(scene: THREE.Scene): string {
+	// which meshes are in the scene: another structure with the same number of meshes still changes it
+	const ids: number[] = [];
 	scene.traverse((o) => {
 		const mesh = o as THREE.Mesh;
 		if (!mesh.isMesh) return;
-		n++;
+		ids.push(mesh.id);
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
 		for (const m of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) if (m && m.shadowSide !== THREE.DoubleSide) m.shadowSide = THREE.DoubleSide;
 	});
-	return n;
+	return ids.join(",");
 }
 const saved = new WeakMap<object, Saved>();
 
 /**
  * Put the sun and its shadow box around everything that is loaded. Called when shading turns on and again by the sweep
- * whenever meshes were added (chunks stream in after the host's first call, when the scene is still empty: without the
- * refit the shadow box stayed a 16-block cube around the origin and most of the structure cast no shadow).
+ * whenever the meshes change: chunks stream in after the host's first call (when the scene is still empty, so without the
+ * refit the shadow box stayed a 16-block cube around the origin and most of the structure cast no shadow), and another
+ * structure replaces the first.
  */
 function fitSun(renderer: SchematicRenderer, sun: THREE.DirectionalLight, scene: THREE.Scene): void {
 	const box = new THREE.Box3();
@@ -90,15 +92,15 @@ export function applyShading(renderer: SchematicRenderer, on: boolean, quality: 
 					clearInterval(sweep);
 					return;
 				}
-				const n = markShadows(scene);
-				if (n !== cur.meshes) {
-					cur.meshes = n;
+				const meshes = markShadows(scene);
+				if (meshes !== cur.meshes) {
+					cur.meshes = meshes;
 					fitSun(renderer, sun, scene);
 					gl.shadowMap.needsUpdate = true;
 					renderer.invalidate();
 				}
 			}, 1000);
-			s = { ambient: ambient.intensity, sun: sun.intensity, sunColor: sun.color.getHex(), sunPosition: sun.position.clone(), hemi, sweep, meshes: 0 };
+			s = { ambient: ambient.intensity, sun: sun.intensity, sunColor: sun.color.getHex(), sunPosition: sun.position.clone(), hemi, sweep, meshes: "" };
 			saved.set(renderer, s);
 		}
 		// Chunks the camera does not see are hidden by the chunk culling, and hidden chunks cast no shadow: a tower behind you
