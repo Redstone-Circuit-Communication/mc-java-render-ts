@@ -62,8 +62,13 @@ export interface RedstoneInfo {
 	note: string;
 }
 export interface RenderSettingsValue {
-	/** Lightweight shading: sun light with soft shadows (src/shading.ts). Not part of the presets; hosts opt in. */
+	/** Lightweight shading: sun light with soft shadows (src/shading.ts); only applied when given. */
 	shading?: boolean;
+	/**
+	 * Chunk-by-chunk loading: each 16³ chunk takes at least this many milliseconds (the rest of the time is left to the page);
+	 * 0 builds a structure at once. Only applied when given, and from the next load on.
+	 */
+	chunkMs?: number;
 	/** Shadow map 2048 (normal) or 4096 (high). */
 	shadingQuality?: "normal" | "high";
 	maxChunks: number;

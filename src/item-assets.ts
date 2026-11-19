@@ -8,7 +8,9 @@ export interface BlockMeshSource {
 	cubane: {
 		getBlockMesh(block: string): Promise<THREE.Object3D>;
 		parseBlockString?(block: string): unknown;
-		getBlockMeshBuilder?(): { createBlockMesh(model: never, transform?: object, block?: never): Promise<THREE.Object3D> };
+		getBlockMeshBuilder?(): {
+			createBlockMesh(model: never, transform?: object, block?: never): Promise<THREE.Object3D>;
+		};
 	};
 }
 
@@ -70,7 +72,9 @@ export class ItemAssets {
 		if (!definition) {
 			// blocks without an item of their own (potted plants, wall torches …): their block model
 			if (!this.options.renderer) return null;
-			const icon = await this.blockIcon(id, `minecraft:block/${id.slice(10)}`, false).catch(() => null);
+			const icon = await this.blockIcon(id, `minecraft:block/${id.slice(10)}`, false).catch(
+				() => null
+			);
 			return icon ? this.url(icon) : null;
 		}
 		const tree = JSON.parse(definition).model;
@@ -105,7 +109,11 @@ export class ItemAssets {
 		return DEFAULT_GUI;
 	}
 
-	private gl?: { renderer: THREE.WebGLRenderer; scene: THREE.Scene; camera: THREE.OrthographicCamera };
+	private gl?: {
+		renderer: THREE.WebGLRenderer;
+		scene: THREE.Scene;
+		camera: THREE.OrthographicCamera;
+	};
 	/** One icon at a time on the shared canvas. */
 	private drawing: Promise<unknown> = Promise.resolve();
 
@@ -119,7 +127,9 @@ export class ItemAssets {
 		if (!special && cubane.getBlockMeshBuilder && cubane.parseBlockString) {
 			const model = await this.loader.getModel(reference).catch(() => null);
 			if (model?.elements?.length)
-				return cubane.getBlockMeshBuilder().createBlockMesh(model as never, {}, cubane.parseBlockString(id) as never);
+				return cubane
+					.getBlockMeshBuilder()
+					.createBlockMesh(model as never, {}, cubane.parseBlockString(id) as never);
 		}
 		return cubane.getBlockMesh(id);
 	}
@@ -128,7 +138,10 @@ export class ItemAssets {
 	private async blockIcon(id: string, reference: string, special: boolean): Promise<Blob | null> {
 		const source = this.options.renderer;
 		if (!source) return null;
-		const [object, gui] = await Promise.all([this.itemMesh(id, reference, special), this.guiTransform(reference)]);
+		const [object, gui] = await Promise.all([
+			this.itemMesh(id, reference, special),
+			this.guiTransform(reference),
+		]);
 		// nothing drawable (a special renderer this package lacks): let the caller fall back to the flat texture
 		if (new THREE.Box3().setFromObject(object).isEmpty()) return null;
 		const run = this.drawing.then(() => this.draw(object, gui));
@@ -136,13 +149,21 @@ export class ItemAssets {
 		return run;
 	}
 
-	private async draw(object: THREE.Object3D, gui: { rotation: number[]; scale: number[] }): Promise<Blob | null> {
+	private async draw(
+		object: THREE.Object3D,
+		gui: { rotation: number[]; scale: number[] }
+	): Promise<Blob | null> {
 		if (this.disposed) return null;
 		const size = this.options.iconSize ?? 64;
 		if (!this.gl) {
 			const canvas = document.createElement("canvas");
 			canvas.width = canvas.height = size;
-			const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
+			const renderer = new THREE.WebGLRenderer({
+				canvas,
+				alpha: true,
+				antialias: true,
+				preserveDrawingBuffer: true,
+			});
 			renderer.setClearColor(0x000000, 0);
 			const scene = new THREE.Scene();
 			// the inventory lights a block from the front left: the top at about its texture's own colour, the left face at about
@@ -171,7 +192,9 @@ export class ItemAssets {
 		camera.updateProjectionMatrix();
 		renderer.render(scene, camera);
 		scene.remove(holder);
-		return new Promise((resolve) => renderer.domElement.toBlob((blob) => resolve(blob), "image/png"));
+		return new Promise((resolve) =>
+			renderer.domElement.toBlob((blob) => resolve(blob), "image/png")
+		);
 	}
 
 	private url(blob: Blob): string | null {

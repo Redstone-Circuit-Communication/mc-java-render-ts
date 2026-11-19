@@ -27,10 +27,17 @@ self.onmessage = (event: MessageEvent) => {
 				blocks,
 				origin: data.chunkOrigin as Vec3 | undefined,
 				apron: data.apronBlocks,
+				ao: data.ao !== false,
 			});
 			const transfer: Transferable[] = [];
 			for (const mesh of result.meshes)
-				for (const array of [mesh.positions, mesh.normals, mesh.uvs, mesh.indices])
+				for (const array of [
+					mesh.positions,
+					mesh.normals,
+					mesh.uvs,
+					mesh.indices,
+					...(mesh.ao ? [mesh.ao] : []),
+				])
 					transfer.push(array.buffer as ArrayBuffer);
 			self.postMessage(
 				{

@@ -19,7 +19,8 @@ exposes the same API for `.mcstructure` files.
 - Orbit, orthographic and first-person cameras, plus a host-driven camera API (frames, poses) for custom controls
 - Block and entity picking, container inventories, redstone state readouts and material lists
 - Inventory-style item icons, and English or Simplified Chinese names and readouts (`setLocale`)
-- Screen-space ambient occlusion, SMAA / MSAA anti-aliasing and optional sun shadows
+- Ambient occlusion like the game's smooth lighting, optional screen-space AO, SMAA / MSAA anti-aliasing and optional sun
+  shadows
 - A self-contained ES module build (`pnpm build:sdk`) that a site can load at runtime
 
 ## Usage

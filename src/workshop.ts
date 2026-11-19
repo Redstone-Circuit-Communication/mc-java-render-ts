@@ -18,7 +18,9 @@ export interface WorkshopOptions {
  */
 function defaultPacks(options: WorkshopOptions): Record<string, () => Promise<Blob>> {
 	const name = options.resourcePackName ?? "workshop";
-	const urls = Array.isArray(options.resourcePackUrl) ? options.resourcePackUrl : [options.resourcePackUrl];
+	const urls = Array.isArray(options.resourcePackUrl)
+		? options.resourcePackUrl
+		: [options.resourcePackUrl];
 	const packs: Record<string, () => Promise<Blob>> = {};
 	for (let i = urls.length - 1; i >= 0; i--) {
 		const url = urls[i];
@@ -57,37 +59,32 @@ export function createWorkshopRenderer(options: WorkshopOptions): Promise<Schema
 		);
 		options.canvas.addEventListener("rendererError", onError);
 		try {
-			instance = new SchematicRenderer(
-				options.canvas,
-				{},
-				defaultPacks(options),
-				{
-					showGrid: true,
-					showAxes: false,
-					enableDragAndDrop: false,
-					enableInteraction: false,
-					singleSchematicMode: false,
-					enableProgressBar: false,
-					sidebarOptions: { enabled: false },
-					resourcePackOptions: { showMissingPackNotice: false },
-					...options.rendererOptions,
-					callbacks: {
-						...options.rendererOptions?.callbacks,
-						onRendererInitialized: (ready) => {
-							if (settled) {
-								ready.dispose();
-								return;
-							}
-							try {
-								options.rendererOptions?.callbacks?.onRendererInitialized?.(ready);
-								finish(undefined, ready);
-							} catch (error) {
-								finish(error);
-							}
-						},
+			instance = new SchematicRenderer(options.canvas, {}, defaultPacks(options), {
+				showGrid: true,
+				showAxes: false,
+				enableDragAndDrop: false,
+				enableInteraction: false,
+				singleSchematicMode: false,
+				enableProgressBar: false,
+				sidebarOptions: { enabled: false },
+				resourcePackOptions: { showMissingPackNotice: false },
+				...options.rendererOptions,
+				callbacks: {
+					...options.rendererOptions?.callbacks,
+					onRendererInitialized: (ready) => {
+						if (settled) {
+							ready.dispose();
+							return;
+						}
+						try {
+							options.rendererOptions?.callbacks?.onRendererInitialized?.(ready);
+							finish(undefined, ready);
+						} catch (error) {
+							finish(error);
+						}
 					},
-				}
-			);
+				},
+			});
 		} catch (error) {
 			finish(error);
 		}

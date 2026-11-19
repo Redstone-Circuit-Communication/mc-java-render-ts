@@ -28,7 +28,8 @@ function integer(value: unknown, min = 0, max = 15) {
 	return Number.isInteger(n) && n >= min && n <= max ? n : null;
 }
 const binarySignal = (active: boolean | null) => (active === null ? null : active ? 15 : 0);
-const yesNo = (value: boolean | null) => (value === null ? UNKNOWN() : value ? L("Yes", "是") : L("No", "否"));
+const yesNo = (value: boolean | null) =>
+	value === null ? UNKNOWN() : value ? L("Yes", "是") : L("No", "否");
 const VANILLA_WOODS =
 	"oak|spruce|birch|jungle|acacia|dark_oak|mangrove|cherry|bamboo|crimson|warped|pale_oak";
 const BINARY_INPUT = new RegExp(
@@ -52,14 +53,22 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 	};
 	const detail = (label: string, value: string) => info.details.push({ label, value });
 	const direction = (label: string, value: string) => detail(label, directionName(value));
-	const active = (value: boolean | null, on = L("Active", "已激活"), off = L("Inactive", "未激活")) => {
+	const active = (
+		value: boolean | null,
+		on = L("Active", "已激活"),
+		off = L("Inactive", "未激活")
+	) => {
 		info.active = value;
 		info.status = value === null ? L("Unknown state", "状态未知") : value ? on : off;
 	};
 	const binary = (property: string, on?: string, off?: string) => {
 		active(bool(p[property]), on, off);
 		info.strength = binarySignal(info.active);
-		if (info.strength !== null) info.source = L(`Block state ${property} · vanilla outputs 0 or 15`, `方块状态 ${property} · 原版固定输出 0 / 15`);
+		if (info.strength !== null)
+			info.source = L(
+				`Block state ${property} · vanilla outputs 0 or 15`,
+				`方块状态 ${property} · 原版固定输出 0 / 15`
+			);
 	};
 	const analog = () => {
 		info.strength = integer(p.power);
@@ -69,7 +78,10 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 	const consumer = (property: string, on?: string, off?: string) => {
 		active(bool(p[property]), on, off);
 		info.signalLabel = L("Input strength", "输入强度");
-		info.source = L("Block states do not save the input signal level", "方块状态不保存输入信号的数值");
+		info.source = L(
+			"Block states do not save the input signal level",
+			"方块状态不保存输入信号的数值"
+		);
 		info.note = L(
 			"Whether it is working does not tell the input strength, nor does it mean the block outputs a redstone signal.",
 			"工作状态不能用来推算输入强度，也不代表该方块输出红石信号。"
@@ -82,8 +94,13 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 		for (const d of ["north", "south", "east", "west"])
 			detail(
 				directionName(d),
-				({ none: L("Not connected", "不连接"), side: L("Side", "水平连接"), up: L("Up", "向上连接") } as Record<string, string>)[p[d]] ??
-					UNKNOWN()
+				(
+					{
+						none: L("Not connected", "不连接"),
+						side: L("Side", "水平连接"),
+						up: L("Up", "向上连接"),
+					} as Record<string, string>
+				)[p[d]] ?? UNKNOWN()
 			);
 	} else if (name === "repeater") {
 		binary("powered");
@@ -107,7 +124,9 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 		active(powered ?? (info.strength === null ? null : info.strength > 0));
 		detail(
 			L("Mode", "模式"),
-			({ compare: L("Compare", "比较"), subtract: L("Subtract", "减法") } as Record<string, string>)[p.mode] ?? UNKNOWN()
+			(
+				{ compare: L("Compare", "比较"), subtract: L("Subtract", "减法") } as Record<string, string>
+			)[p.mode] ?? UNKNOWN()
 		);
 		direction(L("Input side", "输入方向"), p.facing);
 		direction(L("Output side", "输出方向"), OPPOSITE[p.facing]);
@@ -134,10 +153,14 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 		binary("powered", L("Emitting a pulse", "正在输出脉冲"), L("No pulse", "未输出脉冲"));
 		direction(L("Observed side", "侦测方向"), p.facing);
 		direction(L("Output side", "输出方向"), OPPOSITE[p.facing]);
-		detail(L("Pulse length", "脉冲时长"), L("1 redstone tick · 2 game ticks", "1 红石刻 · 2 游戏刻"));
+		detail(
+			L("Pulse length", "脉冲时长"),
+			L("1 redstone tick · 2 game ticks", "1 红石刻 · 2 游戏刻")
+		);
 	} else if (BINARY_INPUT.test(name)) {
 		binary("powered");
-		if (name === "tripwire_hook") detail(L("Tripwire attached", "绊线连接"), yesNo(bool(p.attached)));
+		if (name === "tripwire_hook")
+			detail(L("Tripwire attached", "绊线连接"), yesNo(bool(p.attached)));
 	} else if (
 		[
 			"daylight_detector",
@@ -152,9 +175,13 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 		analog();
 		detail(
 			L("Phase", "阶段"),
-			({ inactive: L("Inactive", "待命"), active: L("Active", "激活"), cooldown: L("Cooldown", "冷却") } as Record<string, string>)[
-				p.sculk_sensor_phase
-			] ?? UNKNOWN()
+			(
+				{
+					inactive: L("Inactive", "待命"),
+					active: L("Active", "激活"),
+					cooldown: L("Cooldown", "冷却"),
+				} as Record<string, string>
+			)[p.sculk_sensor_phase] ?? UNKNOWN()
 		);
 	} else if (name === "redstone_lamp") {
 		consumer("lit", L("Lit", "已点亮"), L("Unlit", "未点亮"));

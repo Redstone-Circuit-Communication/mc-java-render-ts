@@ -21,6 +21,9 @@ const EMPTY = new Int32Array();
 const key = (x: number, y: number, z: number) => `${x},${y},${z}`;
 
 /** Stateful palette compiler; no DOM, Three.js, globals or WASM dependency. */
+/** Brightness by the number of occluders at a corner (0–3), as the game's smooth lighting shades it. */
+const AO_LEVELS = [255, 204, 166, 128];
+
 export class MeshBuilder {
 	private palette = new Map<number, PreparedItem>();
 	private readonly cacheLimit: number;
@@ -172,6 +175,48 @@ export class MeshBuilder {
 				batch.indices += template.indices.length;
 			}
 		}
+		// smooth-lighting occlusion: only full opaque cubes darken a corner
+		const solid = (x: number, y: number, z: number) =>
+			this.palette.get(get(x, y, z) - 1)?.occlusionFlags === 63;
+		const occlusion = (
+			t: Template,
+			bx: number,
+			by: number,
+			bz: number,
+			out: Uint8Array,
+			first: number
+		) => {
+			const p = t.positions,
+				n = t.packedNormals;
+			for (let v = 0; v < p.length / 3; v++) {
+				const nx = n[v * 3],
+					ny = n[v * 3 + 1],
+					nz = n[v * 3 + 2];
+				const axis = Math.abs(nx) > 120 ? 0 : Math.abs(ny) > 120 ? 1 : Math.abs(nz) > 120 ? 2 : -1;
+				if (axis < 0) {
+					out[first + v] = 255;
+					continue;
+				}
+				const sign = (axis === 0 ? nx : axis === 1 ? ny : nz) > 0 ? 1 : -1;
+				const local = [p[v * 3], p[v * 3 + 1], p[v * 3 + 2]];
+				// a face on the cell boundary looks at the layer of cells beyond it; an inset face (a slab's top) at its own layer
+				const cell = [bx, by, bz];
+				if (Math.abs(local[axis] - sign * 0.5) < 1e-3) cell[axis] += sign;
+				const [a, b] = axis === 0 ? [1, 2] : axis === 1 ? [0, 2] : [0, 1];
+				const da = local[a] > 0.25 ? 1 : local[a] < -0.25 ? -1 : 0;
+				const db = local[b] > 0.25 ? 1 : local[b] < -0.25 ? -1 : 0;
+				const near = (oa: number, ob: number) => {
+					const c = [...cell];
+					c[a] += oa;
+					c[b] += ob;
+					return solid(c[0], c[1], c[2]) ? 1 : 0;
+				};
+				const side1 = da ? near(da, 0) : 0,
+					side2 = db ? near(0, db) : 0;
+				const level = side1 && side2 ? 3 : side1 + side2 + (da && db ? near(da, db) : 0);
+				out[first + v] = AO_LEVELS[level];
+			}
+		};
 		const meshes: MeshData[] = [];
 		for (const [category, batch] of batches) {
 			const positions = batch.quantized
@@ -181,6 +226,7 @@ export class MeshBuilder {
 				uvs = new Float32Array(batch.vertices * 2);
 			const indices =
 				batch.vertices > 65536 ? new Uint32Array(batch.indices) : new Uint16Array(batch.indices);
+			const ao = request.ao ? new Uint8Array(batch.vertices) : undefined;
 			const groups: MeshData["groups"] = [];
 			let vo = 0,
 				io = 0;
@@ -192,13 +238,14 @@ export class MeshBuilder {
 						positions[vo * 3 + v] = batch.quantized ? Math.round(p * 1024) : p;
 					}
 					normals.set(t.packedNormals, vo * 3);
+					if (ao) occlusion(t, x + origin[0], y + origin[1], z + origin[2], ao, vo);
 					uvs.set(t.uvs, vo * 2);
 					for (let j = 0; j < t.indices.length; j++) indices[io++] = vo + t.indices[j];
 					vo += t.positions.length / 3;
 				}
 				groups.push({ start, count: io - start, materialIndex });
 			}
-			meshes.push({ category, positions, normals, uvs, indices, groups });
+			meshes.push({ category, positions, normals, uvs, indices, groups, ...(ao ? { ao } : {}) });
 			stats.vertices += batch.vertices;
 			stats.triangles += batch.indices / 3;
 			stats.bytes +=

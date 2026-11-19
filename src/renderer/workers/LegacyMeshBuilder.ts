@@ -5,8 +5,8 @@ export class LegacyMeshBuilder {
 	update_palette(items: PaletteItem[]): void {
 		this.core.updatePalette(items);
 	}
-	build_chunk(blocks: Int32Array, x: number, y: number, z: number, apron: Int32Array) {
-		return this.core.build({ blocks, origin: [x, y, z], apron });
+	build_chunk(blocks: Int32Array, x: number, y: number, z: number, apron: Int32Array, ao = true) {
+		return this.core.build({ blocks, origin: [x, y, z], apron, ao });
 	}
 	free(): void {
 		this.core.dispose();

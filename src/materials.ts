@@ -123,7 +123,8 @@ export async function countLitematicMaterials(input: ArrayBuffer): Promise<Mater
 	const bytes = new Uint8Array(input);
 	let raw = input;
 	if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
-		if (typeof DecompressionStream === "undefined") throw Error("this browser cannot decompress gzip");
+		if (typeof DecompressionStream === "undefined")
+			throw Error("this browser cannot decompress gzip");
 		const stream = new Blob([input]).stream().pipeThrough(new DecompressionStream("gzip"));
 		raw = await new Response(stream).arrayBuffer();
 	}
@@ -217,7 +218,8 @@ export function countPaletteStates(
 		let v = (words[wordIndex] ?? 0) >>> offset;
 		if (offset + bits > 32) v |= (words[wordIndex + 1] ?? 0) << (32 - offset);
 		const index = v & mask;
-		if (index >= counts.length) throw Error(`region ${regionName} has an invalid block index ${index}`);
+		if (index >= counts.length)
+			throw Error(`region ${regionName} has an invalid block index ${index}`);
 		counts[index]++;
 	}
 	return counts;

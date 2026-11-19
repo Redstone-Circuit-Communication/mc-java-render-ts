@@ -17,9 +17,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`scripts/lib/bedrock-geometry.mjs`, checked against catalog models that exist in both editions); the copper golem and
   cushion models are now converted the same way instead of being inferred from their textures.
 
+- **Smooth-lighting ambient occlusion**, as the game shades corners: the shared mesh core darkens each vertex of an
+  axis-aligned face by the full opaque cubes next to its corner, and chunk materials read it as a `blockShade` attribute
+  (meshes sharing those materials without the attribute are unaffected). On by default; renderer option
+  `ambientOcclusion: false` turns it off.
+- Render settings gain `shading` and `chunkMs` (chunk-by-chunk loading), applied only when given; the presets match a
+  typical host's (power saving 400 ms, balanced 200 ms, quality 5 ms with shading).
+
 ### Changed
 
 - Error messages are in English.
+- 3D item icons draw the item's own model (a wall's post with two sides, a fence's two posts …); blocks without an item
+  use their block model, and a special renderer this package lacks falls back to the flat texture.
+- The every-entity example gives the ghasts a row of their own, next to the ender dragon and the giant.
 - The example and the development scripts download the official Minecraft client jar from Mojang (the scripts cache it in
   `.cache/`); no Minecraft assets are kept in the repository. The example page is English by default with a Chinese switch.
 

@@ -276,6 +276,11 @@ export interface SchematicRendererOptions {
 	 * and the `schematicChunkProgress` event.
 	 */
 	chunkLoading?: { minIntervalMs?: number };
+	/**
+	 * Darken the corners of faces next to solid blocks the way the game's smooth lighting does (default true; same name
+	 * and meaning as the Bedrock package's mesh option). Applies to meshes built afterwards.
+	 */
+	ambientOcclusion?: boolean;
 	// Global toggles for enabling/disabling functionalities
 	enableInteraction?: boolean;
 	enableDragAndDrop?: boolean;

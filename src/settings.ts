@@ -10,6 +10,8 @@ export const RENDER_PRESETS: Record<"performance" | "balanced" | "quality", Rend
 		ssao: false,
 		targetFPS: 60,
 		frustumCulling: true,
+		shading: false,
+		chunkMs: 400,
 	},
 	balanced: {
 		maxChunks: 512,
@@ -18,6 +20,8 @@ export const RENDER_PRESETS: Record<"performance" | "balanced" | "quality", Rend
 		ssao: false,
 		targetFPS: 60,
 		frustumCulling: true,
+		shading: false,
+		chunkMs: 200,
 	},
 	quality: {
 		maxChunks: 0,
@@ -26,19 +30,21 @@ export const RENDER_PRESETS: Record<"performance" | "balanced" | "quality", Rend
 		ssao: true,
 		targetFPS: 60,
 		frustumCulling: true,
+		shading: true,
+		chunkMs: 5,
 	},
 };
 export function normalizeRenderSettings(input: Record<string, unknown> = {}): RenderSettingsValue {
 	input = input && typeof input === "object" ? input : {};
 	const defaults = RENDER_PRESETS.balanced;
 	const number = (
-		key: "maxChunks" | "renderDistance" | "maxPixelRatio" | "targetFPS",
+		key: "maxChunks" | "renderDistance" | "maxPixelRatio" | "targetFPS" | "chunkMs",
 		min: number,
 		max: number,
 		round = true
 	) => {
 		const n = input[key];
-		if (typeof n !== "number" || !Number.isFinite(n)) return defaults[key];
+		if (typeof n !== "number" || !Number.isFinite(n)) return defaults[key] as number;
 		const clamped = Math.min(max, Math.max(min, n));
 		return round ? Math.floor(clamped) : clamped;
 	};
@@ -50,6 +56,8 @@ export function normalizeRenderSettings(input: Record<string, unknown> = {}): Re
 		ssao: typeof input.ssao === "boolean" ? input.ssao : defaults.ssao,
 		frustumCulling:
 			typeof input.frustumCulling === "boolean" ? input.frustumCulling : defaults.frustumCulling,
+		shading: typeof input.shading === "boolean" ? input.shading : defaults.shading,
+		chunkMs: number("chunkMs", 0, 2000),
 	};
 }
 export function readRenderSettings() {
@@ -73,8 +81,15 @@ export function applyRenderSettings(
 	if (renderer.options.maxPixelRatio !== maxPixelRatio)
 		renderer.renderManager.setMaxPixelRatio(maxPixelRatio);
 	renderer.renderManager.setSSAOEnabled(ssao);
-	// lightweight shading (optional key: hosts that never send it keep the original lights)
-	if (typeof input.shading === "boolean") applyShading(renderer, input.shading, input.shadingQuality === "high" ? "high" : "normal");
+	// lightweight shading (optional key: hosts that never send it keep the original lights); without an explicit quality,
+	// sharp screens (pixel ratio 2 and up) get the 4096 shadow map
+	if (typeof input.shading === "boolean") {
+		const quality = input.shadingQuality ?? (maxPixelRatio >= 2 ? "high" : "normal");
+		applyShading(renderer, input.shading, quality === "high" ? "high" : "normal");
+	}
+	// chunk-by-chunk loading (optional key, as above): used by the next load
+	if (typeof input.chunkMs === "number")
+		renderer.options.chunkLoading = settings.chunkMs ? { minIntervalMs: settings.chunkMs } : undefined;
 	renderer.setTargetFPS(targetFPS);
 	renderer.invalidate();
 	return settings;

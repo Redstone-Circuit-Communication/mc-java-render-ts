@@ -151,8 +151,19 @@
                 <input id="render-frustumCulling" type="checkbox" checked />
                 <label for="render-ssao" data-i18n="settings.ssao">Ambient occlusion (SSAO)</label>
                 <input id="render-ssao" type="checkbox" />
+                <label for="render-shading" data-i18n="settings.shading">Shading (sun and shadows)</label>
+                <input id="render-shading" type="checkbox" />
+                <label for="render-chunkMs" data-i18n="settings.chunkMs">Render speed (per chunk)</label>
+                <select id="render-chunkMs">
+                  <option value="0" data-i18n="settings.chunkMsAll">All at once</option>
+                  <option value="5" data-i18n="settings.chunkMs5">Fast · 5 ms</option>
+                  <option value="50" data-i18n="settings.chunkMs50">50 ms</option>
+                  <option value="200" data-i18n="settings.chunkMs200">Balanced · 200 ms</option>
+                  <option value="400" data-i18n="settings.chunkMs400">Power saving · 400 ms</option>
+                  <option value="800" data-i18n="settings.chunkMs800">800 ms</option>
+                </select>
               </fieldset>
-              <p data-i18n="settings.help">0 means no limit for chunks, distance and frame rate. Chunks are 16 × 16 × 16 blocks and the nearest are drawn first; the distance is applied per chunk.</p>
+              <p data-i18n="settings.help">0 means no limit for chunks, distance and frame rate. Chunks are 16 × 16 × 16 blocks and the nearest are drawn first; the distance is applied per chunk. The render speed applies to the next structure loaded: each chunk takes at least that long, so slower devices stay responsive while it builds.</p>
               <label class="checkbox-row"><input type="checkbox" id="profile-cpu" /> <span data-i18n="settings.profile">CPU timing breakdown</span></label>
               <output id="cpu-profile" hidden></output>
               <p id="cpu-profile-help" hidden data-i18n="settings.profileHelp">Mean / P95 of the last 120 submitted frames on the CPU, not GPU time. To compare resolutions, keep the same view and quality, set the frame rate limit to 0, and note the canvas size, chunks and material batches.</p>

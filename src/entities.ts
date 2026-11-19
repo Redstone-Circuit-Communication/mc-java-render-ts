@@ -22,7 +22,10 @@ const NAMES: Record<string, string> = {
 /** An entity's custom name, or its display name in the current locale (`setLocale`). */
 export function entityName(record: EntitySummary): string {
 	const short = record.id.replace(/^minecraft:/, "");
-	return textComponent(record.nbt.CustomName) || (getLocale() === "en" ? englishName(short) : NAMES[short] || record.id);
+	return (
+		textComponent(record.nbt.CustomName) ||
+		(getLocale() === "en" ? englishName(short) : NAMES[short] || record.id)
+	);
 }
 export function entityFromObject(object: EntityObject | null): EntitySummary | null {
 	for (let node = object; node; node = node.parent)

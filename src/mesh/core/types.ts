@@ -29,6 +29,8 @@ export interface MeshData {
 	uvs: Float32Array;
 	indices: Uint16Array | Uint32Array;
 	groups: Group[];
+	/** With `BuildRequest.ao`: per-vertex brightness 0–255 from the blocks around each corner (the game's smooth lighting). */
+	ao?: Uint8Array;
 }
 export interface BuildRequest {
 	/** Flat [worldX, worldY, worldZ, paletteIndex, ...], integer block centers. */
@@ -38,6 +40,11 @@ export interface BuildRequest {
 	apron?: Int32Array;
 	/** auto = rounded Int16 if every value fits, otherwise Float32. */
 	positions?: "auto" | "float32";
+	/**
+	 * Ambient occlusion like the game's smooth lighting: each vertex of an axis-aligned face is darkened by the full opaque
+	 * cubes next to its corner (two sides and the diagonal), returned as `MeshData.ao`.
+	 */
+	ao?: boolean;
 }
 export interface BuildResult {
 	origin: Vec3;

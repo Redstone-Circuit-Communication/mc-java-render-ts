@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { setBlockShade, useBlockShade } from "./blockShade";
 import { sortChunkGeometry } from "./performance/ChunkBatchGeometry";
 import { createWorkCheckpoint } from "./utils/cooperativeYield";
 import type { PaletteGeometryData, MeshBuildResult, MeshBlockEntity } from "./workers/types";
@@ -871,6 +872,7 @@ export class WorldMeshBuilder {
 									chunkId,
 									{
 										type: "buildChunkBatched",
+										ao: this.schematicRenderer.options.ambientOcclusion !== false,
 										chunkKey: `${chunkData.chunk_x},${chunkData.chunk_y},${chunkData.chunk_z}`,
 										chunkId,
 										batchId,
@@ -974,6 +976,8 @@ export class WorldMeshBuilder {
 				}
 			}
 
+			setBlockShade(geometry, optimized.ao);
+			useBlockShade(materials);
 			const mesh = new THREE.Mesh(geometry, materials);
 			mesh.name = `batched_${meshData.category}`;
 			if (optimized.chunkGroups && optimized.chunkBounds) {
@@ -1239,6 +1243,7 @@ export class WorldMeshBuilder {
 
 						worker.postMessage({
 							type: "buildChunk",
+							ao: this.schematicRenderer.options.ambientOcclusion !== false,
 							chunkId,
 							sharedInputBuffer: sharedBuffer, // Worker reads from this directly
 							chunkOrigin: [originX, originY, originZ],
@@ -1254,6 +1259,7 @@ export class WorldMeshBuilder {
 						worker.postMessage(
 							{
 								type: "buildChunk",
+								ao: this.schematicRenderer.options.ambientOcclusion !== false,
 								chunkId,
 								blocks: workerBlocks,
 								chunkOrigin: [originX, originY, originZ],
@@ -1595,6 +1601,7 @@ export class WorldMeshBuilder {
 
 						worker.postMessage({
 							type: "buildChunk",
+							ao: this.schematicRenderer.options.ambientOcclusion !== false,
 							chunkId,
 							sharedInputBuffer: sharedBuffer,
 							chunkOrigin: [originX, originY, originZ],
@@ -1612,6 +1619,7 @@ export class WorldMeshBuilder {
 						worker.postMessage(
 							{
 								type: "buildChunk",
+								ao: this.schematicRenderer.options.ambientOcclusion !== false,
 								chunkId,
 								blocks: workerBlocks,
 								chunkOrigin: [originX, originY, originZ],
@@ -1683,6 +1691,8 @@ export class WorldMeshBuilder {
 						}
 					}
 
+					setBlockShade(geometry, meshData.ao);
+					useBlockShade(this.paletteCache.globalMaterials);
 					const mesh = new THREE.Mesh(geometry, this.paletteCache.globalMaterials);
 					mesh.name = `${meshData.category}_chunk`;
 

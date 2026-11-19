@@ -208,4 +208,6 @@ export interface ChunkGeometryData {
 	groups: ChunkGeometryGroup[];
 	chunkGroups?: ChunkGeometryGroup[];
 	chunkBounds?: Record<string, { min: number[]; max: number[] }>;
+	/** Per-vertex brightness 0–255 from the mesh core's smooth-lighting ambient occlusion. */
+	ao?: Uint8Array;
 }

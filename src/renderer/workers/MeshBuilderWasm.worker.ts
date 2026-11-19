@@ -40,6 +40,8 @@ type ChunkBuildRequest = {
 	apronBlocks?: Int32Array;
 	// Identifies which view's palette to mesh against (shared worker pools). Absent → default.
 	meshContextId?: string;
+	// Smooth-lighting ambient occlusion from the mesh core; on unless false.
+	ao?: boolean;
 };
 
 // Reused empty apron so chunks with no neighbour data don't allocate.
@@ -204,6 +206,7 @@ function finishBatch(meshContextId: string, batchId?: string) {
 			mesh.uvs.buffer,
 			mesh.indices.buffer
 		);
+		if (mesh.ao) transferables.push(mesh.ao.buffer);
 	}
 
 	const elapsed = performance.now() - startTime;
@@ -270,7 +273,14 @@ function buildChunkBatched(request: ChunkBuildRequest) {
 	// Build chunk with WASM - use chunk's min position as origin
 	// Use greedy meshing if enabled for better vertex reduction
 	const apron = apronBlocks ?? EMPTY_APRON;
-	const result = mb.build_chunk(blocksArray, originX, originY, originZ, apron);
+	const result = mb.build_chunk(
+		blocksArray,
+		originX,
+		originY,
+		originZ,
+		apron,
+		request.ao !== false
+	);
 
 	for (const mesh of result.meshes || []) {
 		const key = accKey(meshContextId, batchId, mesh.category || "solid");
@@ -411,7 +421,14 @@ function buildChunk(request: ChunkBuildRequest) {
 
 	// Call WASM build_chunk (with or without greedy meshing)
 	const apron = apronBlocks ?? EMPTY_APRON;
-	const result = mb.build_chunk(blocksArray, originX, originY, originZ, apron);
+	const result = mb.build_chunk(
+		blocksArray,
+		originX,
+		originY,
+		originZ,
+		apron,
+		request.ao !== false
+	);
 
 	const wasmTime = performance.now() - wasmStart;
 	const elapsed = performance.now() - startTime;
@@ -439,6 +456,7 @@ function buildChunk(request: ChunkBuildRequest) {
 		if (mesh.normals?.buffer) transferables.push(mesh.normals.buffer);
 		if (mesh.uvs?.buffer) transferables.push(mesh.uvs.buffer);
 		if (mesh.indices?.buffer) transferables.push(mesh.indices.buffer);
+		if (mesh.ao?.buffer) transferables.push(mesh.ao.buffer);
 	}
 
 	self.postMessage(

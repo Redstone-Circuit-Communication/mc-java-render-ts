@@ -39,10 +39,12 @@ export class MaterialsCounter {
 						else request.resolve(data.result);
 					};
 					worker.onerror = () => {
-						if (this.worker === worker) this.reset(new Error("the material counting worker failed; try again"));
+						if (this.worker === worker)
+							this.reset(new Error("the material counting worker failed; try again"));
 					};
 					worker.onmessageerror = () => {
-						if (this.worker === worker) this.reset(new Error("cannot read the material counting result"));
+						if (this.worker === worker)
+							this.reset(new Error("cannot read the material counting result"));
 					};
 				}
 				const id = ++this.serial;

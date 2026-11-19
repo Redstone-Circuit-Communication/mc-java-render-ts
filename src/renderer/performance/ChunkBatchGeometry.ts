@@ -28,6 +28,10 @@ export class ChunkBatchAccumulator {
 		const positions = new Float32Array(this.vertices * 3);
 		const normals = new Int8Array(this.vertices * 3);
 		const uvs = new Float32Array(this.vertices * 2);
+		// ambient occlusion when any part has it; parts without it keep full brightness
+		const ao = this.parts.some((p) => p.mesh.ao)
+			? new Uint8Array(this.vertices).fill(255)
+			: undefined;
 		const indices =
 			this.vertices > 65535 ? new Uint32Array(this.indices) : new Uint16Array(this.indices);
 		const groups: ChunkGeometryGroup[] = [];
@@ -56,6 +60,7 @@ export class ChunkBatchAccumulator {
 			}
 			normals.set(mesh.normals, vertexOffset * 3);
 			uvs.set(mesh.uvs, vertexOffset * 2);
+			if (ao && mesh.ao) ao.set(mesh.ao, vertexOffset);
 			for (let i = 0; i < mesh.indices.length; i++)
 				indices[indexOffset + i] = mesh.indices[i] + vertexOffset;
 			for (const group of mesh.groups)
@@ -69,7 +74,16 @@ export class ChunkBatchAccumulator {
 			indexOffset += mesh.indices.length;
 		}
 		this.parts = [];
-		return { category, positions, normals, uvs, indices, groups, chunkBounds };
+		return {
+			category,
+			positions,
+			normals,
+			uvs,
+			indices,
+			groups,
+			chunkBounds,
+			...(ao ? { ao } : {}),
+		};
 	}
 }
 

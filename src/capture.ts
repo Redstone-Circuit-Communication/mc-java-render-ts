@@ -5,7 +5,8 @@ export function captureScreenshot(
 	type = "image/png",
 	quality?: number
 ): Promise<Blob> {
-	if (!renderer.renderManager) return Promise.reject(new Error("the renderer is not initialized yet"));
+	if (!renderer.renderManager)
+		return Promise.reject(new Error("the renderer is not initialized yet"));
 	renderer.renderManager.render();
 	return new Promise((resolve, reject) => {
 		try {

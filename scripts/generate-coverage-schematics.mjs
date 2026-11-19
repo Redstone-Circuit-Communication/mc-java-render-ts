@@ -410,7 +410,8 @@ function buildBlocks(zip) {
 // ---- all entities ----------------------------------------------------------
 const SKIPPED_ENTITIES = new Set(["player", "falling_block_type", "killer_bunny"]);
 const LEGACY_ENTITIES = new Set(["boat", "chest_boat", "creaking_transient"]);
-const HUGE_ENTITIES = new Set(["ender_dragon", "giant"]);
+/** Mobs far wider or taller than the grid spacing: they get their own row past the grid, so they hide nothing. */
+const HUGE_ENTITIES = new Set(["ender_dragon", "giant", "ghast", "happy_ghast"]);
 const stack = (id) => compound({ id: string(id), count: int(1) });
 const frame = { Facing: byte(3), Item: stack("minecraft:compass"), ItemRotation: byte(0) };
 /**
