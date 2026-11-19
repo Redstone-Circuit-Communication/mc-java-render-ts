@@ -65,7 +65,7 @@ export function applyRenderSettings(
 	renderer: SchematicRenderer,
 	input: Partial<RenderSettingsValue>
 ): RenderSettingsValue {
-	if (!renderer.renderManager) throw new Error("渲染器尚未初始化");
+	if (!renderer.renderManager) throw new Error("the renderer is not initialized yet");
 	const settings = normalizeRenderSettings(input);
 	const { maxChunks, renderDistance, frustumCulling, ssao, maxPixelRatio, targetFPS } = settings;
 	renderer.options.chunkRenderOptions = { maxChunks, renderDistance, frustumCulling };

@@ -1,3 +1,6 @@
+import { englishName, getLocale } from "./locale.js";
+
+// Simplified Chinese names; English names follow from the ids (see `englishName`).
 const names: Record<string, string> = {
 	chest: "箱子",
 	trapped_chest: "陷阱箱",
@@ -149,8 +152,10 @@ const suffixes: Record<string, string> = {
 	sign: "告示牌",
 	wall_sign: "墙上告示牌",
 };
+/** Display name of a block or item id in the current locale (`setLocale`): English, or Simplified Chinese. */
 export function nameFor(id: string): string {
 	const short = id.replace(/^minecraft:/, "");
+	if (getLocale() === "en") return englishName(short);
 	if (names[short]) return names[short];
 	for (const [c, label] of Object.entries(colors))
 		for (const [s, n] of Object.entries({

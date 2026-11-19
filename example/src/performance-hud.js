@@ -1,4 +1,5 @@
 import { FrameStats } from "@rsw/mc-java-render-ts";
+import { t } from "./i18n.js";
 
 export class PerformanceHUD {
   constructor(renderer, root = document.getElementById("performance-hud")) {
@@ -52,14 +53,14 @@ export class PerformanceHUD {
     text(
       this.state,
       this.loading
-        ? "加载中"
+        ? t("hud.loading")
         : paused
-          ? "已暂停"
+          ? t("hud.paused")
           : !snapshot.active
-            ? "空闲 · 按需渲染"
+            ? t("hud.idle")
             : snapshot.low === null
-              ? "1% Low 采样中"
-              : "近 10 秒",
+              ? t("hud.sampling")
+              : t("hud.window"),
     );
     this.root.dataset.state = unavailable
       ? "paused"

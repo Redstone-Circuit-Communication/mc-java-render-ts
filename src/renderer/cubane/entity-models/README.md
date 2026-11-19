@@ -10,16 +10,15 @@ equal to the entity name used by callers, including any version suffix.
 
 ## Derived models
 
-The resource pack ships entity textures, never entity geometry, so some mobs have no GLB to export.
-`scripts/generate-entity-models.mjs` adds the ones that the pack and the existing catalog determine:
+The resource pack ships entity textures, never entity geometry. `scripts/generate-entity-models.mjs` adds models the catalog
+lacks, textured with the official client jar (downloaded from Mojang into `.cache/` on first run):
 
-- Re-skins of an existing model (same UV mask): `poplar_boat`, `poplar_chest_boat`, `camel_husk`,
-  `happy_ghast`, `tropical_fish_pattern_{a,b}_1..6`.
-- Boxes recovered from a texture's UV layout (a cuboid unwraps into one fixed cross, so sizes and
-  texOffs follow from the opaque pixels): `cushion`, `sulfur_cube`, `copper_golem`. Where a box sits
-  is not in the texture; the copper golem's pivots and the sulfur cube's placement are inferred.
-  Replace the JSON with a real export when you have one. `scripts/fit-texture-boxes.py` repeats the
-  recovery for any entity texture.
+- Re-skins of an existing model (same UV mask): `poplar_boat`, `poplar_chest_boat`, `camel_husk`, `happy_ghast`,
+  `tropical_fish_pattern_{a,b}_1..6`.
+- Converted from the mob's official Bedrock Edition geometry (github.com/Mojang/bedrock-samples, pinned release) with
+  `scripts/lib/bedrock-geometry.mjs`: `nautilus`, `zombie_nautilus`, `parched`, `copper_golem`, `cushion`. Both editions
+  use the same boxes and texture layout for these mobs; mobs that exist in both editions convert to within a pixel of the
+  catalog's own models.
+- `sulfur_cube`: two boxes whose sizes follow from its texture, placed as in the Bedrock geometry.
 
-Still without geometry: `nautilus`, `zombie_nautilus` and `parched`. Add `<name>.json` and a loader
-entry and `MobRegistry` uses it; until then a hitbox-sized stand-in marks the spot.
+A mob that still has no model is drawn as a hitbox-sized stand-in, so the spot remains visible.

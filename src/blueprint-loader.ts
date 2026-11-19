@@ -35,8 +35,8 @@ export interface LoadHooks {
 /** The error a cancelled load rejects with (a newer load, `dispose`, an aborted signal). */
 export function abortError(): Error {
 	return typeof DOMException === "function"
-		? new DOMException("结构加载已取消", "AbortError")
-		: Object.assign(new Error("结构加载已取消"), { name: "AbortError" });
+		? new DOMException("structure loading was aborted", "AbortError")
+		: Object.assign(new Error("structure loading was aborted"), { name: "AbortError" });
 }
 export const isAbortError = (e: unknown): boolean =>
 	!!e && typeof e === "object" && (e as { name?: unknown }).name === "AbortError";
@@ -60,9 +60,9 @@ export class BlueprintLoader {
 		this.counter = options.counter ?? new MaterialsCounter();
 	}
 	load(buffer: ArrayBuffer, filename: string, hooks: LoadHooks = {}): Promise<BlueprintResult> {
-		if (this.disposed) return Promise.reject(new Error("蓝图加载器已关闭"));
+		if (this.disposed) return Promise.reject(new Error("the blueprint loader has been disposed"));
 		if (!/\.(litematic|schem|schematic|nbt)$/i.test(filename))
-			return Promise.reject(new Error("不支持的蓝图格式"));
+			return Promise.reject(new Error("unsupported schematic format"));
 		// Snapshot before queuing so caller mutations cannot corrupt an upcoming load.
 		const copy = buffer.slice(0);
 		const stop = new AbortController();
@@ -91,13 +91,13 @@ export class BlueprintLoader {
 	}
 	async loadUrl(url: string | URL, init?: RequestInit): Promise<BlueprintResult> {
 		const response = await fetch(url, init);
-		if (!response.ok) throw new Error(`蓝图请求失败（HTTP ${response.status}）`);
+		if (!response.ok) throw new Error(`schematic request failed (HTTP ${response.status})`);
 		const pathname = String(url).split(/[?#]/)[0];
 		const filename = decodeURIComponent(pathname.split("/").pop() || "blueprint.litematic");
 		return this.load(await response.arrayBuffer(), filename);
 	}
 	private assertOpen(): void {
-		if (this.disposed) throw new Error("蓝图加载器已关闭");
+		if (this.disposed) throw new Error("the blueprint loader has been disposed");
 	}
 	private async loadOne(
 		buffer: ArrayBuffer,
@@ -108,7 +108,7 @@ export class BlueprintLoader {
 		this.assertOpen();
 		if (signal.aborted) throw abortError();
 		const manager = this.renderer.schematicManager;
-		if (!manager) throw new Error("渲染器尚未初始化");
+		if (!manager) throw new Error("the renderer is not initialized yet");
 		const id = `${this.namespace}-${++this.serial}`;
 		const chunked = this.chunked;
 		const events = this.renderer.eventEmitter;
@@ -130,7 +130,7 @@ export class BlueprintLoader {
 			await manager.loadSchematic(id, buffer, { focused: false });
 			this.assertOpen();
 			const schematic = manager.getAllSchematics().find((s) => s.id === id);
-			if (!schematic) throw signal.aborted ? abortError() : new Error("蓝图加载后未找到场景");
+			if (!schematic) throw signal.aborted ? abortError() : new Error("the schematic loaded but is missing from the scene");
 			if (chunked) {
 				// parsed: the new one streams in where the old one was
 				replaceOld();

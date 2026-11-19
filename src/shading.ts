@@ -2,7 +2,7 @@ import * as THREE from "three";
 import type { SchematicRenderer } from "./renderer/index.js";
 
 /**
- * Lightweight shading ("光影" on the site, for capable devices): a warm sun with soft shadows fitted to the loaded
+ * Lightweight shading (for capable devices): a warm sun with soft shadows fitted to the loaded
  * structure, a sky / ground hemisphere light in place of most of the flat ambient light. Blocks get a lit side, a shaded
  * side and cast shadows; no extra post-processing pass. Off restores the original lights.
  * Call again after the structure changes (loaded, other state) so the shadow camera covers the new bounds.

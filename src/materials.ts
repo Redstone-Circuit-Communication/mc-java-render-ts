@@ -123,13 +123,13 @@ export async function countLitematicMaterials(input: ArrayBuffer): Promise<Mater
 	const bytes = new Uint8Array(input);
 	let raw = input;
 	if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
-		if (typeof DecompressionStream === "undefined") throw Error("浏览器不支持 gzip 解压");
+		if (typeof DecompressionStream === "undefined") throw Error("this browser cannot decompress gzip");
 		const stream = new Blob([input]).stream().pipeThrough(new DecompressionStream("gzip"));
 		raw = await new Response(stream).arrayBuffer();
 	}
 	const root = parseNbt(raw);
 	const regions = root.Regions;
-	if (!isCompound(regions)) throw Error("不是有效的 Litematic 蓝图");
+	if (!isCompound(regions)) throw Error("not a valid Litematica schematic");
 	const totals = new Map<string, number>();
 	let regionCount = 0;
 	for (const [regionName, regionValue] of Object.entries(regions)) {
@@ -144,7 +144,7 @@ export async function countLitematicMaterials(input: ArrayBuffer): Promise<Mater
 			sz = Math.abs(typeof size?.z === "number" ? size.z : 0);
 		const volume = sx * sy * sz;
 		if (!Number.isSafeInteger(volume) || volume > 100000000)
-			throw Error(`区域 ${regionName} 太大，无法安全统计`);
+			throw Error(`region ${regionName} is too large to count safely`);
 		const bits = Math.max(2, Math.ceil(Math.log2(Math.max(2, paletteValue.length))));
 		const counts = countPaletteStates(
 			stateWordsValue,
@@ -202,7 +202,7 @@ export function countPaletteStates(
 	)
 		throw new Error("Invalid palette or bit width");
 	if (stateWords.length < Math.ceil((volume * bits) / 64))
-		throw new Error(`区域 ${regionName} 方块数据被截断`);
+		throw new Error(`block data of region ${regionName} is truncated`);
 	const words = new Uint32Array(stateWords.length * 2);
 	for (let i = 0; i < stateWords.length; i++) {
 		words[i * 2] = Number(stateWords[i] & 0xffffffffn);
@@ -217,7 +217,7 @@ export function countPaletteStates(
 		let v = (words[wordIndex] ?? 0) >>> offset;
 		if (offset + bits > 32) v |= (words[wordIndex + 1] ?? 0) << (32 - offset);
 		const index = v & mask;
-		if (index >= counts.length) throw Error(`区域 ${regionName} 包含无效方块索引 ${index}`);
+		if (index >= counts.length) throw Error(`region ${regionName} has an invalid block index ${index}`);
 		counts[index]++;
 	}
 	return counts;

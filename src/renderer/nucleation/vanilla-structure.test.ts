@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { blockStateString, fillFromVanillaStructure, parseJavaNbt, readVanillaStructure, toSnbt } from "./vanilla-structure";
 
-/** 写一个最小的 Java NBT（大端），测试里自己造原版结构，不用别人的投稿当样本 */
+/** Writes a minimal Java NBT document (big-endian), so the tests build their own vanilla structures */
 function nbt(root: Record<string, unknown>): Uint8Array {
 	const out: number[] = [];
 	const u16 = (n: number) => out.push((n >> 8) & 255, n & 255);
@@ -42,8 +42,8 @@ const structure = {
 	entities: [],
 };
 
-describe("Java 原版结构（nucleation 的 fromData 不认的那种 .nbt）", () => {
-	it("gzip、未压缩都认；空气不写；状态写成 name[k=v]；方块实体单独列出来", async () => {
+describe("Java vanilla structures (the .nbt that Nucleation's fromData does not read)", () => {
+	it("reads gzip and uncompressed files, skips air, spells states as name[k=v] and lists block entities", async () => {
 		for (const bytes of [await gzip(nbt(structure)), nbt(structure)]) {
 			const s = await readVanillaStructure(bytes);
 			expect(s).not.toBeNull();
@@ -61,12 +61,12 @@ describe("Java 原版结构（nucleation 的 fromData 不认的那种 .nbt）", 
 		}
 	});
 
-	it("不是原版结构（没有 size / palette / blocks）返回 null，交回 nucleation 原来的错误", async () => {
+	it("returns null for anything that is not a vanilla structure (no size / palette / blocks), leaving Nucleation's error", async () => {
 		expect(await readVanillaStructure(nbt({ Regions: {}, Version: 6 }))).toBeNull();
 		expect(await readVanillaStructure(new Uint8Array([1, 2, 3, 4]))).toBeNull();
 	});
 
-	it("写进 SchematicWrapper：一个状态一次 set_blocks，没写全就一格一格补；方块实体用 name[props]{SNBT}", async () => {
+	it("writes into a SchematicWrapper: one set_blocks per state, cell by cell when needed; block entities as name[props]{SNBT}", async () => {
 		const s = (await readVanillaStructure(nbt(structure)))!;
 		const calls: string[] = [];
 		const dropped = fillFromVanillaStructure(
@@ -85,7 +85,7 @@ describe("Java 原版结构（nucleation 的 fromData 不认的那种 .nbt）", 
 		);
 	});
 
-	it("SNBT 保留类型", () => {
+	it("keeps tag types in SNBT", () => {
 		const tag = parseJavaNbt(Uint8Array.from([10, 0, 0, 1, 0, 1, 99, 5, 4, 0, 1, 76, 0, 0, 0, 0, 0, 0, 0, 7, 0]));
 		expect(toSnbt(tag)).toBe("{c:5b,L:7L}");
 		expect(blockStateString("minecraft:stone")).toBe("minecraft:stone");

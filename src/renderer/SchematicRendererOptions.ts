@@ -269,9 +269,11 @@ export interface SchematicRendererOptions {
 	chunkSideLength?: number; // Length of each chunk side in blocks
 	meshBuildingMode?: "immediate" | "incremental" | "instanced" | "batched"; // How meshes are built
 	/**
-	 * 逐块加载（与基岩包同名同义）：一次只建一个区块（`chunkSideLength`，默认 16³），自下而上，建好就显示；
-	 * 每块至少用 `minIntervalMs` 毫秒，剩下的时间空着，把主线程让给慢的设备。设了它就按 `incremental` 构建，
-	 * 不管 `meshBuildingMode` 是什么。不设就是原来的整体构建。进度：`callbacks.onChunkProgress`、事件 `schematicChunkProgress`。
+	 * Chunk-by-chunk loading (same name and meaning as in the Bedrock package): one chunk (`chunkSideLength`, 16³ by
+	 * default) is built at a time, bottom up, and shown as soon as it is ready; each chunk takes at least `minIntervalMs`
+	 * milliseconds, leaving the main thread free for slow devices. When set, meshes are built `incremental`ly whatever
+	 * `meshBuildingMode` says; when unset, the whole structure is built at once. Progress: `callbacks.onChunkProgress`
+	 * and the `schematicChunkProgress` event.
 	 */
 	chunkLoading?: { minIntervalMs?: number };
 	// Global toggles for enabling/disabling functionalities
@@ -508,7 +510,7 @@ export interface Callbacks {
 	// File handling callbacks
 	onInvalidFileType?: (file: File) => void | Promise<void>;
 	onLoadingProgress?: (file: File, progress: number) => void | Promise<void>;
-	/** `chunkLoading`：结构 `id` 又有一个区块显示出来了（第 `done` 个，共 `total` 个）。同时发事件 `schematicChunkProgress` `{ id, done, total }` */
+	/** `chunkLoading`: one more chunk of structure `id` is on screen (`done` of `total`). The `schematicChunkProgress` event `{ id, done, total }` fires as well. */
 	onChunkProgress?: (id: string, done: number, total: number) => void;
 
 	// Simulation callbacks

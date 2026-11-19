@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#edf0e8" />
-    <title>方块工坊 · Minecraft 蓝图查看器</title>
+    <title data-i18n="page.title">Block Workshop · Minecraft schematic viewer</title>
     <link rel="icon" href="./favicon.svg" />
     <link rel="stylesheet" href="./src/style.css" />
   </head>
@@ -12,17 +12,18 @@
     <header class="app-header">
       <a class="brand" href="./"
         ><span class="brand-cube" aria-hidden="true"><i></i></span
-        ><span>方块工坊<small>SCHEMATIC STUDIO</small></span></a
+        ><span><span data-i18n="brand.name">Block Workshop</span><small>SCHEMATIC STUDIO</small></span></a
       ><span class="header-divider"></span
-      ><span class="workspace-label">蓝图工作台</span>
+      ><span class="workspace-label" data-i18n="brand.workspace">Schematic workbench</span>
       <div class="header-actions">
-        <span class="local-badge"><i></i>本地解析</span
+        <button id="lang-toggle" class="button lang-toggle" type="button" data-i18n="lang.switch" data-i18n-attr="title:lang.switchTitle" title="切换到中文">中文</button
+        ><span class="local-badge"><i></i><span data-i18n="header.local">Parsed locally</span></span
         ><button id="open-file" class="button primary" disabled>
           <svg viewBox="0 0 24 24">
             <path
               d="M3 7h7l2 2h9v11H3zM3 7V4h6l2 3M12 12v5m-2-2 2 2 2-2"
             /></svg
-          >打开蓝图
+          ><span data-i18n="header.open">Open schematic</span>
         </button>
       </div>
       <input
@@ -33,84 +34,84 @@
       />
     </header>
     <main class="workspace">
-      <section class="scene-panel" aria-label="蓝图三维视图">
+      <section class="scene-panel" aria-label="3D view of the schematic" data-i18n-attr="aria-label:scene.label">
         <div class="scene-toolbar">
           <div class="scene-file">
             <span class="file-dot"></span
             ><span id="scene-name">inspection-demo</span
             ><span class="file-extension">.litematic</span>
           </div>
-          <div class="camera-modes" role="group" aria-label="视角模式">
+          <div class="camera-modes" role="group" aria-label="Camera mode" data-i18n-attr="aria-label:camera.group">
             <button
               data-view="orbit"
               aria-pressed="true"
               disabled
-              title="透视环绕 · 1"
+              title="Perspective orbit · 1" data-i18n-attr="title:camera.orbitTitle"
             >
               <svg viewBox="0 0 24 24">
                 <path
                   d="m12 3 8 4.5v9L12 21l-8-4.5v-9zm0 9L4 7.5m8 4.5 8-4.5M12 12v9"
                 /></svg
-              ><span>环绕</span><kbd>1</kbd>
+              ><span data-i18n="camera.orbit">Orbit</span><kbd>1</kbd>
             </button>
             <button
               data-view="first"
               aria-pressed="false"
               disabled
-              title="第一人称 · 2"
+              title="First person · 2" data-i18n-attr="title:camera.firstTitle"
             >
               <svg viewBox="0 0 24 24">
                 <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
                 <circle cx="12" cy="12" r="3" /></svg
-              ><span>第一人称</span><kbd>2</kbd>
+              ><span data-i18n="camera.first">First person</span><kbd>2</kbd>
             </button>
             <button
               data-view="ortho"
               aria-pressed="false"
               disabled
-              title="正交投影 · 3"
+              title="Orthographic · 3" data-i18n-attr="title:camera.orthoTitle"
             >
               <svg viewBox="0 0 24 24">
                 <path d="M4 4h16v16H4zM4 10h16M10 4v16" /></svg
-              ><span>正交</span><kbd>3</kbd>
+              ><span data-i18n="camera.ortho">Ortho</span><kbd>3</kbd>
             </button>
           </div>
         </div>
         <div class="viewport" id="viewport">
           <canvas
             id="canvas"
-            aria-label="Minecraft 蓝图，单击方块查看详情"
+            aria-label="Minecraft schematic; click a block for details" data-i18n-attr="aria-label:scene.canvas"
             tabindex="0"
           ></canvas>
           <div class="viewport-label">
-            <i class="live-dot"></i><span id="view-label">透视 · 环绕视角</span>
+            <i class="live-dot"></i><span id="view-label">Perspective · orbit</span>
           </div>
           <div
             id="performance-hud"
             class="performance-hud"
             role="group"
-            aria-label="渲染帧率"
-            title="FPS：最近 1 秒的实际提交帧间隔。1% Low：最近 10 秒最慢 1% 帧的平均帧时间换算值，至少 100 帧后显示。空闲间隔不计，加载和隐藏页面重置。"
+            aria-label="Frame rate" data-i18n-attr="aria-label:hud.label;title:hud.title"
+            title="FPS: frame interval actually submitted over the last second. 1% low: the slowest 1% of frames over the last 10 seconds, shown after at least 100 frames. Idle gaps are not counted; loading and hiding the page reset it."
           >
             <div class="performance-values">
               <span>FPS <b data-fps>—</b></span
               ><span>1% LOW <b data-low>—</b></span>
             </div>
-            <small data-frame-state>加载中</small>
+            <small data-frame-state>Loading</small>
           </div>
           <details id="render-settings" class="render-settings">
-            <summary>渲染设置</summary>
+            <summary data-i18n="settings.title">Render settings</summary>
             <div class="render-settings-body">
               <fieldset disabled>
-                <legend class="sr-only">渲染性能设置</legend>
-                <label for="render-preset">预设</label>
+                <legend class="sr-only" data-i18n="settings.legend">Rendering performance settings</legend>
+                <label for="render-preset" data-i18n="settings.preset">Preset</label>
                 <select id="render-preset">
-                  <option value="performance">性能优先</option>
-                  <option value="balanced" selected>均衡</option>
-                  <option value="quality">画质优先</option>
-                  <option value="custom" disabled>自定义</option>
+                  <option value="performance" data-i18n="settings.performance">Performance</option>
+                  <option value="balanced" selected data-i18n="settings.balanced">Balanced</option>
+                  <option value="quality" data-i18n="settings.quality">Quality</option>
+                  <option value="custom" disabled data-i18n="settings.custom">Custom</option>
                 </select>
-                <label for="render-maxChunks">最大渲染区块数</label>
+                <label for="render-maxChunks" data-i18n="settings.maxChunks">Maximum chunks drawn</label>
                 <input
                   id="render-maxChunks"
                   type="number"
@@ -119,7 +120,7 @@
                   step="1"
                   value="512"
                 />
-                <label for="render-renderDistance">最大可见范围（格）</label>
+                <label for="render-renderDistance" data-i18n="settings.distance">Maximum view distance (blocks)</label>
                 <input
                   id="render-renderDistance"
                   type="number"
@@ -128,7 +129,7 @@
                   step="1"
                   value="0"
                 />
-                <label for="render-maxPixelRatio">像素比上限</label>
+                <label for="render-maxPixelRatio" data-i18n="settings.pixelRatio">Maximum pixel ratio</label>
                 <input
                   id="render-maxPixelRatio"
                   type="number"
@@ -137,7 +138,7 @@
                   step="0.25"
                   value="1"
                 />
-                <label for="render-targetFPS">帧率上限</label>
+                <label for="render-targetFPS" data-i18n="settings.fps">Frame rate limit</label>
                 <input
                   id="render-targetFPS"
                   type="number"
@@ -146,23 +147,20 @@
                   step="1"
                   value="60"
                 />
-                <label for="render-frustumCulling">裁剪视野外区块</label>
+                <label for="render-frustumCulling" data-i18n="settings.culling">Skip chunks outside the view</label>
                 <input id="render-frustumCulling" type="checkbox" checked />
-                <label for="render-ssao">环境光遮蔽（SSAO）</label>
+                <label for="render-ssao" data-i18n="settings.ssao">Ambient occlusion (SSAO)</label>
                 <input id="render-ssao" type="checkbox" />
               </fieldset>
-              <p>
-                区块数、范围和帧率填 0 表示不限。区块按 16 × 16 × 16
-                格统计，优先显示近处；范围按区块裁剪。
-              </p>
-              <label class="checkbox-row"><input type="checkbox" id="profile-cpu" /> CPU 分段诊断</label>
+              <p data-i18n="settings.help">0 means no limit for chunks, distance and frame rate. Chunks are 16 × 16 × 16 blocks and the nearest are drawn first; the distance is applied per chunk.</p>
+              <label class="checkbox-row"><input type="checkbox" id="profile-cpu" /> <span data-i18n="settings.profile">CPU timing breakdown</span></label>
               <output id="cpu-profile" hidden></output>
-              <p id="cpu-profile-help" hidden>显示最近 120 次提交的均值 / P95，不是 GPU 耗时。比较分辨率时请使用相同视角和画质，将帧率上限设为 0，并记录实际画布尺寸、区块和材质批次。</p>
-              <output id="render-stats">等待蓝图加载…</output>
+              <p id="cpu-profile-help" hidden data-i18n="settings.profileHelp">Mean / P95 of the last 120 submitted frames on the CPU, not GPU time. To compare resolutions, keep the same view and quality, set the frame rate limit to 0, and note the canvas size, chunks and material batches.</p>
+              <output id="render-stats">Waiting for a schematic…</output>
               <small id="render-resolution"></small>
             </div>
           </details>
-          <div class="axis-widget" id="axis-widget" aria-label="坐标球">
+          <div class="axis-widget" id="axis-widget" aria-label="Axis gizmo" data-i18n-attr="aria-label:axis.label">
             <canvas
               id="axis-canvas"
               width="256"
@@ -170,14 +168,15 @@
               aria-hidden="true"
             ></canvas>
             <div id="axis-buttons"></div>
-            <span>点击坐标轴对齐</span>
+            <span data-i18n="axis.hint">Click an axis to align</span>
           </div>
-          <div class="view-tools" role="group" aria-label="视图操作">
+          <div class="view-tools" role="group" aria-label="View tools" data-i18n-attr="aria-label:tools.group">
             <button
               id="fit-view"
               class="tool-button"
-              title="适应蓝图 · F"
-              aria-label="适应蓝图"
+              title="Fit the schematic · F"
+              aria-label="Fit the schematic"
+              data-i18n-attr="title:tools.fitTitle;aria-label:tools.fit"
               disabled
             >
               <svg viewBox="0 0 24 24">
@@ -187,8 +186,9 @@
             <button
               id="toggle-grid"
               class="tool-button"
-              title="网格 · G"
-              aria-label="切换网格"
+              title="Grid · G"
+              aria-label="Toggle the grid"
+              data-i18n-attr="title:tools.gridTitle;aria-label:tools.grid"
               aria-pressed="true"
               disabled
             >
@@ -199,8 +199,9 @@
             <button
               id="take-screenshot"
               class="tool-button"
-              title="导出 PNG 截图"
-              aria-label="导出 PNG 截图"
+              title="Save a PNG screenshot"
+              aria-label="Save a PNG screenshot"
+              data-i18n-attr="title:tools.shot;aria-label:tools.shot"
               disabled
             >
               <svg viewBox="0 0 24 24">
@@ -211,64 +212,57 @@
           </div>
           <div class="loading-card" id="loading-card" role="status">
             <span class="loading-cube"></span
-            ><strong id="loading-title">正在打开蓝图</strong>
-            <p id="loading-message">准备材质与方块模型…</p>
+            ><strong id="loading-title">Opening the schematic</strong>
+            <p id="loading-message">Preparing textures and block models…</p>
             <div class="loading-track"><i></i></div>
           </div>
           <div class="crosshair" id="crosshair" hidden aria-hidden="true"></div>
           <button id="resume-flight" class="flight-prompt" hidden>
-            点击进入第一人称<small
-              >WASD 移动 · Space 上升 · Shift 下降 · 滚轮调速 · Esc
-              释放鼠标</small
-            >
+            <span data-i18n="flight.resume">Click to enter first person</span><small data-i18n="flight.keys">WASD move · Space up · Shift down · wheel speed · Esc release the mouse</small>
           </button>
           <div id="drop-overlay" hidden>
-            <strong>放下，打开你的蓝图</strong
-            ><span>支持 .litematic / .schem / .schematic / .nbt</span>
+            <strong data-i18n="drop.title">Drop to open your schematic</strong>
+            <span data-i18n="drop.formats">Supports .litematic / .schem / .schematic / .nbt</span>
           </div>
           <div class="viewport-bottom">
             <div class="scene-caption">
               <span>BUILD. EXPLORE. INSPECT.</span
-              ><strong>每一格，都有细节。</strong>
+              ><strong data-i18n="scene.caption">Every block has a story.</strong>
             </div>
             <div class="control-hint for-mouse" id="control-hint">
-              <span><b>左键单击</b> 查看方块</span><span><b>拖动</b> 旋转</span
-              ><span><b>右键</b> 平移</span><span><b>滚轮</b> 缩放</span>
+              <span><b data-i18n="hint.click">Left click</b> <span data-i18n="hint.inspect">inspect a block</span></span><span><b data-i18n="hint.drag">Drag</b> <span data-i18n="hint.rotate">rotate</span></span
+              ><span><b data-i18n="hint.right">Right drag</b> <span data-i18n="hint.pan">pan</span></span><span><b data-i18n="hint.wheel">Wheel</b> <span data-i18n="hint.zoom">zoom</span></span>
             </div>
             <div class="control-hint for-touch">
-              <span><b>点按</b> 查看方块</span><span><b>单指拖动</b> 旋转</span
-              ><span><b>双指拖动</b> 平移</span><span><b>双指捏合</b> 缩放</span>
+              <span><b data-i18n="hint.tap">Tap</b> <span data-i18n="hint.inspect">inspect a block</span></span><span><b data-i18n="hint.oneFinger">One-finger drag</b> <span data-i18n="hint.rotate">rotate</span></span
+              ><span><b data-i18n="hint.twoFinger">Two-finger drag</b> <span data-i18n="hint.pan">pan</span></span><span><b data-i18n="hint.pinch">Pinch</b> <span data-i18n="hint.zoom">zoom</span></span>
             </div>
           </div>
         </div>
         <footer class="scene-footer">
           <span class="status-indicator"
-            ><i></i><span id="scene-status" role="status">准备中</span></span
+            ><i></i><span id="scene-status" role="status">Starting</span></span
           ><span id="scene-dimensions">— × — × —</span
-          ><label for="demo-select" class="sr-only">示例蓝图</label
+          ><label for="demo-select" class="sr-only" data-i18n="demo.label">Example schematics</label
           ><select id="demo-select" disabled>
-            <option value="./schematics/inspection-demo.litematic">
-              容器与剔除 · 测试场
-            </option>
-            <option value="./schematics/redstone-demo.litematic">
-              红石状态 · 测试场
-            </option>
-            <option value="./schematics/entities-demo.litematic">实体渲染测试场</option>
-            <option value="./schematics/five-entities.litematic">悦灵、盔甲架与载具</option>
-            <option value="./schematics/all-blocks.litematic">全方块 · 逐个排查</option>
-            <option value="./schematics/all-entities.litematic">全实体 · 逐个排查</option>
+            <option value="./schematics/inspection-demo.litematic" data-i18n="demo.inspection">Containers and culling · test bed</option>
+            <option value="./schematics/redstone-demo.litematic" data-i18n="demo.redstone">Redstone states · test bed</option>
+            <option value="./schematics/entities-demo.litematic" data-i18n="demo.entities">Entity rendering test bed</option>
+            <option value="./schematics/five-entities.litematic" data-i18n="demo.five">Allay, armor stand and vehicles</option>
+            <option value="./schematics/all-blocks.litematic" data-i18n="demo.allBlocks">Every block · one by one</option>
+            <option value="./schematics/all-entities.litematic" data-i18n="demo.allEntities">Every entity · one by one</option>
           </select>
         </footer>
       </section>
-      <aside class="sidebar" aria-label="蓝图材料与方块详情">
-        <div class="sidebar-tabs" role="tablist" aria-label="侧栏面板">
+      <aside class="sidebar" aria-label="Materials and block details" data-i18n-attr="aria-label:side.label">
+        <div class="sidebar-tabs" role="tablist" aria-label="Side panels" data-i18n-attr="aria-label:side.tabs">
           <button
             id="materials-tab"
             role="tab"
             aria-selected="true"
             aria-controls="materials-pane"
           >
-            材料清单 <span id="material-count-badge">—</span></button
+            <span data-i18n="side.materials">Materials</span> <span id="material-count-badge">—</span></button
           ><button
             id="inspect-tab"
             role="tab"
@@ -276,7 +270,7 @@
             aria-controls="inspect-pane"
             tabindex="-1"
           >
-            方块详情 <i id="selection-dot" hidden></i>
+            <span data-i18n="side.details">Block details</span> <i id="selection-dot" hidden></i>
           </button>
         </div>
         <section
@@ -288,48 +282,48 @@
           <header class="panel-header">
             <span class="eyebrow">YOUR BUILD, BLOCK BY BLOCK</span>
             <h1>
-              建造所需，一目了然<span class="tiny-cube" aria-hidden="true"
+              <span data-i18n="materials.title">Everything the build needs</span><span class="tiny-cube" aria-hidden="true"
                 >▦</span
               >
             </h1>
-            <p id="materials-status">正在读取完整蓝图…</p>
+            <p id="materials-status">Reading the whole schematic…</p>
           </header>
           <div class="summary">
             <div>
-              <span>方块总数</span><strong id="total-blocks">—</strong
-              ><small>不含空气方块</small>
+              <span data-i18n="materials.total">Blocks</span><strong id="total-blocks">—</strong
+              ><small data-i18n="materials.totalNote">without air</small>
             </div>
             <div>
-              <span>材料种类</span><strong id="total-types">—</strong
-              ><small>相同方块合并统计</small>
+              <span data-i18n="materials.types">Materials</span><strong id="total-types">—</strong
+              ><small data-i18n="materials.typesNote">identical blocks counted together</small>
             </div>
           </div>
           <div class="search-field">
             <svg viewBox="0 0 24 24">
               <circle cx="10.5" cy="10.5" r="6.5" />
               <path d="m16 16 5 5" /></svg
-            ><label for="material-search" class="sr-only">搜索材料</label
+            ><label for="material-search" class="sr-only" data-i18n="materials.searchLabel">Search materials</label
             ><input
               type="search"
               id="material-search"
-              placeholder="搜索材料名称或 ID…"
+              placeholder="Search by name or ID…" data-i18n-attr="placeholder:materials.search"
               autocomplete="off"
             /><kbd>/</kbd>
           </div>
           <div class="list-heading">
-            <span>材料 <small id="filtered-count"></small></span
-            ><span>数量 / 组</span>
+            <span><span data-i18n="materials.column">Material</span> <small id="filtered-count"></small></span
+            ><span data-i18n="materials.countColumn">Count / stacks</span>
           </div>
           <div class="material-list" id="material-list"></div>
           <footer class="panel-footer">
-            <button id="copy-materials" class="button" disabled>复制清单</button
+            <button id="copy-materials" class="button" disabled data-i18n="materials.copy">Copy list</button
             ><button id="export-materials" class="button" disabled>
               <svg viewBox="0 0 24 24">
                 <path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5" /></svg
-              >导出 CSV
+              ><span data-i18n="materials.csv">Export CSV</span>
             </button>
           </footer>
-          <p class="panel-footnote">按蓝图内已放置方块统计 · 64 个 / 组</p>
+          <p class="panel-footnote" data-i18n="materials.footnote">Counts the blocks placed in the schematic · 64 per stack</p>
         </section>
         <section
           id="inspect-pane"
@@ -340,24 +334,24 @@
         >
           <header class="panel-header">
             <span class="eyebrow">LOOK A LITTLE CLOSER</span>
-            <h2>看看这一格</h2>
-            <p>单击方块或实体，查看保存的状态与 NBT。</p>
+            <h2 data-i18n="details.title">Take a closer look</h2>
+            <p data-i18n="details.intro">Click a block or an entity to see its saved state and NBT.</p>
           </header>
           <div class="container-jump">
-            <label for="show-entities"><input id="show-entities" type="checkbox" checked> 显示实体</label>
-            <label for="show-debug-entities"><input id="show-debug-entities" type="checkbox" checked> 显示原版不可见的实体与方块（调试标记）</label>
-            <label for="entity-select">快速定位实体</label>
-            <select id="entity-select" disabled><option value="">蓝图未保存实体</option></select>
-            <label for="container-select">快速定位容器</label
+            <label for="show-entities"><input id="show-entities" type="checkbox" checked> <span data-i18n="details.showEntities">Show entities</span></label>
+            <label for="show-debug-entities"><input id="show-debug-entities" type="checkbox" checked> <span data-i18n="details.showDebug">Show entities and blocks the game keeps invisible (debug markers)</span></label>
+            <label for="entity-select" data-i18n="details.findEntity">Jump to an entity</label>
+            <select id="entity-select" disabled><option value="">No entities saved in the schematic</option></select>
+            <label for="container-select" data-i18n="details.findContainer">Jump to a container</label
             ><select id="container-select" disabled>
-              <option value="">尚未加载容器</option>
+              <option value="">No containers loaded yet</option>
             </select>
           </div>
           <div id="inspect-content" class="inspect-content">
             <div class="inspect-empty">
-              <strong>选中一个方块或实体</strong>
-              <p>箱子里装了什么？<br />左键点一下，就能看见。</p>
-              <span class="small-tag">支持箱子 · 木桶 · 潜影盒等容器</span>
+              <strong data-i18n="details.emptyTitle">Select a block or an entity</strong>
+              <p><span data-i18n="details.emptyQuestion">What is in that chest?</span><br /><span data-i18n="details.emptyAnswer">Click it to find out.</span></p>
+              <span class="small-tag" data-i18n="details.emptyTag">Chests, barrels, shulker boxes and other containers</span>
             </div>
           </div>
         </section>

@@ -24,7 +24,7 @@ for (const bits of [2, 3, 4, 5, 6, 7, 9, 12, 17]) {
 	});
 }
 test("invalid palette indices still reject", () => {
-	assert.throws(() => countPaletteStates([3n], 3, 1, 2), /无效方块索引/);
+	assert.throws(() => countPaletteStates([3n], 3, 1, 2), /invalid block index/);
 });
 
 test("actual material worker preserves input, matches parser output and can be reused", async () => {
@@ -64,7 +64,7 @@ test("actual material worker preserves input, matches parser output and can be r
 	} finally {
 		counter.dispose();
 	}
-	await assert.rejects(counter.count(new ArrayBuffer(0)), /关闭/);
+	await assert.rejects(counter.count(new ArrayBuffer(0)), /disposed/);
 });
 
 test("worker failure rejects pending work and permits retry with a fresh worker", async () => {
@@ -80,7 +80,7 @@ test("worker failure rejects pending work and permits retry with a fresh worker"
 		return worker;
 	});
 	const first = counter.count(new ArrayBuffer(8));
-	const rejected = assert.rejects(first, /线程出错/);
+	const rejected = assert.rejects(first, /worker failed/);
 	workers[0].onerror();
 	await rejected;
 	assert.equal(workers[0].terminated, true);

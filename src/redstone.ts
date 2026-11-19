@@ -1,14 +1,17 @@
 import type { RedstoneInfo } from "./types.js";
 import { blockState, unwrapNbt } from "./inventory.js";
+import { L } from "./locale.js";
 
-const DIRECTIONS: Record<string, string> = {
-	north: "北 · −Z",
-	south: "南 · +Z",
-	east: "东 · +X",
-	west: "西 · −X",
-	up: "上 · +Y",
-	down: "下 · −Y",
+const DIRECTIONS: Record<string, [string, string]> = {
+	north: ["North · −Z", "北 · −Z"],
+	south: ["South · +Z", "南 · +Z"],
+	east: ["East · +X", "东 · +X"],
+	west: ["West · −X", "西 · −X"],
+	up: ["Up · +Y", "上 · +Y"],
+	down: ["Down · −Y", "下 · −Y"],
 };
+const UNKNOWN = () => L("Unknown", "未知");
+const directionName = (d: string) => (DIRECTIONS[d] ? L(...DIRECTIONS[d]) : UNKNOWN());
 const OPPOSITE: Record<string, string> = {
 	north: "south",
 	south: "north",
@@ -25,7 +28,7 @@ function integer(value: unknown, min = 0, max = 15) {
 	return Number.isInteger(n) && n >= min && n <= max ? n : null;
 }
 const binarySignal = (active: boolean | null) => (active === null ? null : active ? 15 : 0);
-const yesNo = (value: boolean | null) => (value === null ? "未知" : value ? "是" : "否");
+const yesNo = (value: boolean | null) => (value === null ? UNKNOWN() : value ? L("Yes", "是") : L("No", "否"));
 const VANILLA_WOODS =
 	"oak|spruce|birch|jungle|acacia|dark_oak|mangrove|cherry|bamboo|crimson|warped|pale_oak";
 const BINARY_INPUT = new RegExp(
@@ -40,89 +43,101 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 		nbt = unwrapNbt(rawNbt) ?? {};
 	const info: RedstoneInfo = {
 		active: null,
-		status: "状态未知",
+		status: L("Unknown state", "状态未知"),
 		strength: null,
-		signalLabel: "输出强度",
-		source: "蓝图未保存可用的信号强度",
+		signalLabel: L("Output strength", "输出强度"),
+		source: L("The schematic saves no usable signal strength", "蓝图未保存可用的信号强度"),
 		details: [],
 		note: "",
 	};
 	const detail = (label: string, value: string) => info.details.push({ label, value });
-	const direction = (label: string, value: string) => detail(label, DIRECTIONS[value] ?? "未知");
-	const active = (value: boolean | null, on = "已激活", off = "未激活") => {
+	const direction = (label: string, value: string) => detail(label, directionName(value));
+	const active = (value: boolean | null, on = L("Active", "已激活"), off = L("Inactive", "未激活")) => {
 		info.active = value;
-		info.status = value === null ? "状态未知" : value ? on : off;
+		info.status = value === null ? L("Unknown state", "状态未知") : value ? on : off;
 	};
 	const binary = (property: string, on?: string, off?: string) => {
 		active(bool(p[property]), on, off);
 		info.strength = binarySignal(info.active);
-		if (info.strength !== null) info.source = `方块状态 ${property} · 原版固定输出 0 / 15`;
+		if (info.strength !== null) info.source = L(`Block state ${property} · vanilla outputs 0 or 15`, `方块状态 ${property} · 原版固定输出 0 / 15`);
 	};
 	const analog = () => {
 		info.strength = integer(p.power);
 		active(info.strength === null ? null : info.strength > 0);
-		if (info.strength !== null) info.source = "方块状态 power";
+		if (info.strength !== null) info.source = L("Block state power", "方块状态 power");
 	};
 	const consumer = (property: string, on?: string, off?: string) => {
 		active(bool(p[property]), on, off);
-		info.signalLabel = "输入强度";
-		info.source = "方块状态不保存输入信号的数值";
-		info.note = "工作状态不能用来推算输入强度，也不代表该方块输出红石信号。";
+		info.signalLabel = L("Input strength", "输入强度");
+		info.source = L("Block states do not save the input signal level", "方块状态不保存输入信号的数值");
+		info.note = L(
+			"Whether it is working does not tell the input strength, nor does it mean the block outputs a redstone signal.",
+			"工作状态不能用来推算输入强度，也不代表该方块输出红石信号。"
+		);
 	};
 
 	if (name === "redstone_wire") {
 		analog();
-		info.signalLabel = "信号强度";
+		info.signalLabel = L("Signal strength", "信号强度");
 		for (const d of ["north", "south", "east", "west"])
 			detail(
-				DIRECTIONS[d],
-				({ none: "不连接", side: "水平连接", up: "向上连接" } as Record<string, string>)[p[d]] ??
-					"未知"
+				directionName(d),
+				({ none: L("Not connected", "不连接"), side: L("Side", "水平连接"), up: L("Up", "向上连接") } as Record<string, string>)[p[d]] ??
+					UNKNOWN()
 			);
 	} else if (name === "repeater") {
 		binary("powered");
 		const delay = integer(p.delay, 1, 4);
 		detail(
-			"延迟",
+			L("Delay", "延迟"),
 			delay === null
-				? "未知"
-				: `${delay} 红石刻 · ${delay * 2} 游戏刻 · ${(delay / 10).toFixed(1)} 秒`
+				? UNKNOWN()
+				: L(
+						`${delay} redstone ticks · ${delay * 2} game ticks · ${(delay / 10).toFixed(1)} s`,
+						`${delay} 红石刻 · ${delay * 2} 游戏刻 · ${(delay / 10).toFixed(1)} 秒`
+					)
 		);
-		detail("锁定", yesNo(bool(p.locked)));
+		detail(L("Locked", "锁定"), yesNo(bool(p.locked)));
 		// Java's facing points from output toward input for both repeaters and comparators.
-		direction("输入方向", p.facing);
-		direction("输出方向", OPPOSITE[p.facing]);
+		direction(L("Input side", "输入方向"), p.facing);
+		direction(L("Output side", "输出方向"), OPPOSITE[p.facing]);
 	} else if (name === "comparator") {
 		info.strength = integer(nbt.OutputSignal);
 		const powered = bool(p.powered);
 		active(powered ?? (info.strength === null ? null : info.strength > 0));
 		detail(
-			"模式",
-			({ compare: "比较", subtract: "减法" } as Record<string, string>)[p.mode] ?? "未知"
+			L("Mode", "模式"),
+			({ compare: L("Compare", "比较"), subtract: L("Subtract", "减法") } as Record<string, string>)[p.mode] ?? UNKNOWN()
 		);
-		direction("输入方向", p.facing);
-		direction("输出方向", OPPOSITE[p.facing]);
+		direction(L("Input side", "输入方向"), p.facing);
+		direction(L("Output side", "输出方向"), OPPOSITE[p.facing]);
 		if (info.strength !== null) {
-			info.source = "方块实体 NBT · OutputSignal";
+			info.source = L("Block entity NBT · OutputSignal", "方块实体 NBT · OutputSignal");
 			if (powered !== null && powered !== info.strength > 0)
-				info.note = "保存的 powered 与 OutputSignal 不一致，面板分别保留原始状态和数值。";
+				info.note = L(
+					"The saved powered state and OutputSignal disagree; both are shown as saved.",
+					"保存的 powered 与 OutputSignal 不一致，面板分别保留原始状态和数值。"
+				);
 		} else {
-			info.note = "缺少有效的 OutputSignal；powered 只能表示激活状态，无法确定 0–15 的具体输出。";
+			info.note = L(
+				"No valid OutputSignal: powered only tells whether it is active, not the exact output from 0 to 15.",
+				"缺少有效的 OutputSignal；powered 只能表示激活状态，无法确定 0–15 的具体输出。"
+			);
 		}
 	} else if (["redstone_torch", "redstone_wall_torch"].includes(name)) {
-		binary("lit", "已点亮", "已熄灭");
+		binary("lit", L("Lit", "已点亮"), L("Unlit", "已熄灭"));
 	} else if (name === "redstone_block") {
-		active(true, "持续供能");
+		active(true, L("Always powered", "持续供能"));
 		info.strength = 15;
-		info.source = "原版固定信号源";
+		info.source = L("Fixed vanilla signal source", "原版固定信号源");
 	} else if (name === "observer") {
-		binary("powered", "正在输出脉冲", "未输出脉冲");
-		direction("侦测方向", p.facing);
-		direction("输出方向", OPPOSITE[p.facing]);
-		detail("脉冲时长", "1 红石刻 · 2 游戏刻");
+		binary("powered", L("Emitting a pulse", "正在输出脉冲"), L("No pulse", "未输出脉冲"));
+		direction(L("Observed side", "侦测方向"), p.facing);
+		direction(L("Output side", "输出方向"), OPPOSITE[p.facing]);
+		detail(L("Pulse length", "脉冲时长"), L("1 redstone tick · 2 game ticks", "1 红石刻 · 2 游戏刻"));
 	} else if (BINARY_INPUT.test(name)) {
 		binary("powered");
-		if (name === "tripwire_hook") detail("绊线连接", yesNo(bool(p.attached)));
+		if (name === "tripwire_hook") detail(L("Tripwire attached", "绊线连接"), yesNo(bool(p.attached)));
 	} else if (
 		[
 			"daylight_detector",
@@ -132,29 +147,32 @@ export function readRedstone(state: string, rawNbt: unknown = {}): RedstoneInfo 
 		].includes(name)
 	) {
 		analog();
-		if (name === "daylight_detector") detail("反转模式", yesNo(bool(p.inverted)));
+		if (name === "daylight_detector") detail(L("Inverted", "反转模式"), yesNo(bool(p.inverted)));
 	} else if (["sculk_sensor", "calibrated_sculk_sensor"].includes(name)) {
 		analog();
 		detail(
-			"阶段",
-			({ inactive: "待命", active: "激活", cooldown: "冷却" } as Record<string, string>)[
+			L("Phase", "阶段"),
+			({ inactive: L("Inactive", "待命"), active: L("Active", "激活"), cooldown: L("Cooldown", "冷却") } as Record<string, string>)[
 				p.sculk_sensor_phase
-			] ?? "未知"
+			] ?? UNKNOWN()
 		);
 	} else if (name === "redstone_lamp") {
-		consumer("lit", "已点亮", "未点亮");
+		consumer("lit", L("Lit", "已点亮"), L("Unlit", "未点亮"));
 	} else if (["piston", "sticky_piston"].includes(name)) {
-		consumer("extended", "已伸出", "已收回");
-		direction("伸出方向", p.facing);
-		info.note = "伸出状态不是供电检测；蓝图快照无法据此判断当前输入、准连接或待执行更新。";
+		consumer("extended", L("Extended", "已伸出"), L("Retracted", "已收回"));
+		direction(L("Pushes toward", "伸出方向"), p.facing);
+		info.note = L(
+			"Being extended is not a power check: a schematic snapshot cannot tell the current input, quasi-connectivity or pending updates.",
+			"伸出状态不是供电检测；蓝图快照无法据此判断当前输入、准连接或待执行更新。"
+		);
 	} else if (name === "hopper") {
-		consumer("enabled", "可传输", "已锁定");
+		consumer("enabled", L("Transferring", "可传输"), L("Locked", "已锁定"));
 		// Activation here means redstone locking, not inventory transfer availability.
 		info.active = p.enabled === "false" ? true : p.enabled === "true" ? false : null;
-		direction("漏斗朝向", p.facing);
+		direction(L("Hopper faces", "漏斗朝向"), p.facing);
 	} else if (["dispenser", "dropper"].includes(name)) {
-		consumer("triggered", "已触发", "未触发");
-		direction("发射方向", p.facing);
+		consumer("triggered", L("Triggered", "已触发"), L("Not triggered", "未触发"));
+		direction(L("Fires toward", "发射方向"), p.facing);
 	} else if (["powered_rail", "activator_rail"].includes(name)) {
 		consumer("powered");
 	} else {

@@ -279,12 +279,12 @@ describe("real Three.js cameras, controls and raycasting", () => {
 		const state = vi.spyOn(schematic.schematicWrapper, "get_block_string");
 		state.mockReturnValue("minecraft:repeater[powered=true,locked=true,delay=3,facing=west]");
 		click(canvas);
-		expect(document.querySelector(".redstone-state")?.textContent).toBe("已激活");
+		expect(document.querySelector(".redstone-state")?.textContent).toBe("Active");
 		expect(document.querySelector('[role="meter"]')?.getAttribute("aria-valuenow")).toBe("15");
-		expect(document.querySelector(".redstone-details")?.textContent).toContain("3 红石刻");
+		expect(document.querySelector(".redstone-details")?.textContent).toContain("3 redstone ticks");
 		state.mockReturnValue("minecraft:comparator[powered=true,mode=subtract,facing=north]");
 		click(canvas);
-		expect(document.querySelector(".redstone-strength")?.textContent).toContain("未知");
+		expect(document.querySelector(".redstone-strength")?.textContent).toContain("Unknown");
 		expect(document.querySelector('[role="meter"]')).toBe(null);
 		expect(document.querySelector(".redstone-note")?.textContent).toContain("OutputSignal");
 		state.mockReturnValue("minecraft:chest[facing=south,type=single]");

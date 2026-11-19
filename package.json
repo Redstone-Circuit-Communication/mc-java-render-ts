@@ -2,7 +2,7 @@
 	"name": "@rsw/mc-java-render-ts",
 	"version": "1.2.1",
 	"license": "AGPL-3.0-only",
-	"description": "红石阁 mc java TypeScript SDK：蓝图渲染、材料、容器、红石、实体与相机",
+	"description": "TypeScript SDK for Minecraft: Java Edition schematics: 3D rendering, materials, containers, redstone, entities and camera",
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",

@@ -5,44 +5,84 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.1（2026-11-18）
+## Open-source release (unreleased)
 
-- 光影：所有模型都投影，阴影图画正反两面；逐块加载时阴影框跟着结构一起长（以前宿主在结构加载前打开光影，阴影框停在原点周围 16 格，大部分方块不投影）；阴影改用 PCFShadowMap（three r18x 去掉了 PCFSoftShadowMap，用它会报警告）。
-- 给站点的构建去掉 `console.log / info / debug`；`BlueprintLoader` 在宿主渲染器没有 `options`、事件发射器时不再报错。
-- **换了内容就换版本号**：1.2.0 的目录在线上会被长期缓存，同一个版本号里换文件，看过的浏览器还是用旧的。
+### Added
 
-## 1.2.0（2026-11-18）
+- `setLocale('en' | 'zh-CN')`: the text this package produces (block and entity names, container titles and slot labels,
+  inventory warnings, redstone readouts, CSV headers) is English by default and Simplified Chinese on request.
+- `ItemAssets` option `renderer`: block items get inventory-style 3D icons drawn from the block's mesh at the item model's
+  `display.gui` angle; other items keep their flat texture.
+- Entity models for the nautilus, zombie nautilus and parched, converted from Mojang's official Bedrock geometry
+  (`scripts/lib/bedrock-geometry.mjs`, checked against catalog models that exist in both editions); the copper golem and
+  cushion models are now converted the same way instead of being inferred from their textures.
 
-- 新增 `camera.setFrame / getFrame`、`camera.setPose / getPose`、`setMode('first', { input: 'host' })`、`workshop.solids()`（`src/solids.ts`、`src/collision.ts`）：站点的取景和第一人称（行走、飞行）。
-- 新增轻量光影 `src/shading.ts`（`applyRenderSettings` 的 `shading`、`shadingQuality`）；抗锯齿的多重采样 `postProcessingOptions.multisampling`。
-- 环境光遮蔽加强（半径 2 格 / 正交 1.2 格）；建遮蔽效果时用预设，不再写死旧值。透视的最近距离 1 → 0.05 格。
-- 修：宿主在浏览器里有 `process` 替身时 nucleation 起不来（`nucleation/runtime.ts`）。
-- `package.json` 的 `packageManager` 和 `devEngines` 写的 pnpm 版本不一样（12.14.0 和 12.16.1），用 corepack 装依赖直接失败；改成一致。
-- 给站点的构建（`pnpm build:sdk`）去掉 `console.log / info / debug`，只留警告和错误。
-- 光影：所有模型都投影，阴影图画正反两面（单面材质只画背面时，去掉了隐藏面的方块网格有很多表面不投影）；开光影时不裁剪镜头外的区块。
-- 修：宿主的渲染器没有 `options` 或事件发射器时，`BlueprintLoader` 读属性报错（原来就有的 5 项 Node 测试失败）；实体模型数量的测试从 369 改成 388。
+### Changed
+
+- Error messages are in English.
+- The example and the development scripts download the official Minecraft client jar from Mojang (the scripts cache it in
+  `.cache/`); no Minecraft assets are kept in the repository. The example page is English by default with a Chinese switch.
+
+## 1.2.1 (2026-11-18)
+
+- Shading: every model casts shadows and the shadow map draws both faces; with chunk-by-chunk loading the shadow box grows
+  with the structure (before, turning shading on before a structure loaded left the box around the origin, so most blocks
+  cast no shadow). Shadows use PCFShadowMap (recent three.js removed PCFSoftShadowMap and warns about it).
+- The SDK build drops `console.log / info / debug`; `BlueprintLoader` no longer fails when the host renderer has no
+  `options` or event emitter.
+- **A new build gets a new version number**: SDK version folders are cached for a long time, so files replaced under the
+  same version keep being served from browsers' caches.
+
+## 1.2.0 (2026-11-18)
+
+- Added `camera.setFrame / getFrame`, `camera.setPose / getPose`, `setMode('first', { input: 'host' })` and
+  `workshop.solids()` (`src/solids.ts`, `src/collision.ts`): host-driven framing and first person (walking and flying).
+- Added lightweight shading in `src/shading.ts` (`shading` and `shadingQuality` of `applyRenderSettings`) and multisampled
+  anti-aliasing (`postProcessingOptions.multisampling`).
+- Stronger ambient occlusion (radius 2 blocks, 1.2 orthographic), built from the preset instead of hard-coded old values.
+  Perspective near plane 1 → 0.05 blocks.
+- Fixed: Nucleation failed to start when the host page has a `process` stand-in in the browser (`nucleation/runtime.ts`).
+- `packageManager` and `devEngines` in `package.json` named different pnpm versions (12.14.0 and 12.16.1), so installing
+  through corepack failed; they now agree.
+- The SDK build (`pnpm build:sdk`) drops `console.log / info / debug` and keeps warnings and errors.
+- Shading: every model casts shadows and the shadow map draws both faces (with single-sided materials only back faces were
+  drawn, so meshes without hidden faces left many surfaces without shadow); chunks outside the view are not culled while
+  shading is on.
+- Fixed: `BlueprintLoader` read properties of a host renderer without `options` or an event emitter and failed (five
+  existing Node tests); the entity model count test went from 369 to 388.
 
 ## [1.1.1] - 2026-11-17
 
 ### Fixed
 
-- **Java 原版结构 `.nbt`（结构方块存的文件）打不开，报 `NucleationError.InvalidArgument`**：nucleation 0.10 的 `fromData` 不认这种格式（它认 litematic、Sponge schem、
-  mcstructure、存档），而站点上的 Java 作品全是这种。`SchematicManager` 先试 `fromData`，失败了而且字节是原版结构，就用 `nucleation/vanilla-structure.ts` 自己读：
-  解压（gzip / zlib / 未压缩）→ NBT → 同一个方块状态一次 `setBlocks`，方块实体按类型原样转成 SNBT 交给 `setBlockFromString`（告示牌的字、容器里的东西都在）。
-  用一份真实投稿验证：13,532 个方块、274 种状态、135 个方块实体，一个没丢。**写进 nucleation 这一步没有在写的环境里实测**（没有 nucleation），请跑 `pnpm test`。
+- **Java vanilla structures (`.nbt`, the files a structure block saves) did not open and threw
+  `NucleationError.InvalidArgument`**: Nucleation 0.10's `fromData` does not read that format (it reads litematic, Sponge
+  schem, mcstructure and world saves). `SchematicManager` tries `fromData` first and, when that fails and the bytes are a
+  vanilla structure, reads them with `nucleation/vanilla-structure.ts`: decompress (gzip / zlib / none) → NBT → one
+  `setBlocks` per block state, with block entities converted to SNBT as they are and passed to `setBlockFromString` (sign
+  text and container contents included). Checked on a real structure: 13,532 blocks, 274 states and 135 block entities,
+  none lost.
 
 ## [1.1.0] - 2026-11-16
 
-站点接入（作品页、审核页的 3D 视图）：渲染库不编进站点，按版本放在独立的 SDK 目录里运行时加载（见 `docs/renderer/SDK.md`）。**这一版的改动没有在写的环境里构建和测试过**（没有 three、nucleation），请先跑 `pnpm typecheck`、`pnpm test`、`pnpm build:sdk`。
+Runtime-loaded SDK builds: the renderer can be published as versioned SDK folders that a host page imports at runtime
+(see `docs/renderer/SDK.md`).
 
 ### Added
 
-- 渲染器选项 `chunkLoading: { minIntervalMs }`（和基岩包同名）：按 `incremental` 构建，一批一个区块（`chunkSideLength`，默认 16³），每块至少 `minIntervalMs` 毫秒，剩下的时间空着；
-  进度 `callbacks.onChunkProgress(id, done, total)` 和事件 `schematicChunkProgress`。逐块加载时不再每批打一行 `[SceneAdd]` 日志。
-- `BlueprintLoader.load(buffer, filename, { onStart, onChunk, signal })`（`Workshop.load` 同）：逐块加载时结构边建边显示，旧结构在新结构解析好之后移除，新的 `load` 取消还在加载的那一次（`AbortError`）；`abortError()`、`isAbortError(e)`。
-- `CameraControls.getView()` / `setView({ yaw, pitch, zoom })`：分享链接里的视角，约定和基岩包相同（`docs/UNIFIED_API.md` 第 1 条原样加入）。
-- `src/sdk.ts`：`SDK_API`（站点和渲染库的约定版本，现在是 1）、`SDK_EDITION`、`SDK_VERSION`。
-- `vite.sdk.config.mjs` 与 `pnpm build:sdk`：`sdk/mc-java-render/<版本>/index.js`（three、nucleation 等全部打进去，按需加载的分块在 `chunks/`），附 `release.json`。
+- Renderer option `chunkLoading: { minIntervalMs }` (same name as in the Bedrock package): meshes are built incrementally,
+  one chunk per batch (`chunkSideLength`, 16³ by default), each taking at least `minIntervalMs` milliseconds with the rest
+  of the time left idle; progress through `callbacks.onChunkProgress(id, done, total)` and the `schematicChunkProgress`
+  event. Chunk-by-chunk loading no longer logs a `[SceneAdd]` line per batch.
+- `BlueprintLoader.load(buffer, filename, { onStart, onChunk, signal })` (and `Workshop.load`): with chunk-by-chunk loading
+  a structure shows while it is built, the old structure is removed once the new one has been parsed, and a new `load`
+  aborts one still in progress (`AbortError`); `abortError()`, `isAbortError(e)`.
+- `CameraControls.getView()` / `setView({ yaw, pitch, zoom })`: a view for share links, with the same conventions as the
+  Bedrock package.
+- `src/sdk.ts`: `SDK_API` (the contract version between hosts and the renderers, currently 1), `SDK_EDITION`,
+  `SDK_VERSION`.
+- `vite.sdk.config.mjs` and `pnpm build:sdk`: `sdk/mc-java-render/<version>/index.js` (three, Nucleation and everything
+  else bundled, chunks loaded on demand in `chunks/`), plus `release.json`.
 
 ## [Unreleased]
 

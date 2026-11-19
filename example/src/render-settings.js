@@ -1,4 +1,5 @@
 import { STORAGE_KEY, RENDER_PRESETS, readRenderSettings, normalizeRenderSettings, applyRenderSettings } from "@rsw/mc-java-render-ts";
+import { t, lang } from "./i18n.js";
 export { RENDER_PRESETS, readRenderSettings, normalizeRenderSettings };
 export class RenderSettings {
   constructor(renderer, initial = readRenderSettings()) {
@@ -95,30 +96,34 @@ export class RenderSettings {
     if (this.profileToggle?.checked) {
       const profile = this.renderer.renderManager.getFrameProfile();
       const labels = {
-        controlsMs: "控制",
-        highlightMs: "高亮",
-        gizmoMs: "辅助框",
-        visibilityMs: "区块筛选",
-        submitMs: "绘制提交",
-        measuredMs: "已测合计",
+        controlsMs: t("profile.controls"),
+        highlightMs: t("profile.highlight"),
+        gizmoMs: t("profile.gizmo"),
+        visibilityMs: t("profile.visibility"),
+        submitMs: t("profile.submit"),
+        measuredMs: t("profile.measured"),
       };
       this.profileOutput.textContent = profile?.samples
-        ? `${profile.samples} 帧 · 均值 / P95（ms）\n` +
+        ? `${t("profile.header", { samples: profile.samples })}\n` +
           Object.entries(labels)
             .map(
               ([key, label]) =>
                 `${label} ${profile.mean[key].toFixed(2)} / ${profile.p95[key].toFixed(2)}`,
             )
             .join("\n")
-        : "等待采样：请移动相机。静止时按需渲染，不强制生成帧。";
+        : t("profile.waiting");
       this.profileOutput.style.whiteSpace = "pre-line";
     }
     const stats = this.renderer.chunkVisibility.getStats();
-    const format = (n) => Math.round(n).toLocaleString("zh-CN");
+    const format = (n) => Math.round(n).toLocaleString(lang());
     document.getElementById("render-stats").textContent =
-      `区块 ${format(stats.visibleChunks)} / ${format(stats.totalChunks)} · 三角形 ${format(stats.triangles)} · 材质批次 ${format(stats.drawCalls)}`;
+      t("stats.chunks", { visible: format(stats.visibleChunks), total: format(stats.totalChunks), triangles: format(stats.triangles), calls: format(stats.drawCalls) });
     document.getElementById("render-resolution").textContent =
-      `画布 ${this.renderer.canvas.width} × ${this.renderer.canvas.height} · 静止时按需渲染`;
+      t("stats.canvas", { w: this.renderer.canvas.width, h: this.renderer.canvas.height });
+  }
+  /** Redraws the readouts after a language switch. */
+  refresh() {
+    this.updateStats();
   }
   dispose() {
     if (this.profileToggle?.checked)

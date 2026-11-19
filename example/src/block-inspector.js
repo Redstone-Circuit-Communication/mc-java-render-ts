@@ -15,18 +15,15 @@ import {
 } from "@rsw/mc-java-render-ts";
 import { nameFor } from "@rsw/mc-java-render-ts";
 import { readRedstone } from "@rsw/mc-java-render-ts";
+import { t, lang, applyI18n } from "./i18n.js";
 function el(tag, cls, text) {
   const node = document.createElement(tag);
   if (cls) node.className = cls;
   if (text !== undefined) node.textContent = text;
   return node;
 }
-const MESSAGES = {
-  player: "末影箱内容属于玩家数据，不保存在蓝图的方块 NBT 中。",
-  loot: "该容器使用战利品表，蓝图中尚未生成实际物品。",
-  missing: "蓝图未保存此容器的物品列表，无法判断是否为空。",
-  partial: "大型箱子有一侧未保存物品列表，以下仅显示已保存的内容。",
-};
+/** Notes for containers whose contents the schematic cannot show. */
+const STATE_NOTES = new Set(["player", "loot", "missing", "partial"]);
 /** The overlay that marks barriers, light blocks, structure voids and moving pistons, which the game does not draw. */
 const INVISIBLE_BLOCKS_OVERLAY = "schematic-renderer:invisible-blocks";
 function showInvisibleBlockMarkers(schematic, shown) {
@@ -162,7 +159,7 @@ export class BlockInspector {
     if (hit?.kind === "entity") { this.selectEntity(hit.schematic, hit.entity); return; }
     if (hit?.kind === "block") { this.select(hit.schematic, hit.position); return; }
     this.clear();
-    this.notify("没有选中方块或实体");
+    this.notify(t("inspect.nothing"));
   }
   selectEntity(schematic, entity) {
     this.selection = { kind: "entity", schematic, entity };
@@ -188,6 +185,24 @@ export class BlockInspector {
     this.renderer.invalidate();
     if (this.views.locked) this.views.manager.flyControls.unlock();
   }
+  /** Redraws the text after a language switch: the jump lists, the empty panel and the current selection. */
+  refresh() {
+    applyI18n(this.initialContent);
+    if (!this.selection) {
+      this.content.replaceChildren(...[...this.initialContent.childNodes].map((n) => n.cloneNode(true)));
+    }
+    if (this.renderer.schematicManager.getAllSchematics().length) {
+      const containers = document.getElementById("container-select"), entities = document.getElementById("entity-select");
+      const [container, entity] = [containers.value, entities.value];
+      this.indexContainers();
+      [containers.value, entities.value] = [container, entity];
+    }
+    if (this.selection?.kind === "entity") this.render();
+    else if (this.selection) {
+      this.selection = { ...readBlockInventory(this.selection.schematic, this.selection.position), schematic: this.selection.schematic };
+      this.render();
+    }
+  }
   clear() {
     this.selection = null;
     this.highlight.visible = false;
@@ -205,17 +220,17 @@ export class BlockInspector {
     this.indexEntities();
     this.targets = [];
     const select = document.getElementById("container-select");
-    select.replaceChildren(new Option("选择容器，定位并查看…", ""));
+    select.replaceChildren(new Option(t("inspect.pickContainer"), ""));
     this.targets = listContainers(this.renderer.schematicManager.getAllSchematics());
-    this.targets.forEach((t, i) =>
+    this.targets.forEach((target, i) =>
       select.append(
-        new Option(`${nameFor(t.id)} · ${t.position.join(", ")}`, String(i)),
+        new Option(`${nameFor(target.id)} · ${target.position.join(", ")}`, String(i)),
       ),
     );
     select.disabled = !this.targets.length;
     select.options[0].textContent = this.targets.length
-      ? `发现 ${this.targets.length} 个容器 · 选择定位`
-      : "蓝图未保存容器方块实体";
+      ? t("inspect.containersFound", { count: this.targets.length })
+      : t("inspect.noContainers");
   }
   indexEntities() {
     this.entityTargets = [];
@@ -228,9 +243,10 @@ export class BlockInspector {
       showInvisibleBlockMarkers(schematic, debugShown);
     }
     this.entityTargets = listEntities(this.renderer.schematicManager.getAllSchematics());
-    select.replaceChildren(new Option(this.entityTargets.length ? `发现 ${this.entityTargets.length} 个实体 · 选择定位` : "蓝图未保存实体", ""));
+    select.replaceChildren(new Option(this.entityTargets.length ? t("inspect.entitiesFound", { count: this.entityTargets.length }) : t("inspect.noEntities"), ""));
+    const tag = { model: "", placeholder: t("entity.tagPlaceholder"), debug: t("entity.tagDebug"), invisible: t("entity.tagEmpty") };
     for (const [index, { entity }] of this.entityTargets.entries())
-      select.append(new Option(`${entityName(entity)} · ${entity.position.join(", ")}${entity.status === "model" ? "" : entity.status === "placeholder" ? " · 占位" : entity.status === "debug" ? " · 调试替身" : entity.status === "invisible" ? " · 无内容" : " · 未渲染"}`, String(index)));
+      select.append(new Option(`${entityName(entity)} · ${entity.position.join(", ")}${tag[entity.status] ?? t("entity.tagNone")}`, String(index)));
     select.disabled = !this.entityTargets.length;
   }
   render() {
@@ -265,18 +281,18 @@ export class BlockInspector {
     this.content.append(coords);
     if (redstone) this.content.append(this.redstonePanel(redstone));
     if (inventory) {
-      if (MESSAGES[inventory.state])
+      if (STATE_NOTES.has(inventory.state))
         this.content.append(
-          el("p", "notice warning", MESSAGES[inventory.state]),
+          el("p", "notice warning", t(`state.${inventory.state}`)),
         );
       if (inventory.size) {
         const shell = el("div", "inventory-shell"),
           title = el("div", "inventory-title", inventory.name);
-        title.append(el("span", "", `${inventory.size} 格 · 只读`));
+        title.append(el("span", "", t("inv.size", { size: inventory.size })));
         shell.append(title);
         const grid = el("div", "inventory-grid");
         grid.style.setProperty("--columns", inventory.columns);
-        grid.setAttribute("aria-label", `${inventory.name}物品槽`);
+        grid.setAttribute("aria-label", t("inv.slotsLabel", { name: inventory.name }));
         inventory.slots.forEach((item, slot) => {
           const b = el(
             "button",
@@ -287,8 +303,8 @@ export class BlockInspector {
           b.setAttribute(
             "aria-label",
             item
-              ? `槽位 ${slot}，${item.customName || nameFor(item.id)}，${item.count} 个`
-              : `槽位 ${slot}，空`,
+              ? t("inv.slotItem", { slot, name: item.customName || nameFor(item.id), count: item.count })
+              : t("inv.slotEmpty", { slot }),
           );
           b.setAttribute("aria-pressed", "false");
           if (item) {
@@ -330,13 +346,13 @@ export class BlockInspector {
         }
         const stats = el("div", "inventory-stats");
         stats.append(
-          el("span", "", `${inventory.occupied} / ${inventory.size} 格已占用`),
-          el("span", "", `${inventory.total.toLocaleString("zh-CN")} 个物品`),
+          el("span", "", t("inv.occupied", { occupied: inventory.occupied, size: inventory.size })),
+          el("span", "", t("inv.total", { total: inventory.total.toLocaleString(lang()) })),
         );
         shell.append(stats);
         this.content.append(shell);
         if (inventory.state === "loaded" && !inventory.occupied)
-          this.content.append(el("p", "notice", "这个容器是空的。"));
+          this.content.append(el("p", "notice", t("inv.empty")));
         this.itemDetail = el("div");
         this.content.append(this.itemDetail);
         inventory.warnings.forEach((w) =>
@@ -345,7 +361,7 @@ export class BlockInspector {
       }
     } else if (!redstone)
       this.content.append(
-        el("p", "notice", "这不是已支持的容器方块，可在下方查看方块状态。"),
+        el("p", "notice", t("inv.unsupported")),
       );
     if (Object.keys(properties).length) {
       const props = el("div", "block-properties");
@@ -356,26 +372,26 @@ export class BlockInspector {
     }
     if (inventory || Object.keys(nbt).length)
       this.content.append(
-        this.nbtDetails("查看方块实体数据 · JSON", inventory?.nbt ?? nbt),
+        this.nbtDetails(t("inv.blockEntityJson"), inventory?.nbt ?? nbt),
       );
     if (snbt)
-      this.content.append(this.nbtDetails("选中方块的完整 NBT · SNBT", snbt));
+      this.content.append(this.nbtDetails(t("inv.snbt"), snbt));
   }
   redstonePanel(info) {
     const panel = el("section", "redstone-panel"),
       header = el("div", "redstone-header"),
       badge = el("span", "redstone-state", info.status);
-    panel.setAttribute("aria-label", "红石信号");
+    panel.setAttribute("aria-label", t("redstone.title"));
     badge.dataset.state =
       info.active === null ? "unknown" : info.active ? "active" : "inactive";
-    header.append(el("h4", "", "红石信号"), badge);
+    header.append(el("h4", "", t("redstone.title")), badge);
     const strength = el("div", "redstone-strength");
     strength.append(
       el("span", "", info.signalLabel),
       el(
         "strong",
         "",
-        info.strength === null ? "未知" : `${info.strength} / 15`,
+        info.strength === null ? t("redstone.unknown") : `${info.strength} / 15`,
       ),
     );
     panel.append(header, strength);
@@ -399,7 +415,7 @@ export class BlockInspector {
     panel.append(details, el("p", "redstone-source", info.source));
     if (info.note) panel.append(el("p", "redstone-note", info.note));
     panel.append(
-      el("p", "redstone-snapshot", "蓝图保存时的状态 · 未运行红石模拟"),
+      el("p", "redstone-snapshot", t("redstone.snapshot")),
     );
     return panel;
   }
@@ -408,16 +424,16 @@ export class BlockInspector {
     if (!this.itemDetail) return;
     this.itemDetail.replaceChildren();
     if (!item) {
-      this.itemDetail.append(el("p", "notice", `槽位 ${slot}：没有保存物品。`));
+      this.itemDetail.append(el("p", "notice", t("item.none", { slot })));
       return;
     }
     const panel = el("section", "item-detail");
     panel.append(
       el("h4", "", item.customName || nameFor(item.id)),
-      el("p", "", `${item.id} · 数量 ${item.count} · 槽位 ${slot}`),
+      el("p", "", t("item.summary", { id: item.id, count: item.count, slot })),
     );
     item.lore.forEach((t) => panel.append(el("p", "item-lore", t)));
-    const details = this.nbtDetails("物品 NBT · JSON 视图", item.raw);
+    const details = this.nbtDetails(t("item.nbt"), item.raw);
     details.open = true;
     panel.append(details);
     this.itemDetail.append(panel);
@@ -434,7 +450,7 @@ export class BlockInspector {
     this.tooltip.replaceChildren(
       el("strong", "", item.customName || nameFor(item.id)),
       el("small", "", item.id),
-      el("small", "", `数量 ${item.count} · 点击查看 NBT`),
+      el("small", "", t("item.count", { count: item.count })),
     );
     this.tooltip.hidden = false;
     this.positionTooltip(x, y);

@@ -1,4 +1,5 @@
 import type { Material } from "./types.js";
+import { L } from "./locale.js";
 import { nameFor } from "./names.js";
 export function filterMaterials(materials: readonly Material[], query = ""): Material[] {
 	const q = query.trim().toLowerCase();
@@ -8,11 +9,11 @@ export function filterMaterials(materials: readonly Material[], query = ""): Mat
 }
 export function materialRows(materials: readonly Material[]): (string | number)[][] {
 	return [
-		["材料名称", "方块 ID", "数量", "整组(64)", "零散数量"],
+		[L("Material", "材料名称"), L("Block ID", "方块 ID"), L("Count", "数量"), L("Stacks (64)", "整组(64)"), L("Remainder", "零散数量")],
 		...materials.map((m) => [nameFor(m.id), m.id, m.count, Math.floor(m.count / 64), m.count % 64]),
 	];
 }
-/** Includes a UTF-8 BOM for Chinese text in spreadsheet applications. */
+/** Includes a UTF-8 BOM so spreadsheet applications read non-ASCII names correctly. */
 export function materialsToCsv(materials: readonly Material[]): string {
 	const escape = (value: string | number) => `"${String(value).replaceAll('"', '""')}"`;
 	return (

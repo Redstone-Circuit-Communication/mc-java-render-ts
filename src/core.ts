@@ -3,6 +3,7 @@ export * from "./materials.js";
 export * from "./inventory.js";
 export * from "./redstone.js";
 export * from "./frame-stats.js";
+export * from "./locale.js";
 export * from "./names.js";
 export * from "./entities.js";
 export * from "./material-export.js";

@@ -1,10 +1,6 @@
 import { CameraControls } from "@rsw/mc-java-render-ts";
 import { Vector3, Quaternion } from "three";
-const LABELS = {
-  orbit: "透视 · 环绕视角",
-  first: "第一人称 · 自由飞行",
-  ortho: "正交 · 等比例投影",
-};
+import { t } from "./i18n.js";
 const AXES = [
   { label: "X", direction: [1, 0, 0], color: "#bd7d6a" },
   { label: "−X", direction: [-1, 0, 0], color: "#bd7d6a" },
@@ -57,7 +53,7 @@ export class ViewControls extends CameraControls {
     document.addEventListener(
       "pointerlockerror",
       () => {
-        notify("无法锁定鼠标，请再次点击进入，或使用环绕视角。");
+        notify(t("flight.lockFailed"));
         this.syncFlightUI();
       },
       { signal },
@@ -71,7 +67,7 @@ export class ViewControls extends CameraControls {
       "click",
       () => {
         if (!("requestPointerLock" in renderer.canvas)) {
-          notify("当前浏览器不支持鼠标锁定，请使用环绕或正交视角。");
+          notify(t("flight.noLock"));
           return;
         }
         this.manager.flyControls.lock();
@@ -117,8 +113,9 @@ export class ViewControls extends CameraControls {
     this.axisButtons = AXES.map((axis) => {
       const b = document.createElement("button");
       b.textContent = axis.label;
-      b.setAttribute("aria-label", `从 ${axis.label} 轴观察`);
-      b.title = `从 ${axis.label} 轴观察`;
+      b.dataset.axis = axis.label;
+      b.setAttribute("aria-label", t("axis.view", { axis: axis.label }));
+      b.title = t("axis.view", { axis: axis.label });
       b.style.background = axis.color;
       b.addEventListener("click", () => this.align(axis.direction), { signal });
       parent.append(b);
@@ -140,20 +137,24 @@ export class ViewControls extends CameraControls {
       .forEach((b) =>
         b.setAttribute("aria-pressed", String(b.dataset.view === this.mode)),
       );
-    document.getElementById("view-label").textContent = LABELS[this.mode];
+    document.getElementById("view-label").textContent = t(`view.${this.mode}`);
+    for (const b of this.axisButtons ?? []) {
+      b.title = t("axis.view", { axis: b.dataset.axis });
+      b.setAttribute("aria-label", b.title);
+    }
     document.getElementById("crosshair").hidden = !this.locked;
     document.getElementById("resume-flight").hidden =
       this.mode !== "first" || this.locked;
     document.getElementById("control-hint").innerHTML =
       this.mode === "first"
-        ? "<span><b>WASD</b> 移动</span><span><b>Space / Shift</b> 升降</span><span><b>Ctrl</b> 加速</span><span><b>滚轮</b> 调速 <b id=flight-speed></b></span><span><b>左键</b> 查看</span><span><b>Esc</b> 释放鼠标</span>"
-        : "<span><b>左键单击</b> 查看方块 / 实体</span><span><b>拖动</b> 旋转</span><span><b>右键</b> 平移</span><span><b>滚轮</b> 缩放</span>";
+        ? `<span><b>WASD</b> ${t("flight.move")}</span><span><b>Space / Shift</b> ${t("flight.upDown")}</span><span><b>Ctrl</b> ${t("flight.faster")}</span><span><b>${t("hint.wheel")}</b> ${t("flight.speed")} <b id=flight-speed></b></span><span><b>${t("flight.leftClick")}</b> ${t("flight.inspect")}</span><span><b>Esc</b> ${t("flight.release")}</span>`
+        : `<span><b>${t("hint.click")}</b> ${t("hint.inspectAny")}</span><span><b>${t("hint.drag")}</b> ${t("hint.rotate")}</span><span><b>${t("hint.right")}</b> ${t("hint.pan")}</span><span><b>${t("hint.wheel")}</b> ${t("hint.zoom")}</span>`;
     this.syncFlightSpeed();
   }
   syncFlightSpeed() {
     const label = document.getElementById("flight-speed");
     if (label)
-      label.textContent = `${this.manager.flyControls.getMoveSpeed().toFixed(2)} 格/秒`;
+      label.textContent = t("flight.blocksPerSecond", { speed: this.manager.flyControls.getMoveSpeed().toFixed(2) });
   }
   async fit() { await super.fit(); this.update(); }
   toggleGrid() {

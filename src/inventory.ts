@@ -7,23 +7,25 @@ import type {
 	NbtData,
 	Position,
 } from "./types.js";
+import { L } from "./locale.js";
 
-const DEFINITIONS: Record<string, [string, number, number, string[]?]> = {
-	chest: ["箱子", 27, 9],
-	trapped_chest: ["陷阱箱", 27, 9],
-	barrel: ["木桶", 27, 9],
-	shulker_box: ["潜影盒", 27, 9],
-	hopper: ["漏斗", 5, 5],
-	dispenser: ["发射器", 9, 3],
-	dropper: ["投掷器", 9, 3],
-	crafter: ["合成器", 9, 3],
-	furnace: ["熔炉", 3, 3, ["输入", "燃料", "输出"]],
-	blast_furnace: ["高炉", 3, 3, ["输入", "燃料", "输出"]],
-	smoker: ["烟熏炉", 3, 3, ["输入", "燃料", "输出"]],
-	brewing_stand: ["酿造台", 5, 5, ["药水", "药水", "药水", "原料", "燃料"]],
-	chiseled_bookshelf: ["雕纹书架", 6, 3],
-	decorated_pot: ["饰纹陶罐", 1, 1],
-	ender_chest: ["末影箱", 0, 9],
+/** Container title (English, Chinese), slot count, columns and, where slots have roles, their labels. */
+const DEFINITIONS: Record<string, [[string, string], number, number, [string, string][]?]> = {
+	chest: [["Chest", "箱子"], 27, 9],
+	trapped_chest: [["Trapped Chest", "陷阱箱"], 27, 9],
+	barrel: [["Barrel", "木桶"], 27, 9],
+	shulker_box: [["Shulker Box", "潜影盒"], 27, 9],
+	hopper: [["Hopper", "漏斗"], 5, 5],
+	dispenser: [["Dispenser", "发射器"], 9, 3],
+	dropper: [["Dropper", "投掷器"], 9, 3],
+	crafter: [["Crafter", "合成器"], 9, 3],
+	furnace: [["Furnace", "熔炉"], 3, 3, [["Input", "输入"], ["Fuel", "燃料"], ["Output", "输出"]]],
+	blast_furnace: [["Blast Furnace", "高炉"], 3, 3, [["Input", "输入"], ["Fuel", "燃料"], ["Output", "输出"]]],
+	smoker: [["Smoker", "烟熏炉"], 3, 3, [["Input", "输入"], ["Fuel", "燃料"], ["Output", "输出"]]],
+	brewing_stand: [["Brewing Stand", "酿造台"], 5, 5, [["Potion", "药水"], ["Potion", "药水"], ["Potion", "药水"], ["Ingredient", "原料"], ["Fuel", "燃料"]]],
+	chiseled_bookshelf: [["Chiseled Bookshelf", "雕纹书架"], 6, 3],
+	decorated_pot: [["Decorated Pot", "饰纹陶罐"], 1, 1],
+	ender_chest: [["Ender Chest", "末影箱"], 0, 9],
 };
 const TAG =
 	/^(Compound|List|String|Byte|Short|Int|Long|Float|Double|ByteArray|IntArray|LongArray)$/;
@@ -64,10 +66,10 @@ export function containerDefinition(id: string): ContainerDefinition | null {
 	const definition = DEFINITIONS[name];
 	return definition
 		? {
-				name: definition[0],
+				name: L(...definition[0]),
 				size: definition[1],
 				columns: definition[2],
-				labels: definition[3],
+				labels: definition[3]?.map((label) => L(...label)),
 				unavailable: name === "ender_chest",
 			}
 		: null;
@@ -130,10 +132,10 @@ export function readContainer(id: string, raw: unknown): ContainerInventory | nu
 	for (const raw of entries) {
 		const item = normalizeItem(raw, definition.size === 1 ? 0 : undefined);
 		if (!item || item.slot >= slots.length) {
-			warnings.push("无效或超出范围的槽位已保留在原始 NBT 中。");
+			warnings.push(L("Invalid or out-of-range slots are kept in the raw NBT.", "无效或超出范围的槽位已保留在原始 NBT 中。"));
 			continue;
 		}
-		if (slots[item.slot]) warnings.push(`槽位 ${item.slot} 重复，显示最后一条记录。`);
+		if (slots[item.slot]) warnings.push(L(`Slot ${item.slot} appears twice; the last entry is shown.`, `槽位 ${item.slot} 重复，显示最后一条记录。`));
 		slots[item.slot] = item;
 	}
 	let state: ContainerInventory["state"] = "loaded";
@@ -204,7 +206,7 @@ export function readBlockInventory(
 				);
 				inventory = {
 					...inventory,
-					name: inventory.name === containerDefinition(state)?.name ? "大型箱子" : inventory.name,
+					name: inventory.name === containerDefinition(state)?.name ? L("Large Chest", "大型箱子") : inventory.name,
 					size: 54,
 					slots,
 					occupied: slots.filter(Boolean).length,

@@ -795,7 +795,7 @@ export class SchematicObject extends EventEmitter {
 	}
 
 	// Track chunk building progress
-	/** chunkLoading 的进度：回调 `onChunkProgress` 与事件 `schematicChunkProgress`（BlueprintLoader 的 onChunk 听的是事件） */
+	/** chunkLoading progress: the `onChunkProgress` callback and the `schematicChunkProgress` event (BlueprintLoader's onChunk listens to the event) */
 	private reportChunkProgress(done: number, total: number): void {
 		if (this.disposed) return;
 		this.schematicRenderer.options.callbacks?.onChunkProgress?.(this.id, done, total);

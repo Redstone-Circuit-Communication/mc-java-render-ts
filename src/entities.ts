@@ -1,5 +1,8 @@
 import type { EntitySummary, EntityObject } from "./types.js";
 import { textComponent } from "./inventory.js";
+import { englishName, getLocale } from "./locale.js";
+
+// Simplified Chinese names of common entities; English names follow from the ids.
 
 const NAMES: Record<string, string> = {
 	allay: "悦灵",
@@ -16,10 +19,10 @@ const NAMES: Record<string, string> = {
 	oak_boat: "橡木船",
 	bamboo_raft: "竹筏",
 };
+/** An entity's custom name, or its display name in the current locale (`setLocale`). */
 export function entityName(record: EntitySummary): string {
-	return (
-		textComponent(record.nbt.CustomName) || NAMES[record.id.replace(/^minecraft:/, "")] || record.id
-	);
+	const short = record.id.replace(/^minecraft:/, "");
+	return textComponent(record.nbt.CustomName) || (getLocale() === "en" ? englishName(short) : NAMES[short] || record.id);
 }
 export function entityFromObject(object: EntityObject | null): EntitySummary | null {
 	for (let node = object; node; node = node.parent)

@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { Schematic } from "nucleation";
 import { readRedstone } from "../dist/redstone.js";
+import { setLocale } from "../dist/locale.js";
+
+// The assertions below read the Simplified Chinese labels; the English ones are checked at the end.
+setLocale("zh-CN");
 
 const read = (state, nbt) => readRedstone(`minecraft:${state}`, nbt);
 
@@ -111,5 +115,21 @@ test("real compressed redstone demo decodes saved states and comparator NBT", ()
 		assert.equal(inspect(2, 8).strength, null);
 	} finally {
 		native.clearContents();
+	}
+});
+
+test("labels follow the locale: English by default", () => {
+	setLocale("en");
+	try {
+		const info = read("repeater[delay=4,facing=north,locked=true,powered=true]");
+		assert.deepEqual(info.details, [
+			{ label: "Delay", value: "4 redstone ticks · 8 game ticks · 0.4 s" },
+			{ label: "Locked", value: "Yes" },
+			{ label: "Input side", value: "North · −Z" },
+			{ label: "Output side", value: "South · +Z" },
+		]);
+		assert.equal(info.status, "Active");
+	} finally {
+		setLocale("zh-CN");
 	}
 });

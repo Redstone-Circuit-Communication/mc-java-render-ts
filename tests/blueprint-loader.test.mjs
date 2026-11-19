@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { BlueprintLoader } from "../dist/blueprint-loader.js";
-import { countPaletteStates, materialsToCsv, filterMaterials } from "../dist/core.js";
+import { countPaletteStates, materialsToCsv, filterMaterials, setLocale } from "../dist/core.js";
 function setup() {
 	const old = { id: "old", group: { visible: true } };
 	const schematics = [old];
@@ -108,7 +108,7 @@ test("concurrent requests are serialized and a failed load does not poison the q
 	);
 	await loader.dispose();
 	assert.equal(state.stopped(), true);
-	await assert.rejects(loader.load(new ArrayBuffer(4), "closed.schem"), /关闭/);
+	await assert.rejects(loader.load(new ArrayBuffer(4), "closed.schem"), /disposed/);
 });
 test("dispose during mesh loading cleans the new scene and preserves the old one", async () => {
 	const state = setup();
@@ -121,7 +121,7 @@ test("dispose during mesh loading cleans the new scene and preserves the old one
 		await new Promise((r) => (release = r));
 	};
 	const loader = new BlueprintLoader(state.renderer, { counter: state.counter });
-	const loading = assert.rejects(loader.load(new ArrayBuffer(4), "a.schem"), /关闭/);
+	const loading = assert.rejects(loader.load(new ArrayBuffer(4), "a.schem"), /disposed/);
 	await started;
 	const stopping = loader.dispose();
 	release();
@@ -141,13 +141,16 @@ test("URL names ignore query strings and HTTP failures reject before touching th
 	assert.equal(state.schematics[0].id, result.id);
 	await loader.dispose();
 });
-test("truncated packed states reject and CSV handles quotes and Chinese search", () => {
-	assert.throws(() => countPaletteStates([], 2, 1, 2), /截断/);
+test("truncated packed states reject and CSV handles quotes and localized search", () => {
+	assert.throws(() => countPaletteStates([], 2, 1, 2), /truncated/);
 	const items = [
 		{ id: "minecraft:chest", count: 65, stacks: 1, remainder: 1 },
 		{ id: 'mod:a"b', count: 2, stacks: 0, remainder: 2 },
 	];
+	assert.deepEqual(filterMaterials(items, "chest"), [items[0]]);
+	setLocale("zh-CN");
 	assert.deepEqual(filterMaterials(items, "箱子"), [items[0]]);
+	setLocale("en");
 	const csv = materialsToCsv(items);
 	assert.equal(csv.charCodeAt(0), 0xfeff);
 	assert.match(csv, /mod:a""b/);

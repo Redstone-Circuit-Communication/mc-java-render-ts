@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-// The site's SDK directory (docs/renderer/SDK.md): `pnpm build:sdk` → sdk/mc-java-render/<version>/index.js
+// Script-tag SDK build (docs/renderer/SDK.md): `pnpm build:sdk` → sdk/mc-java-render/<version>/index.js
 // (+ chunks loaded on demand). The site imports index.js at runtime with import(), so nothing is external here:
 // three, nucleation and every other dependency are bundled. Unlike vite.config.mjs (the npm package, where the
 // consumer's bundler provides three and nucleation) this output must run on its own.
@@ -62,7 +62,7 @@ export default defineConfig({
 		outDir,
 		emptyOutDir: true,
 		copyPublicDir: false,
-		// 源码映射默认不发（入口的映射就有 5 MB）；要排查线上问题时 SDK_SOURCEMAP=1 pnpm build:sdk
+		// source maps are left out by default (the entry's map alone is 5 MB); to debug a deployed build: SDK_SOURCEMAP=1 pnpm build:sdk
 		sourcemap: process.env.SDK_SOURCEMAP === "1",
 		lib: {
 			entry: { index: resolve("src/index.ts") },

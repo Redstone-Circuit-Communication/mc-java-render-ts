@@ -10,6 +10,7 @@ import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync, inflateRawSync } from "node:zlib";
+import { clientJar } from "./lib/minecraft-assets.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = resolve(root, "example/public/schematics");
@@ -401,7 +402,7 @@ function buildBlocks(zip) {
 		const notes = [upper ? "upper half at y=1" : "", `label sign at y=${LABEL_Y}`].filter(Boolean);
 		index.push([i + 1, name ?? "", `minecraft:${id}`, x, 0, z, canon(props), notes.join("; ")]);
 	});
-	const file = litematic({ name: "全方块 · 逐个排查", size, palette, cells, tileEntities });
+	const file = litematic({ name: "Every block · one by one", size, palette, cells, tileEntities });
 	const placed = cells.reduce((n, c) => n + (c ? 1 : 0), 0);
 	return { file, index, size, placed, count: ids.length, cols, tileEntities: tileEntities.length };
 }
@@ -497,7 +498,7 @@ function buildEntities(zip) {
 		});
 	});
 	const file = litematic({
-		name: "全实体 · 逐个排查",
+		name: "Every entity · one by one",
 		size,
 		palette,
 		cells,
@@ -514,7 +515,8 @@ function buildEntities(zip) {
 	};
 }
 
-const zip = openZip(resolve(root, "example/public/packs/vanilla_pack_fixed.zip"));
+// block and entity lists come from the official client jar (downloaded from Mojang into .cache/ on first use)
+const zip = openZip(await clientJar());
 const blocks = buildBlocks(zip);
 const entities = buildEntities(zip);
 writeFileSync(resolve(outDir, "all-blocks.litematic"), blocks.file);

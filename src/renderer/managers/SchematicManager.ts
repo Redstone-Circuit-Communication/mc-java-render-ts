@@ -79,9 +79,9 @@ export class SchematicManager {
 	}
 
 	/**
-	 * 字节 → SchematicWrapper。先交给 nucleation 的 fromData（litematic、Sponge schem、mcstructure…）；它不认、而字节是
-	 * Java 原版结构（结构方块存的 .nbt，站点上的 Java 作品都是这种），就自己读（nucleation/vanilla-structure.ts）。
-	 * 两条路都不行时抛 nucleation 原来的错误。
+	 * Bytes → SchematicWrapper. Nucleation's fromData handles litematic, Sponge schem, mcstructure and more; when it refuses
+	 * the bytes and they are a Java vanilla structure (the .nbt a structure block saves), they are read here instead
+	 * (nucleation/vanilla-structure.ts). When neither works, Nucleation's original error is thrown.
 	 */
 	private async parseSchematicBytes(bytes: Uint8Array): Promise<SchematicWrapper> {
 		const wrapper = new SchematicWrapper();
@@ -93,7 +93,7 @@ export class SchematicManager {
 			if (!structure) throw error;
 			const built = new SchematicWrapper();
 			const dropped = fillFromVanillaStructure(built, structure);
-			if (dropped) console.warn(`[SchematicManager] ${dropped} 个方块实体的 NBT 没有写进去（方块本身照常）`);
+			if (dropped) console.warn(`[SchematicManager] NBT of ${dropped} block entities could not be written (the blocks themselves are fine)`);
 			return built;
 		}
 	}

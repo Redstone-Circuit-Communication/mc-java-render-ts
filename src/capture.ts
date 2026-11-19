@@ -5,12 +5,12 @@ export function captureScreenshot(
 	type = "image/png",
 	quality?: number
 ): Promise<Blob> {
-	if (!renderer.renderManager) return Promise.reject(new Error("渲染器尚未初始化"));
+	if (!renderer.renderManager) return Promise.reject(new Error("the renderer is not initialized yet"));
 	renderer.renderManager.render();
 	return new Promise((resolve, reject) => {
 		try {
 			renderer.canvas.toBlob(
-				(blob) => (blob ? resolve(blob) : reject(new Error("截图失败"))),
+				(blob) => (blob ? resolve(blob) : reject(new Error("screenshot failed"))),
 				type,
 				quality
 			);

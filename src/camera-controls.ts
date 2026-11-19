@@ -130,8 +130,9 @@ export class CameraControls {
 		this.renderer.invalidate();
 	}
 	/**
-	 * 分享链接里的视角 `{ yaw, pitch, zoom }`，约定与基岩包相同：`yaw` 0 是相机在目标的 +z 侧（南），往 +x 增加；
-	 * `pitch` 为正是从上往下看；`zoom` 是到目标的距离（透视），正交时是 `camera.zoom`。
+	 * A view for share links, `{ yaw, pitch, zoom }`, with the same conventions as the Bedrock package: `yaw` 0 puts the camera
+ * on the target's +z side (south) and grows toward +x;
+	 * a positive `pitch` looks down; `zoom` is the distance to the target (perspective) or `camera.zoom` (orthographic).
 	 */
 	getView(): { yaw: number; pitch: number; zoom: number } {
 		const offset = this.camera.position.clone().sub(this.target());

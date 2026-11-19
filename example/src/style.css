@@ -1626,3 +1626,10 @@ p {
     display: none;
   }
 }
+
+/* Language switch in the header: a compact button next to the open button. */
+.lang-toggle {
+  min-width: 0;
+  padding-inline: 12px;
+  font-weight: 600;
+}

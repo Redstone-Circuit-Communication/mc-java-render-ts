@@ -25,7 +25,7 @@ export class MaterialsCounter {
 		private timeoutMs = 120000
 	) {}
 	count(buffer: ArrayBuffer): Promise<MaterialsResult> {
-		if (this.disposed) return Promise.reject(new Error("材料统计已关闭"));
+		if (this.disposed) return Promise.reject(new Error("the material counter has been disposed"));
 		return new Promise((resolve, reject) => {
 			try {
 				if (!this.worker) {
@@ -39,16 +39,16 @@ export class MaterialsCounter {
 						else request.resolve(data.result);
 					};
 					worker.onerror = () => {
-						if (this.worker === worker) this.reset(new Error("材料统计线程出错，请重试"));
+						if (this.worker === worker) this.reset(new Error("the material counting worker failed; try again"));
 					};
 					worker.onmessageerror = () => {
-						if (this.worker === worker) this.reset(new Error("无法读取材料统计结果"));
+						if (this.worker === worker) this.reset(new Error("cannot read the material counting result"));
 					};
 				}
 				const id = ++this.serial;
 				const copy = buffer.slice(0);
 				const timeout = setTimeout(
-					() => this.reset(new Error("材料统计超时，请重试")),
+					() => this.reset(new Error("material counting timed out; try again")),
 					this.timeoutMs
 				);
 				this.pending.set(id, { resolve, reject, timeout });
@@ -70,6 +70,6 @@ export class MaterialsCounter {
 	}
 	dispose(): void {
 		this.disposed = true;
-		this.reset(new Error("材料统计已关闭"));
+		this.reset(new Error("the material counter has been disposed"));
 	}
 }

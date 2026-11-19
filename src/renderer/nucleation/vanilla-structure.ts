@@ -1,41 +1,45 @@
 /**
- * Java 原版结构文件（结构方块存的 `.nbt`：`size`、`palette` / `palettes`、`blocks`、`entities`、`DataVersion`）。
+ * Java Edition vanilla structure files (the `.nbt` a structure block saves: `size`, `palette` / `palettes`, `blocks`, `entities`,
+ * `DataVersion`).
  *
- * nucleation 0.10 的 `Schematic.fromData` 认 litematic、Sponge schem、mcstructure、世界存档、快照，**不认原版结构**：
- * 拿到这种文件会抛 `NucleationError.InvalidArgument`。站点上的 Java 作品全是原版结构（后端的 mc-structure 只收这一种），
- * 所以这里自己读：解压 → 解析 NBT → 按方块状态成批 `setBlocks`，方块实体用 `setBlockFromString("name[props]{SNBT}")`。
- * `SchematicManager.loadSchematic` 先试 `fromData`，失败了、而且字节是原版结构，才走这里（以后 nucleation 支持了，就不会走到这里）。
+ * Nucleation 0.10's `Schematic.fromData` reads litematic, Sponge schem, mcstructure, world saves and snapshots, **but not vanilla
+ * structures**:
+ * such a file makes it throw `NucleationError.InvalidArgument`. Vanilla structures are the common way to share Java builds,
+ * so they are read here: decompress → parse the NBT → `setBlocks` in batches per block state, and block entities through
+ * `setBlockFromString("name[props]{SNBT}")`.
+ * `SchematicManager.loadSchematic` tries `fromData` first and only comes here when that fails and the bytes are a vanilla
+ * structure (once Nucleation supports them, this path is no longer taken).
  */
 import type { SchematicWrapper } from "./SchematicWrapper";
 
 export interface VanillaBlockEntity {
 	pos: [number, number, number];
 	block: string;
-	/** 原样的 NBT（带类型），写回时转成 SNBT */
+	/** The NBT as stored (typed), turned into SNBT when written back */
 	nbt: Tag;
 }
 
 export interface VanillaStructure {
 	size: [number, number, number];
 	dataVersion: number | null;
-	/** 方块状态写法（`name[k=v,…]`）→ 坐标，按 x,y,z 平铺 */
+	/** Block state (`name[k=v,…]`) → positions, flattened as x,y,z */
 	blocks: Map<string, number[]>;
 	blockEntities: VanillaBlockEntity[];
-	/** 不是空气的格子数 */
+	/** Number of non-air cells */
 	count: number;
 }
 
 const SKIP = new Set(["minecraft:air", "minecraft:cave_air", "minecraft:void_air", "minecraft:structure_void"]);
 
-// ---------- 解压 ----------
+// ---------- decompression ----------
 
 async function inflate(bytes: Uint8Array, format: "gzip" | "deflate"): Promise<Uint8Array> {
-	// 复制成普通的 Uint8Array：底层可能是 SharedArrayBuffer 的视图不能直接当 BlobPart（tsc 报过错）
+	// copy into a plain Uint8Array: a view of a SharedArrayBuffer cannot be used as a BlobPart
 	const stream = new Blob([new Uint8Array(bytes)]).stream().pipeThrough(new DecompressionStream(format));
 	return new Uint8Array(await new Response(stream).arrayBuffer());
 }
 
-/** gzip（1f 8b）、zlib（78 xx）或者没压缩（第一个字节是 TAG_Compound 0x0A） */
+/** gzip (1f 8b), zlib (78 xx) or uncompressed (the first byte is TAG_Compound, 0x0A) */
 export async function decompressNbt(bytes: Uint8Array): Promise<Uint8Array | null> {
 	if (bytes.length < 3) return null;
 	if (bytes[0] === 0x1f && bytes[1] === 0x8b) return inflate(bytes, "gzip");
@@ -44,7 +48,7 @@ export async function decompressNbt(bytes: Uint8Array): Promise<Uint8Array | nul
 	return null;
 }
 
-// ---------- NBT（Java 版：大端），保留标签类型（方块实体要原样写回 SNBT） ----------
+// ---------- NBT (Java Edition: big-endian), keeping tag types (block entities are written back as SNBT) ----------
 
 export type Tag =
 	| { t: 1 | 2 | 3 | 5 | 6; v: number }
@@ -63,7 +67,7 @@ class Reader {
 		this.view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
 	}
 	private need(n: number) {
-		if (this.p + n > this.bytes.length) throw new Error("NBT 提前结束");
+		if (this.p + n > this.bytes.length) throw new Error("NBT ended early");
 	}
 	private u8() { this.need(1); return this.view.getUint8(this.p++); }
 	private i8() { this.need(1); return this.view.getInt8(this.p++); }
@@ -83,11 +87,11 @@ class Reader {
 	}
 	private len() {
 		const n = this.i32();
-		if (n < 0 || n > 64_000_000) throw new Error("NBT 长度不对");
+		if (n < 0 || n > 64_000_000) throw new Error("invalid NBT length");
 		return n;
 	}
 	tag(t: number, depth = 0): Tag {
-		if (depth > 512) throw new Error("NBT 嵌套太深");
+		if (depth > 512) throw new Error("NBT nested too deeply");
 		switch (t) {
 			case 1: return { t, v: this.i8() };
 			case 2: return { t, v: this.i16() };
@@ -115,11 +119,11 @@ class Reader {
 			}
 			case 11: { const n = this.len(); const v: number[] = []; for (let i = 0; i < n; i++) v.push(this.i32()); return { t, v }; }
 			case 12: { const n = this.len(); const v: bigint[] = []; for (let i = 0; i < n; i++) v.push(this.i64()); return { t, v }; }
-			default: throw new Error(`不认识的 NBT 类型 ${t}`);
+			default: throw new Error(`unknown NBT tag type ${t}`);
 		}
 	}
 	root(): Tag {
-		if (this.u8() !== 10) throw new Error("NBT 的根不是复合标签");
+		if (this.u8() !== 10) throw new Error("the NBT root is not a compound tag");
 		this.str();
 		return this.tag(10);
 	}
@@ -131,7 +135,7 @@ const SNBT_KEY = /^[A-Za-z0-9._+-]+$/;
 const quote = (s: string) => `"${s.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
 const float = (n: number) => (Number.isFinite(n) ? String(n) : "0");
 
-/** 带类型的 NBT → SNBT（`1b`、`5s`、`2L`、`0.5f`、`1.0d`、`[I;1,2]`…），给 nucleation 的 setBlockFromString */
+/** Typed NBT → SNBT (`1b`, `5s`, `2L`, `0.5f`, `1.0d`, `[I;1,2]`, …) for Nucleation's setBlockFromString */
 export function toSnbt(tag: Tag): string {
 	switch (tag.t) {
 		case 1: return `${tag.v}b`;
@@ -149,7 +153,7 @@ export function toSnbt(tag: Tag): string {
 	}
 }
 
-/** 方便看、方便测的普通值（long 变成数字） */
+/** Plain values that are easy to read and test (longs become numbers) */
 export function plain(tag: Tag): unknown {
 	switch (tag.t) {
 		case 4: return Number(tag.v);
@@ -172,7 +176,7 @@ export function blockStateString(name: string, props?: Record<string, unknown>):
 	return entries.length ? `${name}[${entries.map(([k, v]) => `${k}=${String(v)}`).join(",")}]` : name;
 }
 
-/** 是原版结构就读出来，不是（比如 litematic、Sponge schem）返回 null */
+/** Reads a vanilla structure, or returns null for anything else (litematic, Sponge schem, …) */
 export function toVanillaStructure(root: Tag): VanillaStructure | null {
 	const size = list(get(root, "size"))?.map(num) ?? null;
 	const palette = list(get(root, "palette")) ?? list(list(get(root, "palettes"))?.[0]);
@@ -215,9 +219,10 @@ export async function readVanillaStructure(bytes: Uint8Array): Promise<VanillaSt
 }
 
 /**
- * 把读出来的结构写进一个空的 SchematicWrapper：同一个状态一次 setBlocks，没写全的再一格一格写；
- * 方块实体最后用 `name[props]{SNBT}` 一格一格写（告示牌的字、容器的东西都在里面），nucleation 不收这段 NBT 时只写方块本身。
- * 返回没写进 NBT 的方块实体数（只影响告示牌的字之类，不影响方块）。
+ * Writes a structure into an empty SchematicWrapper: one setBlocks per block state, falling back to cell by cell when that does
+ * not write them all; block entities go last, cell by cell as `name[props]{SNBT}` (sign text and container contents live there),
+ * and only the block itself is written when Nucleation refuses the NBT.
+ * Returns how many block entities lost their NBT (this affects things like sign text, not the blocks).
  */
 export function fillFromVanillaStructure(
 	target: Pick<SchematicWrapper, "set_blocks" | "set_block" | "set_block_from_string">,

@@ -101,10 +101,13 @@ describe("model names", () => {
 		expect([bBase.tint, bPattern.tint]).toEqual([0xb02e26, 0xfed83d]);
 	});
 	it("uses a model as soon as the catalog ships one for a mob that only has a stand-in", () => {
-		const nautilus = plan("nautilus");
-		expect(nautilus.kind).toBe("placeholder");
+		const missing = resolveEntityPlan(record("nautilus"), () => false);
+		expect(missing.kind).toBe("placeholder");
 		const shipped = resolveEntityPlan(record("nautilus"), (model) => model === "nautilus");
 		expect(shipped.kind).toBe("model");
+	});
+	it("draws the mobs converted from Bedrock geometry with their catalog models", () => {
+		for (const id of ["nautilus", "zombie_nautilus", "parched", "copper_golem", "cushion"]) expect(plan(id).kind, id).toBe("model");
 	});
 });
 
