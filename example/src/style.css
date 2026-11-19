@@ -348,7 +348,8 @@ kbd {
 .view-tools {
   position: absolute;
   left: 20px;
-  top: 76px;
+  /* below the label (top 22px) and the render settings button (top 54px, about 32px tall) */
+  top: 98px;
   display: flex;
   flex-direction: column;
   gap: 7px;
@@ -1414,9 +1415,13 @@ p {
     left: 14px;
     font-size: 9px;
   }
+  .render-settings {
+    top: 40px;
+    left: 14px;
+  }
   .view-tools {
     left: 14px;
-    top: 58px;
+    top: 80px;
     gap: 6px;
   }
   .tool-button {
@@ -1589,8 +1594,10 @@ p {
 }
 @media (max-width: 760px) {
   .performance-hud {
+    /* bottom right, above the hint line, instead of over the model */
+    top: auto;
     right: 14px;
-    top: 136px;
+    bottom: 44px;
     padding: 6px 8px;
   }
   .performance-values {
@@ -1600,3 +1607,22 @@ p {
 
 #cpu-profile[hidden], #cpu-profile-help[hidden] { display: none; }
 #cpu-profile-help { font-size: 11px; line-height: 1.6; opacity: .8; }
+
+/* Touch devices get touch gestures in the hint line instead of mouse buttons */
+.control-hint.for-touch {
+  display: none;
+}
+@media (hover: none) and (pointer: coarse) {
+  .control-hint.for-mouse {
+    display: none;
+  }
+  .control-hint.for-touch {
+    display: flex;
+  }
+}
+/* First-person mode flies with pointer lock and the keyboard: not usable on a touch screen */
+@media (hover: none) and (pointer: coarse) {
+  .camera-modes [data-view="first"] {
+    display: none;
+  }
+}
